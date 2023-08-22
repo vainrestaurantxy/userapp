@@ -23,9 +23,5 @@ PreferredSizeWidget customAppbar = AppBar(
     SizedBox(
       width: 24,
     ),
-    SvgPicture.asset('assets/cart.svg'),
-    SizedBox(
-      width: 24,
-    ),
   ],
 );

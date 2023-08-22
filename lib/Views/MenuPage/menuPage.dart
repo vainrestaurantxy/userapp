@@ -5,6 +5,8 @@ import 'package:dine/Shared/Widgets/SliverAppBar.dart';
 import 'package:dine/Views/MenuPage/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:provider/provider.dart' as prov;
+import '../../Data/Repositories/MenuPage.dart';
 
 class MenuPage extends ConsumerStatefulWidget {
   const MenuPage({super.key});
@@ -60,38 +62,37 @@ class _MenuPageState extends ConsumerState<MenuPage> {
   List<Widget> items = [];
   @override
   void initState() {
-    for (var element in catog.entries) {
-      items.add(Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Text(
-          element.key,
-          style: TextStyle(
-              color: Colors.black, fontSize: 18, fontWeight: FontWeight.w700),
-        ),
-      ));
-      for (var element2 in element.value) {
-        items.add(Item(
-          image: element2["image"],
-          desc: element2["desc"],
-          name: element2["name"],
-          price: element2["price"],
-          tags: element2["tags"],
-        )
-        );
-      }
-    }
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final repo = prov.Provider.of<MenuPageData>(context, listen: false);
+    for (var category in repo.categoryDividedMenu!.entries) {
+      items.add(Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Text(
+          category.key,
+          style: TextStyle(
+              color: Colors.black, fontSize: 18, fontWeight: FontWeight.w700),
+        ),
+      ));
+      for (var item in category.value) {
+        items.add(Item(
+          image: item.image,
+          desc: item.description,
+          name: item.name,
+          price: item.price,
+          tags: item.tags,
+        ));
+      }
+    }
     return Scaffold(
       body: Stack(
         alignment: Alignment.topCenter,
         children: [
           CustomScrollView(slivers: [
-            customSliverAppBar,
+            createCustomSliverAppBar(restaurant: repo.restaurant!),
             SliverList(
                 delegate: SliverChildBuilderDelegate(
               childCount: items.length,

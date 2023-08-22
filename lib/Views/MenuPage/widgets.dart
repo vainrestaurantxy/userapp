@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../Models/tag.dart';
+
 class Item extends ConsumerStatefulWidget {
   Item(
       {super.key,
@@ -11,7 +13,7 @@ class Item extends ConsumerStatefulWidget {
       required this.tags});
   String image, desc, name;
   int price;
-  List<String> tags;
+  List<Tags> tags;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ItemState();
@@ -86,7 +88,7 @@ class _ItemState extends ConsumerState<Item> {
                             EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         child: Row(
                           children: [
-                            Text(widget.tags[index],
+                            Text(widget.tags[index].name,
                                 style: TextStyle(
                                   fontSize: 8,
                                   color: Colors.white,

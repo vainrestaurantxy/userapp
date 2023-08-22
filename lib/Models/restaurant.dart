@@ -7,11 +7,13 @@ part 'restaurant.g.dart';
 class Restaurant {
   final String logo, name, city, state;
   final List<RestaurantMenu> menu;
+  final List<String> tags;
   Restaurant(
       {required this.logo,
       required this.name,
       required this.city,
       required this.state,
+      required this.tags,
       required this.menu});
 
   factory Restaurant.fromJson(Map<String, dynamic> json) =>

@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dine/Shared/Widgets/AppBar.dart';
+import 'package:dine/ViewModels/QrScannerViewModel/qrscannerviewmodel.dart';
 import 'package:dine/Views/MenuPage/menuPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code_scanner/flutter_code_scanner.dart';
@@ -19,6 +20,7 @@ class QrScanner extends ConsumerStatefulWidget {
 }
 
 class _QrScannerState extends ConsumerState<QrScanner> {
+  QrScannerViewModel viewModel = QrScannerViewModel();
   bc.Barcode? result;
   QrController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
@@ -35,14 +37,18 @@ class _QrScannerState extends ConsumerState<QrScanner> {
 
   void _onQRViewCreated(QrController controller) {
     this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
+    controller.scannedDataStream.listen((scanData) async {
       result = scanData;
 
       if (result?.code?.isNotEmpty ?? false) {
-        controller.dispose();
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => MenuPage()),
-            (route) => false);
+        bool status = await viewModel.getRestaurant(
+            id: 'K7VvDwz4F7B5ka8VGoRn', context: context);
+        if (status) {
+          controller.dispose();
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => MenuPage()),
+              (route) => false);
+        }
       }
     });
   }

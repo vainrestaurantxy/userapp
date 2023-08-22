@@ -1,3 +1,4 @@
+import 'package:dine/Data/Repositories/MenuPage.dart';
 import 'package:dine/Views/MenuPage/menuPage.dart';
 import 'package:dine/Views/QrScannerPage/qrscannerPage.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,7 +18,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        Provider<MenuPage>(create: (_) => MenuPage()),
+        ListenableProvider<MenuPageData>(create: (_) => MenuPageData()),
       ],
       child: MyApp(),
     ),
