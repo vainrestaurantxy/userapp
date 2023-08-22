@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "752491876759",
+    "project_id": "vain-restaurantxy",
+    "storage_bucket": "vain-restaurantxy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:752491876759:android:8b9419337c3fa1a3ecf4d2",
+        "android_client_info": {
+          "package_name": "com.company.dine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "752491876759-tk5d78jsc8n90t688fj09bmnou9528jh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9DSKJolwjfS_UhyHvb9k2fl5EciUcB7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "752491876759-tk5d78jsc8n90t688fj09bmnou9528jh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
