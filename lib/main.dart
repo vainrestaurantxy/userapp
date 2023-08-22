@@ -1,10 +1,14 @@
 import 'package:dine/Views/MenuPage/menuPage.dart';
 import 'package:dine/Views/QrScannerPage/qrscannerPage.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -14,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'dine',
+      title: 'Dine',
       theme: ThemeData(
         colorScheme: ColorScheme.light(primary: Colors.white),
         // useMaterial3: true,
