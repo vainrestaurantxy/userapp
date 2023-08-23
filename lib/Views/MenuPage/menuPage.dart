@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dine/Shared/Widgets/AppBar.dart';
 import 'package:dine/Shared/Widgets/SliverAppBar.dart';
+import 'package:dine/ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 import 'package:dine/Views/MenuPage/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -68,25 +69,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
   @override
   Widget build(BuildContext context) {
     final repo = prov.Provider.of<MenuPageData>(context, listen: false);
-    for (var category in repo.categoryDividedMenu!.entries) {
-      items.add(Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Text(
-          category.key,
-          style: TextStyle(
-              color: Colors.black, fontSize: 18, fontWeight: FontWeight.w700),
-        ),
-      ));
-      for (var item in category.value) {
-        items.add(Item(
-          image: item.image,
-          desc: item.description,
-          name: item.name,
-          price: item.price,
-          tags: item.tags,
-        ));
-      }
-    }
+    items = MenuPageViewModel().createMenu(repo.categoryDividedMenu!);
     return Scaffold(
       body: Stack(
         alignment: Alignment.topCenter,

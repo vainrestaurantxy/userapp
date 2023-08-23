@@ -73,7 +73,7 @@ class _ItemState extends ConsumerState<Item> {
               children: [
                 SizedBox(
                   height: 32,
-                  width: 100,
+                  width: 200,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: widget.tags.length,

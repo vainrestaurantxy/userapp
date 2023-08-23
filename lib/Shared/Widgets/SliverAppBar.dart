@@ -8,7 +8,7 @@ Widget createCustomSliverAppBar({required Restaurant restaurant}) {
     expandedHeight: 350,
     elevation: 0,
     pinned: true,
-    collapsedHeight: 160,
+    collapsedHeight: 100,
     flexibleSpace: FlexibleSpaceBar(
       expandedTitleScale: 1,
       titlePadding: EdgeInsets.all(0),
@@ -20,40 +20,40 @@ Widget createCustomSliverAppBar({required Restaurant restaurant}) {
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
           child: Column(
             children: [
+              // SizedBox(
+              //     width: double.infinity,
+              // child: TextFormField(
+              //   decoration: InputDecoration(
+              //     hintText: "Search in Menu",
+              //     disabledBorder: OutlineInputBorder(
+              //         borderSide:
+              //             BorderSide(color: Color(0xFFF4F4FF), width: 0),
+              //         borderRadius: BorderRadius.all(Radius.circular(12))),
+              //     enabledBorder: OutlineInputBorder(
+              //         borderSide:
+              //             BorderSide(color: Color(0xFFF4F4FF), width: 0),
+              //         borderRadius: BorderRadius.all(Radius.circular(12))),
+              //     errorBorder: OutlineInputBorder(
+              //         borderSide:
+              //             BorderSide(color: Color(0xFFF4F4FF), width: 0),
+              //         borderRadius: BorderRadius.all(Radius.circular(12))),
+              //     border: OutlineInputBorder(
+              //         borderSide:
+              //             BorderSide(color: Color(0xFFF4F4FF), width: 0),
+              //         borderRadius: BorderRadius.all(Radius.circular(12))),
+              //     filled: true,
+              //     fillColor: Color(0xFFF4F4FF),
+              //   ),
+              // )),
               SizedBox(
-                  width: double.infinity,
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Search in Menu",
-                      disabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFFF4F4FF), width: 0),
-                          borderRadius: BorderRadius.all(Radius.circular(12))),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFFF4F4FF), width: 0),
-                          borderRadius: BorderRadius.all(Radius.circular(12))),
-                      errorBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFFF4F4FF), width: 0),
-                          borderRadius: BorderRadius.all(Radius.circular(12))),
-                      border: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Color(0xFFF4F4FF), width: 0),
-                          borderRadius: BorderRadius.all(Radius.circular(12))),
-                      filled: true,
-                      fillColor: Color(0xFFF4F4FF),
-                    ),
-                  )),
-              SizedBox(
-                height: 16,
+                height: 50,
               ),
               Container(
                 height: 20,
                 width: double.infinity,
                 child: Center(
                   child: ListView.builder(
-                    itemCount: restaurant.tags!.length,
+                    itemCount: restaurant.tags.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -71,9 +71,9 @@ Widget createCustomSliverAppBar({required Restaurant restaurant}) {
                             SizedBox(
                               width: 10,
                             ),
-                            Text(restaurant.tags![index],
+                            Text(restaurant.tags[index],
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 12,
                                   color: Colors.black,
                                   fontWeight: FontWeight.w500,
                                 ))
