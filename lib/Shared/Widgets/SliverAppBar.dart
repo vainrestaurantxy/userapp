@@ -2,7 +2,12 @@ import 'package:dine/Models/restaurant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-Widget createCustomSliverAppBar({required Restaurant restaurant}) {
+import './../../ViewModels/MenuPageViewModel/menuPageViewModel.dart';
+
+Widget createCustomSliverAppBar({
+  required Restaurant restaurant,
+  ScrollController? controller,
+}) {
   Widget customSliverAppBar = SliverAppBar(
     floating: false,
     expandedHeight: 350,
@@ -45,39 +50,54 @@ Widget createCustomSliverAppBar({required Restaurant restaurant}) {
               //     fillColor: Color(0xFFF4F4FF),
               //   ),
               // )),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
-              Container(
-                height: 20,
+              SizedBox(
+                height: 32,
                 width: double.infinity,
                 child: Center(
                   child: ListView.builder(
                     itemCount: restaurant.tags.length,
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Container(
-                        color: Colors.white,
-                        child: Row(
-                          children: [
-                            Column(children: [
-                              SvgPicture.asset(
-                                "assets/fastfood.svg",
-                                width: 20,
-                                height: 20,
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () {
+                        Scrollable.ensureVisible(
+                            MenuPageViewModel.keys[index].currentContext!);
+                        // controller?.scrollTo(
+                        //     index: stamps?[restaurant.tags[index]] ?? 0,
+                        //     duration: const Duration(seconds: 1));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 4),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border:
+                                  Border.all(color: const Color(0xFFF4F4FF)),
+                              borderRadius: BorderRadius.circular(4)),
+                          child: Row(
+                            children: [
+                              Column(children: [
+                                SvgPicture.asset(
+                                  "assets/fastfood.svg",
+                                  width: 20,
+                                  height: 20,
+                                ),
+                              ]),
+                              const SizedBox(
+                                width: 10,
                               ),
-                            ]),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(restaurant.tags[index],
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                ))
-                          ],
+                              Text(restaurant.tags[index],
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ))
+                            ],
+                          ),
                         ),
                       ),
                     ),
