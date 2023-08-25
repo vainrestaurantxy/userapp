@@ -12,6 +12,7 @@ RestaurantMenu _$RestaurantMenuFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       price: json['price'] as int,
       description: json['description'] as String,
+      itemCount: json['itemCount'] as int? ?? 0,
       tags: (json['tags'] as List<dynamic>)
           .map((e) => Tags.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -27,5 +28,6 @@ Map<String, dynamic> _$RestaurantMenuToJson(RestaurantMenu instance) =>
       'image': instance.image,
       'price': instance.price,
       'tags': instance.tags,
+      'itemCount': instance.itemCount,
       'category': instance.category,
     };

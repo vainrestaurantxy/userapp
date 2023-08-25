@@ -1,5 +1,4 @@
 import 'package:dine/Data/Repositories/MenuPage.dart';
-import 'package:dine/Models/restaurantMenu.dart';
 import 'package:provider/provider.dart';
 
 class QrScannerViewModel {

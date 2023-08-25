@@ -1,5 +1,7 @@
+import 'package:dine/Data/Repositories/MenuPage.dart';
 import 'package:dine/Views/MenuPage/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 
 import '../../Models/restaurant.dart';
@@ -18,7 +20,13 @@ class MenuPageViewModel {
     }
     return categoryDividedMenu;
   }
-
+  Map<String,RestaurantMenu> mapCodeToItem(List<RestaurantMenu> menu){
+    Map<String,RestaurantMenu> map={};
+    for( RestaurantMenu index in menu){
+      map[index.code] = index;
+    }
+    return map;
+  }
   List<Widget> createMenu(
       Map<String, List<RestaurantMenu>> categoryDividedMenu) {
     List<Widget> items = [];
@@ -45,6 +53,7 @@ class MenuPageViewModel {
                   desc: i.value[index].description,
                   price: i.value[index].price,
                   name: i.value[index].name,
+                  code: i.value[index].code,
                   tags: i.value[index].tags)),
           childrenPadding: EdgeInsets.all(8),
           initiallyExpanded: true,
@@ -53,4 +62,18 @@ class MenuPageViewModel {
     }
     return items;
   }
+
+  List<int> getItemsAndAmount(context){
+    final prov = Provider.of<MenuPageData>(context);
+    int items=0;
+    int amount=0;
+    for( var i in prov.cart.entries){
+      String code = i.key;
+      int count = i.value;
+      items+=count;
+      amount+=count*prov.code_item[code]!.price;
+    }
+    return [items,amount];
+  }
+
 }
