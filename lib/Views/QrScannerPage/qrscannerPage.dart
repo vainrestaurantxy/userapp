@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:dine/Shared/Widgets/AppBar.dart';
 import 'package:dine/ViewModels/QrScannerViewModel/qrscannerviewmodel.dart';
-import 'package:dine/Views/MenuPage/menuPage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_code_scanner/flutter_code_scanner.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,6 +11,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_code_scanner/src/flutter_code_scanner.dart';
 import 'package:flutter_code_scanner/src/flutter_code_scanner_overlay_shape.dart';
 import 'package:flutter_code_scanner/src/types/barcode.dart' as bc;
+import 'package:go_router/go_router.dart';
 
 class QrScanner extends ConsumerStatefulWidget {
   const QrScanner({super.key});
@@ -25,16 +26,6 @@ class _QrScannerState extends ConsumerState<QrScanner> {
   QrController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
-  @override
-  void reassemble() {
-    super.reassemble();
-    if (Platform.isAndroid) {
-      controller!.pauseCamera();
-    } else if (Platform.isIOS) {
-      controller!.resumeCamera();
-    }
-  }
-
   void _onQRViewCreated(QrController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) async {
@@ -45,9 +36,9 @@ class _QrScannerState extends ConsumerState<QrScanner> {
             id: 'K7VvDwz4F7B5ka8VGoRn', context: context);
         if (status) {
           controller.dispose();
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (context) => MenuPage()),
-              (route) => false);
+          context.go(
+            '/menu/K7VvDwz4F7B5ka8VGoRn',
+          );
         }
       }
     });
@@ -70,34 +61,16 @@ class _QrScannerState extends ConsumerState<QrScanner> {
         : 240.0;
     return Scaffold(
       appBar: customAppbar,
-      body: Stack(
-        alignment: Alignment.topCenter,
-        children: [
-          QRView(
-            key: qrKey,
-            onQRViewCreated: _onQRViewCreated,
-            overlay: QrScannerOverlayShape(
-              borderColor: Colors.white,
-              borderLength: 30,
-              borderWidth: 5,
-              cutOutSize: scanArea,
-            ),
-            onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
-          ),
-          //Debug
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (context) => MenuPage()),
-                    (route) => false);
-              },
-            ),
-          ),
-          //Debug
-        ],
+      body: QRView(
+        key: qrKey,
+        onQRViewCreated: _onQRViewCreated,
+        overlay: QrScannerOverlayShape(
+          borderColor: Colors.white,
+          borderLength: 30,
+          borderWidth: 5,
+          cutOutSize: scanArea,
+        ),
+        onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
       ),
     );
   }

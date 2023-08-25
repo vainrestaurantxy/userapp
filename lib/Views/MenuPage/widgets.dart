@@ -54,7 +54,6 @@ class _ItemState extends ConsumerState<Item> {
                   bottom: -7,
                   child: prov.Consumer<MenuPageData>(
                       builder: (context, ref, child) {
-                    log("hii ${ref.cart[widget.code]}");
                     return ref.cart[widget.code] == 0 ||
                             ref.cart[widget.code] == null
                         ? GestureDetector(

@@ -4,13 +4,11 @@ import 'package:provider/provider.dart';
 class QrScannerViewModel {
   Future<bool> getRestaurant({required String id, required context}) async {
     var data = Provider.of<MenuPageData>(context, listen: false);
-    await data.getRestaurant(id);
+    await data.getRestaurant(id, context);
     if (data.restaurant == null) {
       return false;
     } else {
       return true;
     }
   }
-
-  
 }

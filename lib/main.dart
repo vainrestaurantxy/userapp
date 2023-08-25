@@ -1,12 +1,11 @@
 import 'package:dine/Data/Repositories/MenuPage.dart';
 
-import 'package:dine/Views/QrScannerPage/qrscannerPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-
+import 'Routes/router.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -19,6 +18,8 @@ void main() async {
     MultiProvider(
       providers: [
         ListenableProvider<MenuPageData>(create: (_) => MenuPageData()),
+        ListenableProvider<RestaurantBuilder>(
+            create: (_) => RestaurantBuilder()),
       ],
       child: MyApp(),
     ),
@@ -30,13 +31,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
+
       title: 'Dine',
       theme: ThemeData(
         colorScheme: ColorScheme.light(primary: Colors.white),
         // useMaterial3: true,
       ),
-      home: const QrScanner(),
+      // home: const QrScanner(),
     );
   }
 }

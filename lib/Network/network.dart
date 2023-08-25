@@ -8,9 +8,15 @@ class Network {
   Future<Map<String, dynamic>?> get(String collection, String id) async {
     log("Getting Data from Collection : ${collection} \n DocId: ${id}");
     // set();
-    DocumentSnapshot snap =
-        await firestore.collection(collection).doc(id).get();
-    Map<String, dynamic>? data = snap.data() as Map<String, dynamic>?;
+    Map<String, dynamic>? data;
+    try {
+      DocumentSnapshot snap =
+          await firestore.collection(collection).doc(id).get();
+      data = snap.data() as Map<String, dynamic>?;
+    } catch (e) {
+      log(e.toString());
+    }
+
     if (data == null) {
       log("NUll Value in Response");
       return {};
