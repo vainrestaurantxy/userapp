@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dine/Shared/Widgets/AppBar.dart';
+import 'package:dine/Storage/sharedPreference.dart';
 import 'package:dine/ViewModels/QrScannerViewModel/qrscannerviewmodel.dart';
 
 import 'package:flutter/material.dart';
@@ -12,6 +13,8 @@ import 'package:flutter_code_scanner/src/flutter_code_scanner.dart';
 import 'package:flutter_code_scanner/src/flutter_code_scanner_overlay_shape.dart';
 import 'package:flutter_code_scanner/src/types/barcode.dart' as bc;
 import 'package:go_router/go_router.dart';
+
+import '../../Constants/staticConstants.dart';
 
 class QrScanner extends ConsumerStatefulWidget {
   const QrScanner({super.key});
@@ -32,6 +35,9 @@ class _QrScannerState extends ConsumerState<QrScanner> {
       result = scanData;
 
       if (result?.code?.isNotEmpty ?? false) {
+        
+        setLocal(key: "id", value: "K7VvDwz4F7B5ka8VGoRn");
+        Constants.id = 'K7VvDwz4F7B5ka8VGoRn';
         bool status = await viewModel.getRestaurant(
             id: 'K7VvDwz4F7B5ka8VGoRn', context: context);
         if (status) {
@@ -60,7 +66,7 @@ class _QrScannerState extends ConsumerState<QrScanner> {
         ? 180.0
         : 240.0;
     return Scaffold(
-      appBar: customAppbar,
+      appBar: createAppBar(context),
       body: QRView(
         key: qrKey,
         onQRViewCreated: _onQRViewCreated,

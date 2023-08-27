@@ -1,11 +1,15 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dine/Shared/Widgets/AppBar.dart';
 import 'package:dine/Shared/Widgets/SliverAppBar.dart';
+import 'package:dine/Storage/sharedPreference.dart';
 import 'package:dine/ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart' as prov;
+import '../../Constants/staticConstants.dart';
 import '../../Data/Repositories/MenuPage.dart';
 
 class MenuPage extends ConsumerStatefulWidget {
@@ -23,10 +27,10 @@ class _MenuPageState extends ConsumerState<MenuPage> {
   Widget build(BuildContext context) {
     final repo = prov.Provider.of<MenuPageData>(context, listen: false);
     repo.getRestaurant(widget.id, context);
+    Constants.id = widget.id;
     return prov.Consumer<RestaurantBuilder>(
       builder: (context, ref, __) {
         if (repo.restaurant == null) {
-        
           return const Scaffold(
               backgroundColor: (Colors.black),
               body: Center(
@@ -42,8 +46,12 @@ class _MenuPageState extends ConsumerState<MenuPage> {
             return bottomData[0] == 0
                 ? SizedBox()
                 : GestureDetector(
-                  onTap: (){},
-                  child: Container(
+                    onTap: () {
+                      
+                      setLocal(key: "cart", value: jsonEncode(ref.cart));
+                      context.go("/menu/${Constants.id}/checkout");
+                    },
+                    child: Container(
                       color: Color(0xFF970040),
                       width: double.infinity,
                       height: 24 + 32,
@@ -60,7 +68,8 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                           SizedBox(
                             width: 8,
                           ),
-                          Icon(Icons.shopping_cart_outlined, color: Colors.white),
+                          Icon(Icons.shopping_cart_outlined,
+                              color: Colors.white),
                           Container(
                             width: 20,
                             height: 20,
@@ -79,7 +88,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                         ],
                       )),
                     ),
-                );
+                  );
           }),
           body: Stack(
             alignment: Alignment.topCenter,
@@ -93,7 +102,10 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                       List.generate(items.length, (index) => items[index]),
                 )),
               ]),
-              SizedBox(width: double.infinity, height: 84, child: customAppbar)
+              SizedBox(
+                  width: double.infinity,
+                  height: 84,
+                  child: createAppBar(context))
             ],
           ),
         );

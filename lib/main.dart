@@ -33,10 +33,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: router,
-
       title: 'Dine',
       theme: ThemeData(
-        colorScheme: ColorScheme.light(primary: Colors.white),
+        colorScheme: ColorScheme.light(primary: Color(0xFF8C8C8C)),
         // useMaterial3: true,
       ),
       // home: const QrScanner(),

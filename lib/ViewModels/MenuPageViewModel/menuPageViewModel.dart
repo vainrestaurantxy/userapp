@@ -64,7 +64,7 @@ class MenuPageViewModel {
   }
 
   List<int> getItemsAndAmount(context){
-    final prov = Provider.of<MenuPageData>(context);
+    final prov = Provider.of<MenuPageData>(context,listen: false);
     int items=0;
     int amount=0;
     for( var i in prov.cart.entries){
