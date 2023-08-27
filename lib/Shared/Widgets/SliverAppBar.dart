@@ -116,7 +116,10 @@ Widget createCustomSliverAppBar({
                 gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.center,
-                    colors: [Color(0xFFb7975a), Colors.white])),
+                    colors: [
+                  Color(int.parse(restaurant.color)),
+                  Colors.white
+                ])),
           ),
           SizedBox(
             width: double.infinity,

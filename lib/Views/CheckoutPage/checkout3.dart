@@ -34,9 +34,16 @@ class ConfirmOrder extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Consumer<MenuPageData>(
-          builder: (context,_,__) {
-            return Column(
+        child: Consumer<MenuPageData>(builder: (context, _, __) {
+          if (_.cart.isEmpty) {
+            return SizedBox(
+              width: double.infinity,
+              height: 100,
+              child: CircularProgressIndicator(),
+            );
+          }
+          return SingleChildScrollView(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -93,8 +100,8 @@ class ConfirmOrder extends StatelessWidget {
                       context.go('/menu/${Constants.id}/status');
                     },
                     child: Container(
-                        decoration:
-                            BoxDecoration(borderRadius: BorderRadius.circular(12)),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12)),
                         width: double.infinity,
                         height: 48,
                         child: Center(
@@ -125,9 +132,9 @@ class ConfirmOrder extends StatelessWidget {
                                   fontWeight: FontWeight.w500,
                                 )))))
               ],
-            );
-          }
-        ),
+            ),
+          );
+        }),
       ),
     );
   }

@@ -7,12 +7,14 @@ part 'restaurant.g.dart';
 class Restaurant {
   final String logo, name, city, state;
   final List<RestaurantMenu> menu;
+  final String color;
   final List<String> tags;
   Restaurant(
       {required this.logo,
       required this.name,
       required this.city,
       required this.state,
+      required this.color,
       required this.tags,
       required this.menu});
 

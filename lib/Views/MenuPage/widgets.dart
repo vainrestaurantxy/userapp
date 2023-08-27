@@ -29,14 +29,18 @@ class Item extends ConsumerStatefulWidget {
 class _ItemState extends ConsumerState<Item> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: SizedBox(
-        height: 150,
-        // width: double.infinity,
-        child: Row(
-          children: [
-            Stack(
+    return
+        // padding: const EdgeInsets.all(15.0),
+
+        SizedBox(
+      height: 150,
+      width: MediaQuery.of(context).size.width - 35,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: (MediaQuery.of(context).size.width - 35) * 0.25,
+            child: Stack(
               alignment: Alignment.bottomCenter,
               clipBehavior: Clip.none,
               children: [
@@ -61,72 +65,86 @@ class _ItemState extends ConsumerState<Item> {
                 )
               ],
             ),
-            SizedBox(
-              width: 12,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 32,
-                  width: 200,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: widget.tags.length,
-                    itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: Color(0xFF00632E),
-                        ),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        child: Row(
-                          children: [
-                            Text(widget.tags[index].name,
-                                style: TextStyle(
-                                  fontSize: 8,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                ))
-                          ],
+          ),
+          SizedBox(
+            width: 12,
+          ),
+          SingleChildScrollView(
+            child: SizedBox(
+              width: ((MediaQuery.of(context).size.width - 35) * 0.75) - 12,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 32,
+                    width: (MediaQuery.of(context).size.width / 428) * 252 - 60,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: widget.tags.length,
+                      itemBuilder: (context, index) => Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            color: Color(0xFF00632E),
+                          ),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          child: Row(
+                            children: [
+                              Text(widget.tags[index].name,
+                                  style: TextStyle(
+                                    fontSize: 8,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                  ))
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(widget.name,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: (MediaQuery.of(context).size.width / 428) * 252 -
+                            60,
+                        child: Text(widget.name,
+                            overflow: TextOverflow.fade,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            )),
+                      ),
+                      SizedBox(
+                        width: (MediaQuery.of(context).size.width / 428) * 252 -
+                            60,
+                        child: Text("INR ${widget.price}",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            )),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    width: (MediaQuery.of(context).size.width / 428) * 252 - 60,
+                    child: Text(widget.desc,
                         style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                          color: Color(0xFF8C8C8C),
+                          fontWeight: FontWeight.w400,
                         )),
-                    Text("INR ${widget.price}",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ))
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 2,
-                  child: Text(widget.desc,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Color(0xFF8C8C8C),
-                        fontWeight: FontWeight.w400,
-                      )),
-                )
-              ],
-            )
-          ],
-        ),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

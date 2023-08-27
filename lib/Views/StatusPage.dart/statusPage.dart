@@ -14,7 +14,7 @@ import '../../ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 class Status extends StatelessWidget {
   const Status({super.key});
 
-  getRestaurant(context)async{
+  getRestaurant(context) async {
     final prov = Provider.of<MenuPageData>(context, listen: false);
     String id = await getLocal(key: "id");
     await prov.getRestaurant(id, context);
@@ -26,80 +26,81 @@ class Status extends StatelessWidget {
   Widget build(BuildContext context) {
     getRestaurant(context);
     final prov = Provider.of<MenuPageData>(context, listen: false);
-    Restaurant restaurant = prov.restaurant!;
-    return Consumer<RestaurantBuilder>(
-      builder: (context,ref,child) {
-        if (prov.restaurant == null) {
-          return const Scaffold(
-              backgroundColor: (Colors.black),
-              body: Center(
-                child: CircularProgressIndicator(),
-              ));
-        }
-        return Scaffold(
-          extendBodyBehindAppBar: true,
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            iconTheme: IconThemeData(color: Colors.black),
-            backgroundColor: Colors.transparent,
-            title: Text("STATUS",
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
-                )),
-            elevation: 0,
-          ),
-          bottomNavigationBar:
-              Consumer<MenuPageData>(builder: (context, ref, child) {
-            List<int> bottomData = MenuPageViewModel().getItemsAndAmount(context);
-            return bottomData[0] == 0
-                ? GestureDetector(
-                    onTap: () {
-                      context.go("/menu/${Constants.id}");
-                    },
-                    child: Container(
-                      color: Color(0xFF970040),
-                      width: double.infinity,
-                      height: 24 + 32,
-                      child: Center(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Go to menu",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                              )),
-                        ],
-                      )),
-                    ),
-                  )
-                : GestureDetector(
-                    onTap: () {
-                      context.go("/menu/${Constants.id}");
-                    },
-                    child: Container(
-                      color: Color(0xFF970040),
-                      width: double.infinity,
-                      height: 24 + 32,
-                      child: Center(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Go to menu and finish order",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                              )),
-                        ],
-                      )),
-                    ),
-                  );
-          }),
-          body: Column(
+    Restaurant? restaurant = prov.restaurant;
+    return Consumer<RestaurantBuilder>(builder: (context, ref, child) {
+      if (prov.restaurant == null) {
+        return const Scaffold(
+            backgroundColor: (Colors.black),
+            body: Center(
+              child: CircularProgressIndicator(),
+            ));
+      }
+      restaurant = prov.restaurant;
+      return Scaffold(
+        extendBodyBehindAppBar: true,
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Colors.black),
+          backgroundColor: Colors.transparent,
+          title: Text("STATUS",
+              style: TextStyle(
+                fontSize: 24,
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+              )),
+          elevation: 0,
+        ),
+        bottomNavigationBar:
+            Consumer<MenuPageData>(builder: (context, ref, child) {
+          List<int> bottomData = MenuPageViewModel().getItemsAndAmount(context);
+          return bottomData[0] == 0
+              ? GestureDetector(
+                  onTap: () {
+                    context.go("/menu/${Constants.id}");
+                  },
+                  child: Container(
+                    color: Color(0xFF970040),
+                    width: double.infinity,
+                    height: 24 + 32,
+                    child: Center(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Go to menu",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                            )),
+                      ],
+                    )),
+                  ),
+                )
+              : GestureDetector(
+                  onTap: () {
+                    context.go("/menu/${Constants.id}");
+                  },
+                  child: Container(
+                    color: Color(0xFF970040),
+                    width: double.infinity,
+                    height: 24 + 32,
+                    child: Center(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Go to menu and finish order",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                            )),
+                      ],
+                    )),
+                  ),
+                );
+        }),
+        body: SingleChildScrollView(
+          child: Column(
             children: [
               Stack(
                 children: [
@@ -110,7 +111,10 @@ class Status extends StatelessWidget {
                         gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.center,
-                            colors: [Color(0xFFb7975a), Colors.white])),
+                            colors: [
+                          Color(int.parse(restaurant!.color)),
+                          Colors.white
+                        ])),
                   ),
                   SizedBox(
                     width: double.infinity,
@@ -124,12 +128,12 @@ class Status extends StatelessWidget {
                         Container(
                           width: 100,
                           height: 50,
-                          child: Image.network(restaurant.logo),
+                          child: Image.network(restaurant!.logo),
                         ),
                         SizedBox(
                           height: 8,
                         ),
-                        Text(restaurant.name,
+                        Text(restaurant!.name,
                             style: TextStyle(
                               fontSize: 24,
                               color: Colors.black,
@@ -138,7 +142,7 @@ class Status extends StatelessWidget {
                         SizedBox(
                           height: 4,
                         ),
-                        Text("${restaurant.city}, ${restaurant.state}",
+                        Text("${restaurant!.city}, ${restaurant!.state}",
                             style: TextStyle(
                               fontSize: 13,
                               color: Colors.black,
@@ -196,8 +200,8 @@ class Status extends StatelessWidget {
               ),
             ],
           ),
-        );
-      }
-    );
+        ),
+      );
+    });
   }
 }

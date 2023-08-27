@@ -35,15 +35,17 @@ class _QrScannerState extends ConsumerState<QrScanner> {
       result = scanData;
 
       if (result?.code?.isNotEmpty ?? false) {
-        
-        setLocal(key: "id", value: "K7VvDwz4F7B5ka8VGoRn");
-        Constants.id = 'K7VvDwz4F7B5ka8VGoRn';
-        bool status = await viewModel.getRestaurant(
-            id: 'K7VvDwz4F7B5ka8VGoRn', context: context);
+        String id = result!.code!.split('/')[0];
+        String tableNo = result!.code!.split('/')[1];
+        Constants.tableNo = int.parse(tableNo);
+
+        setLocal(key: "id", value: id);
+        Constants.id = id;
+        bool status = await viewModel.getRestaurant(id: id, context: context);
         if (status) {
           controller.dispose();
           context.go(
-            '/menu/K7VvDwz4F7B5ka8VGoRn',
+            '/menu/${id}',
           );
         }
       }

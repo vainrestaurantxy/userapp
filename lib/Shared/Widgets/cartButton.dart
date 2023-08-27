@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 
-
-
 import '../../Data/Repositories/MenuPage.dart';
 
-getAddButton({required String code,required MenuPageData ref}) {
+getAddButton({required String code, required MenuPageData ref}) {
   return ref.cart[code] == 0 || ref.cart[code] == null
       ? GestureDetector(
           onTap: () => ref.addOnTap(code: code),
           child: Container(
-            width: 60,
-            height: 24,
+            width: 70,
+            height: 40,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 border: Border.all(color: const Color(0xFF351985)),
@@ -18,6 +16,7 @@ getAddButton({required String code,required MenuPageData ref}) {
             child: Center(
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text("Add",
                       style: TextStyle(
@@ -30,8 +29,8 @@ getAddButton({required String code,required MenuPageData ref}) {
           ),
         )
       : Container(
-          width: 52,
-          height: 21,
+         width: 70,
+            height: 40,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               border: Border.all(color: const Color(0xFF351985)),
@@ -39,6 +38,7 @@ getAddButton({required String code,required MenuPageData ref}) {
           child: Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 GestureDetector(
                     onTap: () {

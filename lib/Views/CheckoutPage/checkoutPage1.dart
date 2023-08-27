@@ -51,54 +51,57 @@ class _CheckoutPageState extends State<CheckoutPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                    width: (MediaQuery.of(context).size.width / 428) * 259,
-                    child: TextFormField(
-                      onChanged: (v) {
-                        Constants.name = v;
-                      },
-                      decoration: InputDecoration(
-                          label: Text("Name"),
-                          enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xFF8C8C8C))),
-                          border: UnderlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Color(0xFF8C8C8C)))),
-                    )),
-                SizedBox(
-                  width: 12,
-                ),
-                Expanded(
-                    // width: (MediaQuery.of(context).size.width / 428) * 109,
-                    child: TextFormField(
-                  readOnly: true,
-                  initialValue: Constants.tableNo.toString(),
-                  decoration: InputDecoration(
-                      label: Text("Table No."),
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFF8C8C8C))),
-                      border: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFF8C8C8C)))),
-                )),
-              ],
-            ),
-            TextFormField(
-              onChanged: (v) {
-                Constants.phone = v;
-              },
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                  label: Text("Mobile No."),
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFF8C8C8C))),
-                  border: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xFF8C8C8C)))),
-            )
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  SizedBox(
+                      width: (MediaQuery.of(context).size.width / 428) * 259,
+                      child: TextFormField(
+                        onChanged: (v) {
+                          Constants.name = v;
+                        },
+                        decoration: InputDecoration(
+                            label: Text("Name"),
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Color(0xFF8C8C8C))),
+                            border: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Color(0xFF8C8C8C)))),
+                      )),
+                  SizedBox(
+                    width: 12,
+                  ),
+                  Expanded(
+                      // width: (MediaQuery.of(context).size.width / 428) * 109,
+                      child: TextFormField(
+                    readOnly: true,
+                    initialValue: Constants.tableNo.toString(),
+                    decoration: InputDecoration(
+                        label: Text("Table No."),
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFF8C8C8C))),
+                        border: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFF8C8C8C)))),
+                  )),
+                ],
+              ),
+              TextFormField(
+                onChanged: (v) {
+                  Constants.phone = v;
+                },
+                keyboardType: TextInputType.phone,
+                decoration: InputDecoration(
+                    label: Text("Mobile No."),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF8C8C8C))),
+                    border: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xFF8C8C8C)))),
+              )
+            ],
+          ),
         ),
       ),
     );

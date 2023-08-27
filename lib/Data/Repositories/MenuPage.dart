@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dine/Models/restaurantMenu.dart';
 import 'package:dine/Network/network.dart';
+import 'package:dine/Storage/sharedPreference.dart';
 import 'package:dine/ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +17,9 @@ class MenuPageData extends ChangeNotifier {
   Map<String, RestaurantMenu> code_item = {};
   Network network = Network();
   Map<String, int> order = {};
+  refresh() {
+    notifyListeners();
+  }
 
   Future<void> getRestaurant(String id, context) async {
     Map<String, dynamic>? json = await network.get("Restaurants", id);
@@ -48,6 +53,8 @@ class MenuPageData extends ChangeNotifier {
       return MapEntry(key, (order[key] ?? 0) + value);
     });
 
+    setLocal(key: 'order', value:jsonEncode(order));
+    remove(key: 'cart');
     cart = {};
     restaurant!.menu.map((e) {
       e.itemCount = 0;

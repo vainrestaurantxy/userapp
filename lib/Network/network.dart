@@ -29,130 +29,135 @@ class Network {
   }
 
   set() {
-    firestore.collection("Restaurants").doc("K7VvDwz4F7B5ka8VGoRn").set({
-      "menu": [
+    firestore.collection("Restaurants").add({
+  "city": "New York",
+  "logo": "logo2.jpeg",
+  "name": "Gourmet Bites",
+  "state": "New York",
+  "tags": ["Burgers", "Sandwiches", "Pasta", "Seafood", "Cocktails"],
+  "menu": [
+    {
+      "category": {
+        "code": "123",
+        "description": "Savory Burgers",
+        "name": "Burgers"
+      },
+      "code": "101",
+      "description": "A classic beef burger with caramelized onions",
+      "image": "https://example.com/burger2.jpg",
+      "name": "Caramelized Onion Burger",
+      "price": 980,
+      "tags": [
         {
-          "category": {
-            "code": "456",
-            "description": "Delicious Burgers",
-            "name": "Burgers"
-          },
-          "code": "101",
-          "description": "A juicy beef burger with cheese and bacon",
-          "image": "https://example.com/burger1.jpg",
-          "name": "Cheese Bacon Burger",
-          "price": 950,
-          "tags": [
-            {
-              "code": "201",
-              "icon": "https://example.com/icons/beef.png",
-              "name": "Beef"
-            },
-            {
-              "code": "202",
-              "icon": "https://example.com/icons/cheese.png",
-              "name": "Cheese"
-            }
-          ]
+          "code": "201",
+          "icon": "https://example.com/icons/beef.png",
+          "name": "Beef"
         },
         {
-          "category": {
-            "code": "789",
-            "description": "Exotic Pizzas",
-            "name": "Pizzas"
-          },
-          "code": "202",
-          "description": "A flavorful pizza with pepperoni and jalapenos",
-          "image": "https://example.com/pizza1.jpg",
-          "name": "Spicy Pepperoni Pizza",
-          "price": 1200,
-          "tags": [
-            {
-              "code": "301",
-              "icon": "https://example.com/icons/pepperoni.png",
-              "name": "Pepperoni"
-            },
-            {
-              "code": "302",
-              "icon": "https://example.com/icons/spicy.png",
-              "name": "Spicy"
-            }
-          ]
-        },
-        {
-          "category": {
-            "code": "987",
-            "description": "Refreshing Salads",
-            "name": "Salads"
-          },
-          "code": "303",
-          "description":
-              "A healthy salad with mixed greens and grilled chicken",
-          "image": "https://example.com/salad1.jpg",
-          "name": "Grilled Chicken Salad",
-          "price": 850,
-          "tags": [
-            {
-              "code": "401",
-              "icon": "https://example.com/icons/chicken.png",
-              "name": "Chicken"
-            },
-            {
-              "code": "402",
-              "icon": "https://example.com/icons/healthy.png",
-              "name": "Healthy"
-            }
-          ]
-        },
-        {
-          "category": {
-            "code": "654",
-            "description": "Authentic Sushi",
-            "name": "Sushi"
-          },
-          "code": "404",
-          "description": "Fresh sushi rolls with tuna and avocado",
-          "image": "https://example.com/sushi1.jpg",
-          "name": "Tuna Avocado Sushi",
-          "price": 1800,
-          "tags": [
-            {
-              "code": "501",
-              "icon": "https://example.com/icons/tuna.png",
-              "name": "Tuna"
-            },
-            {
-              "code": "502",
-              "icon": "https://example.com/icons/avocado.png",
-              "name": "Avocado"
-            }
-          ]
-        },
-        {
-          "category": {
-            "code": "321",
-            "description": "Decadent Desserts",
-            "name": "Desserts"
-          },
-          "code": "505",
-          "description": "A rich chocolate cake with a molten lava center",
-          "image": "https://example.com/dessert1.jpg",
-          "name": "Molten Lava Cake",
-          "price": 650,
-          "tags": [
-            {
-              "code": "601",
-              "icon": "https://example.com/icons/chocolate.png",
-              "name": "Chocolate"
-            },
-            {
-              "code": "602",
-              "icon": "https://example.com/icons/sweet.png",
-              "name": "Sweet"
-            }
-          ]
+          "code": "203",
+          "icon": "https://example.com/icons/onion.png",
+          "name": "Onion"
         }
       ]
-    }, SetOptions(merge: true));
-  }
+    },
+    {
+      "category": {
+        "code": "234",
+        "description": "Hearty Sandwiches",
+        "name": "Sandwiches"
+      },
+      "code": "202",
+      "description": "A turkey and cranberry sandwich on whole grain bread",
+      "image": "https://example.com/sandwich1.jpg",
+      "name": "Turkey Cranberry Sandwich",
+      "price": 890,
+      "tags": [
+        {
+          "code": "301",
+          "icon": "https://example.com/icons/turkey.png",
+          "name": "Turkey"
+        },
+        {
+          "code": "302",
+          "icon": "https://example.com/icons/cranberry.png",
+          "name": "Cranberry"
+        }
+      ]
+    },
+    {
+      "category": {
+        "code": "345",
+        "description": "Delicious Pasta",
+        "name": "Pasta"
+      },
+      "code": "303",
+      "description": "Creamy fettuccine Alfredo with grilled chicken",
+      "image": "https://example.com/pasta1.jpg",
+      "name": "Chicken Alfredo",
+      "price": 1150,
+      "tags": [
+        {
+          "code": "401",
+          "icon": "https://example.com/icons/chicken.png",
+          "name": "Chicken"
+        },
+        {
+          "code": "402",
+          "icon": "https://example.com/icons/pasta.png",
+          "name": "Pasta"
+        }
+      ]
+    },
+    {
+      "category": {
+        "code": "456",
+        "description": "Fresh Seafood",
+        "name": "Seafood"
+      },
+      "code": "404",
+      "description": "Grilled salmon with a lemon dill sauce",
+      "image": "https://example.com/seafood1.jpg",
+      "name": "Lemon Dill Salmon",
+      "price": 1350,
+      "tags": [
+        {
+          "code": "501",
+          "icon": "https://example.com/icons/salmon.png",
+          "name": "Salmon"
+        },
+        {
+          "code": "502",
+          "icon": "https://example.com/icons/lemon.png",
+          "name": "Lemon"
+        }
+      ]
+    },
+    {
+      "category": {
+        "code": "567",
+        "description": "Signature Cocktails",
+        "name": "Cocktails"
+      },
+      "code": "505",
+      "description": "A refreshing mojito with fresh mint and lime",
+      "image": "https://example.com/cocktail1.jpg",
+      "name": "Minty Mojito",
+      "price": 750,
+      "tags": [
+        {
+          "code": "601",
+          "icon": "https://example.com/icons/mint.png",
+          "name": "Mint"
+        },
+        {
+          "code": "602",
+          "icon": "https://example.com/icons/lime.png",
+          "name": "Lime"
+        }
+      ]
+    }
+  ]
+}
+);
+      }
 }
