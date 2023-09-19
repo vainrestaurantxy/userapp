@@ -66,7 +66,7 @@ class _ItemState extends ConsumerState<Item> {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 12,
           ),
           SingleChildScrollView(
@@ -86,14 +86,14 @@ class _ItemState extends ConsumerState<Item> {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(4),
-                            color: Color(0xFF00632E),
+                            color: const Color(0xFF00632E),
                           ),
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
                           child: Row(
                             children: [
                               Text(widget.tags[index].name,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 8,
                                     color: Colors.white,
                                     fontWeight: FontWeight.w500,
@@ -112,7 +112,7 @@ class _ItemState extends ConsumerState<Item> {
                             60,
                         child: Text(widget.name,
                             overflow: TextOverflow.fade,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
                             )),
@@ -121,20 +121,20 @@ class _ItemState extends ConsumerState<Item> {
                         width: (MediaQuery.of(context).size.width / 428) * 252 -
                             60,
                         child: Text("INR ${widget.price}",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                             )),
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   SizedBox(
                     width: (MediaQuery.of(context).size.width / 428) * 252 - 60,
                     child: Text(widget.desc,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
                           color: Color(0xFF8C8C8C),
                           fontWeight: FontWeight.w400,

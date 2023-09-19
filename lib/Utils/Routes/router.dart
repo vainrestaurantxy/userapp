@@ -4,9 +4,9 @@ import 'package:dine/Views/StatusPage.dart/statusPage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../Views/CheckoutPage/checkoutPage1.dart';
-import '../Views/CheckoutPage/checkoutPage2.dart';
-import '../Views/QrScannerPage/qrscannerPage.dart';
+import '../../Views/CheckoutPage/checkoutPage1.dart';
+import '../../Views/CheckoutPage/checkoutPage2.dart';
+import '../../Views/QrScannerPage/qrscannerPage.dart';
 
 final GoRouter router = GoRouter(
   routes: <RouteBase>[
@@ -45,11 +45,12 @@ final GoRouter router = GoRouter(
                               routes: <RouteBase>[]),
                         ]),
                   ]),
-                  GoRoute( path: 'status',
-                              builder:
-                                  (BuildContext context, GoRouterState state) {
-                                return Status();
-                              },)
+              GoRoute(
+                path: 'status',
+                builder: (BuildContext context, GoRouterState state) {
+                  return Status();
+                },
+              )
             ]),
       ],
     ),

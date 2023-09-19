@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../Constants/staticConstants.dart';
+import '../../Utils/Constants/staticConstants.dart';
 import '../../Models/restaurant.dart';
 import '../../ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 

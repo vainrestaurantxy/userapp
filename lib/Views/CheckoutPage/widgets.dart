@@ -13,7 +13,7 @@ class CartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 60,
       child: Column(
@@ -25,25 +25,27 @@ class CartItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("${item.name}",
-                      style: TextStyle(
+                  Text(item.name,
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                       )),
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   ),
                   Text("INR ${item.price}",
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                       )),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
                 ],
               ),
-              button ? getAddButton(code: item.code, ref: ref) : SizedBox()
+              button
+                  ? getAddButton(code: item.code, ref: ref)
+                  : const SizedBox()
             ],
           ),
           Container(

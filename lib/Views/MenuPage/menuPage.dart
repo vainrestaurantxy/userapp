@@ -8,8 +8,9 @@ import 'package:dine/ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart' as prov;
-import '../../Constants/staticConstants.dart';
+import '../../Utils/Constants/staticConstants.dart';
 import '../../Data/Repositories/MenuPage.dart';
 
 class MenuPage extends ConsumerStatefulWidget {
@@ -39,57 +40,6 @@ class _MenuPageState extends ConsumerState<MenuPage> {
         }
         items = MenuPageViewModel().createMenu(repo.categoryDividedMenu!);
         return Scaffold(
-          bottomNavigationBar:
-              prov.Consumer<MenuPageData>(builder: (context, ref, child) {
-            List<int> bottomData =
-                MenuPageViewModel().getItemsAndAmount(context);
-            return bottomData[0] == 0
-                ? SizedBox()
-                : GestureDetector(
-                    onTap: () {
-                      
-                      setLocal(key: "cart", value: jsonEncode(ref.cart));
-                      context.go("/menu/${Constants.id}/checkout");
-                    },
-                    child: Container(
-                      color: Color(0xFF970040),
-                      width: double.infinity,
-                      height: 24 + 32,
-                      child: Center(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Go to Cart (INR ${bottomData[1]})",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                              )),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Icon(Icons.shopping_cart_outlined,
-                              color: Colors.white),
-                          Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(1000)),
-                            child: Center(
-                              child: Text("${bottomData[0]}",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    // color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                  )),
-                            ),
-                          )
-                        ],
-                      )),
-                    ),
-                  );
-          }),
           body: Stack(
             alignment: Alignment.topCenter,
             children: [
@@ -105,7 +55,52 @@ class _MenuPageState extends ConsumerState<MenuPage> {
               SizedBox(
                   width: double.infinity,
                   height: 84,
-                  child: createAppBar(context))
+                  child: createAppBar(context)),
+              prov.Consumer<MenuPageData>(
+                builder: (context, ref, child) {
+                  List<int> bottomData =
+                      MenuPageViewModel().getItemsAndAmount(context);
+                  return bottomData[0] == 0
+                      ? const SizedBox()
+                      : Align(
+                          alignment: Alignment.bottomRight,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                setLocal(
+                                    key: "cart", value: jsonEncode(ref.cart));
+                                context.go("/menu/${Constants.id}/checkout");
+                              },
+                              child: Container(
+                                width: 151,
+                                height: 48,
+                                decoration: BoxDecoration(
+                                    color: Color(0xff88001f),
+                                    borderRadius: BorderRadius.circular(16)),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.shopping_cart_outlined,
+                                        color: Colors.white),
+                                    SizedBox(
+                                      width: 4,
+                                    ),
+                                    Text(
+                                      'View Cart (${bottomData[0]})',
+                                      style: GoogleFonts.poppins(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                },
+              ),
             ],
           ),
         );

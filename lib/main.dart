@@ -5,7 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-import 'Routes/router.dart';
+import 'Utils/Routes/router.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -21,7 +21,7 @@ void main() async {
         ListenableProvider<RestaurantBuilder>(
             create: (_) => RestaurantBuilder()),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       routerConfig: router,
       title: 'Dine',
       theme: ThemeData(
-        colorScheme: ColorScheme.light(primary: Color(0xFF8C8C8C)),
+        colorScheme: const ColorScheme.light(primary: Color(0xFF8C8C8C)),
         // useMaterial3: true,
       ),
       // home: const QrScanner(),

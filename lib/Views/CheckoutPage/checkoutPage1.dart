@@ -1,8 +1,10 @@
+import 'package:dine/Utils/texts.dart';
 import 'package:dine/ViewModels/CheckoutPageViewModel/checkoutPageViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-import '../../Constants/staticConstants.dart';
+import '../../Utils/Constants/staticConstants.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key});
@@ -12,6 +14,8 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
+  TextEditingController nameCtrl = TextEditingController();
+  TextEditingController phnCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
     CheckoutViewModel().getCart(context);
@@ -19,87 +23,97 @@ class _CheckoutPageState extends State<CheckoutPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
-        title: const Text("CHECKOUT",
-            style: TextStyle(
-              fontSize: 24,
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-            )),
-      ),
-      bottomNavigationBar: GestureDetector(
-        onTap: () {
-          context.go("/menu/${Constants.id}/checkout/checkout2");
-        },
-        child: Container(
-          color: Color(0xFF970040),
-          width: double.infinity,
-          height: 24 + 32,
-          child: Center(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Add details to proceed",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                  )),
-            ],
-          )),
-        ),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Row(
-                children: [
-                  SizedBox(
-                      width: (MediaQuery.of(context).size.width / 428) * 259,
-                      child: TextFormField(
-                        onChanged: (v) {
-                          Constants.name = v;
-                        },
-                        decoration: InputDecoration(
-                            label: Text("Name"),
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xFF8C8C8C))),
-                            border: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xFF8C8C8C)))),
-                      )),
-                  SizedBox(
-                    width: 12,
-                  ),
-                  Expanded(
-                      // width: (MediaQuery.of(context).size.width / 428) * 109,
-                      child: TextFormField(
-                    readOnly: true,
-                    initialValue: Constants.tableNo.toString(),
-                    decoration: InputDecoration(
-                        label: Text("Table No."),
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFF8C8C8C))),
-                        border: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFF8C8C8C)))),
-                  )),
-                ],
+              const SizedBox(
+                height: 5,
+              ),
+              Align(
+                  alignment: Alignment.bottomLeft,
+                  child: giveText('Cart', 20, 600)),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: giveText('Add details to view cart', 14, 400)),
+              const SizedBox(
+                height: 35,
               ),
               TextFormField(
+                readOnly: true,
+                initialValue: Constants.tableNo.toString(),
+                decoration: InputDecoration(
+                  label: const Text("Table Number"),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Color(0xFF8C8C8C))),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: nameCtrl,
+                onChanged: (v) {
+                  Constants.name = v;
+                },
+                decoration: InputDecoration(
+                  hintText: 'Enter Name',
+                  label: const Text("Customer Name"),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Color(0xFF8C8C8C))),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Color(0xFF8C8C8C))),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: phnCtrl,
                 onChanged: (v) {
                   Constants.phone = v;
                 },
+                readOnly: false,
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
-                    label: Text("Mobile No."),
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF8C8C8C))),
-                    border: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF8C8C8C)))),
-              )
+                  prefix: giveText('+971 ', 14, 400),
+                  hintText: 'Enter Number',
+                  label: const Text("Customer Mobile"),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Color(0xFF8C8C8C))),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Color(0xFF8C8C8C))),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextButton(
+                  onPressed: () {
+                    context.go("/menu/${Constants.id}/checkout/checkout2");
+                  },
+                  child: Container(
+                      width: 396,
+                      height: 53,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: const Color(0xff88001f)),
+                      child: Center(
+                          child: Text(
+                        'Proceed to checkout',
+                        style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600),
+                      ))))
             ],
           ),
         ),

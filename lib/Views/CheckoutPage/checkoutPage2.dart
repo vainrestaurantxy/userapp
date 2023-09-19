@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../Constants/staticConstants.dart';
+import '../../Utils/Constants/staticConstants.dart';
+import '../../Utils/texts.dart';
 
 class CheckoutCartPage extends StatefulWidget {
   const CheckoutCartPage({super.key});
@@ -23,23 +24,17 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
-        title: const Text("CHECKOUT",
-            style: TextStyle(
-              fontSize: 24,
-              color: Colors.black,
-              fontWeight: FontWeight.w600,
-            )),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       bottomNavigationBar: GestureDetector(
         onTap: () {
           context.go("/menu/${Constants.id}/checkout/checkout2/checkout3");
         },
         child: Container(
-          color: Color(0xFF970040),
+          color: const Color(0xFF970040),
           width: double.infinity,
           height: 24 + 32,
-          child: Center(
+          child: const Center(
               child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -58,83 +53,66 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Row(
-                children: [
-                  SizedBox(
-                      width: (MediaQuery.of(context).size.width / 428) * 259,
-                      child: TextFormField(
-                        readOnly: true,
-                        initialValue: Constants.name,
-                        decoration: InputDecoration(
-                            label: Text("Name"),
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Color(0xFF8C8C8C))),
-                            border: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Color(0xFF8C8C8C)))),
-                      )),
-                  SizedBox(
-                    width: 12,
-                  ),
-                  Expanded(
-                      // width: (MediaQuery.of(context).size.width / 428) * 109,
-                      child: TextFormField(
-                    readOnly: true,
-                    initialValue: Constants.tableNo.toString(),
-                    decoration: InputDecoration(
-                        label: Text("Table No."),
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFF8C8C8C))),
-                        border: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFF8C8C8C)))),
-                  )),
-                ],
+              const SizedBox(
+                height: 5,
               ),
-              TextFormField(
-                readOnly: true,
-                initialValue: Constants.phone,
-                keyboardType: TextInputType.phone,
-                decoration: InputDecoration(
-                    label: Text("Mobile No."),
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF8C8C8C))),
-                    border: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xFF8C8C8C)))),
+              Align(
+                  alignment: Alignment.bottomLeft,
+                  child: giveText('Cart', 20, 600)),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child:
+                      giveText('Verify order details & place order', 14, 400)),
+              const SizedBox(
+                height: 35,
               ),
-              SizedBox(
-                height: 24,
-              ),
-              Consumer<MenuPageData>(
-                builder: (_, ref, __) {
-                  List<int> cartData =
-                      CheckoutViewModel().getItemsAndAmount(context);
-                  if(cartData[0]==0){
-                    return SizedBox(width: double.infinity,height: 100,child: CircularProgressIndicator(),);
-                  }
-                  return SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Your Cart (${cartData[0]})",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                            )),
-                        ...(ref.cart.entries.map((e) {
-                          return Padding(
-                            padding: const EdgeInsets.only(top: 16.0),
-                            child: CartItem(
-                              item: ref.code_item[e.key]!,
-                              ref: ref,
-                            ),
-                          );
-                        }).toList())
-                      ],
-                    ),
-                  );
-                },
+              Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(11),
+                    boxShadow: const [
+                      BoxShadow(
+                          spreadRadius: 2,
+                          color: Color.fromARGB(124, 0, 0, 0),
+                          blurRadius: 2)
+                    ]),
+                child: Consumer<MenuPageData>(
+                  builder: (_, ref, __) {
+                    List<int> cartData =
+                        CheckoutViewModel().getItemsAndAmount(context);
+                    if (cartData[0] == 0) {
+                      return const SizedBox(
+                        width: double.infinity,
+                        height: 100,
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    }
+                    return SizedBox(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Your Cart (${cartData[0]})",
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                              )),
+                          ...(ref.cart.entries.map((e) {
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 16.0),
+                              child: CartItem(
+                                item: ref.code_item[e.key]!,
+                                ref: ref,
+                              ),
+                            );
+                          }).toList())
+                        ],
+                      ),
+                    );
+                  },
+                ),
               )
             ],
           ),

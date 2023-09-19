@@ -1,6 +1,7 @@
 import 'package:dine/Models/restaurant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import './../../ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 
@@ -9,18 +10,19 @@ Widget createCustomSliverAppBar({
   ScrollController? controller,
 }) {
   Widget customSliverAppBar = SliverAppBar(
+    automaticallyImplyLeading: false,
     floating: false,
     expandedHeight: 350,
     elevation: 0,
     pinned: true,
-    collapsedHeight: 100,
+    collapsedHeight: 125,
     flexibleSpace: FlexibleSpaceBar(
       expandedTitleScale: 1,
-      titlePadding: EdgeInsets.all(0),
+      titlePadding: const EdgeInsets.all(0),
       title: Container(
         color: Colors.white,
         width: double.infinity,
-        height: 115,
+        height: 125,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
           child: Column(
@@ -51,7 +53,21 @@ Widget createCustomSliverAppBar({
               //   ),
               // )),
               const SizedBox(
-                height: 50,
+                height: 35,
+              ),
+
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Text(
+                  'Categories & Filters',
+                  style: GoogleFonts.poppins(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black),
+                ),
+              ),
+              const SizedBox(
+                height: 8,
               ),
               SizedBox(
                 height: 32,
@@ -124,28 +140,31 @@ Widget createCustomSliverAppBar({
           SizedBox(
             width: double.infinity,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
+                const SizedBox(
+                  height: 100,
+                ),
+                SizedBox(
                   width: 100,
                   height: 50,
                   child: Image.network(restaurant.logo),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 Text(restaurant.name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 24,
                       color: Colors.black,
                       fontWeight: FontWeight.w600,
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 4,
                 ),
                 Text("${restaurant.city}, ${restaurant.state}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 13,
                       color: Colors.black,
                       fontWeight: FontWeight.w400,

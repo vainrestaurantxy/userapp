@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../Data/Repositories/MenuPage.dart';
 
@@ -14,27 +15,25 @@ getAddButton({required String code, required MenuPageData ref}) {
                 border: Border.all(color: const Color(0xFF351985)),
                 color: const Color(0xFFF4F4FF)),
             child: Center(
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text("Add",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      ))
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w400, fontSize: 14))
                 ],
               ),
             ),
           ),
         )
       : Container(
-         width: 70,
-            height: 40,
+          width: 70,
+          height: 40,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               border: Border.all(color: const Color(0xFF351985)),
-              color: Color(0xFFF4F4FF)),
+              color: const Color(0xFFF4F4FF)),
           child: Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -44,13 +43,13 @@ getAddButton({required String code, required MenuPageData ref}) {
                     onTap: () {
                       ref.subOnTap(code: code);
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.remove,
                       size: 20,
                     )),
                 // IconButton(onPressed: (){ref.addOnTap(code: code);}, icon: Icon(Icons.add)),
                 Text("${ref.cart[code]}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                     )),
@@ -58,7 +57,7 @@ getAddButton({required String code, required MenuPageData ref}) {
                     onTap: () {
                       ref.addOnTap(code: code);
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.add,
                       size: 20,
                     )),

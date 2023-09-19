@@ -14,7 +14,7 @@ import 'package:flutter_code_scanner/src/flutter_code_scanner_overlay_shape.dart
 import 'package:flutter_code_scanner/src/types/barcode.dart' as bc;
 import 'package:go_router/go_router.dart';
 
-import '../../Constants/staticConstants.dart';
+import '../../Utils/Constants/staticConstants.dart';
 
 class QrScanner extends ConsumerStatefulWidget {
   const QrScanner({super.key});
