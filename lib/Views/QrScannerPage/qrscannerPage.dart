@@ -44,12 +44,13 @@ class _QrScannerState extends ConsumerState<QrScanner> {
         Constants.id = id;
         bool status = await viewModel.getRestaurant(id: id, context: context);
         String mac = await viewModel.getMacAdderess();
-        await prov.Provider.of<MenuPageData>(context).setUser(
+        await prov.Provider.of<MenuPageData>(context, listen: false).setUser(
             macAdderess: mac,
             name: "",
             phoneno: "",
             tableNo: Constants.tableNo);
-        await prov.Provider.of<MenuPageData>(context).getUser(mac);
+        await prov.Provider.of<MenuPageData>(context, listen: false)
+            .getUser(mac);
         if (status) {
           controller.dispose();
           context.go(
