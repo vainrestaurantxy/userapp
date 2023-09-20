@@ -24,7 +24,7 @@ class ConfirmOrder extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
         title: const Text("CHECKOUT",
             style: TextStyle(
               fontSize: 24,
@@ -36,7 +36,7 @@ class ConfirmOrder extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Consumer<MenuPageData>(builder: (context, _, __) {
           if (_.cart.isEmpty) {
-            return SizedBox(
+            return const SizedBox(
               width: double.infinity,
               height: 100,
               child: CircularProgressIndicator(),
@@ -47,7 +47,8 @@ class ConfirmOrder extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Are you sure you want to place the following order?",
+                const Text(
+                    "Are you sure you want to place the following order?",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -70,29 +71,29 @@ class ConfirmOrder extends StatelessWidget {
                       children: [
                         Text(
                             "MRP: INR ${CheckoutViewModel().getItemsAndAmount(context)[1]}",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             )),
                         Text("Tax: ${taxPercent}%",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             )),
                         Text(
                             "Total INR: ${CheckoutViewModel().getItemsAndAmount(context)[1] + (CheckoutViewModel().getItemsAndAmount(context)[1] * (taxPercent / 100))}",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w600,
                             )),
                       ],
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF970040),
+                      backgroundColor: const Color(0xFF970040),
                     ),
                     onPressed: () {
                       CheckoutViewModel().clearCart(context);
@@ -104,27 +105,27 @@ class ConfirmOrder extends StatelessWidget {
                             borderRadius: BorderRadius.circular(12)),
                         width: double.infinity,
                         height: 48,
-                        child: Center(
+                        child: const Center(
                             child: Text("Confirm Order",
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
                                 ))))),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
-                        side: BorderSide(color: Colors.black)),
+                        side: const BorderSide(color: Colors.black)),
                     onPressed: () {
                       context.pop();
                     },
                     child: Container(
                         width: double.infinity,
                         height: 48,
-                        child: Center(
+                        child: const Center(
                             child: Text("Go Back",
                                 style: TextStyle(
                                   fontSize: 16,

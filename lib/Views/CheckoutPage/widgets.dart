@@ -1,5 +1,7 @@
 import 'package:dine/Shared/Widgets/cartButton.dart';
+import 'package:dine/Utils/texts.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../Data/Repositories/MenuPage.dart';
 import '../../Models/restaurantMenu.dart';
@@ -21,38 +23,38 @@ class CartItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Container(
+                  clipBehavior: Clip.antiAlias,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                  child: Image.network(
+                    item.image,
+                    height: 43,
+                    width: 43,
+                    fit: BoxFit.fill,
+                  )),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(item.name,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      )),
+                  giveText(item.name, 14, 400),
                   const SizedBox(
                     height: 4,
                   ),
-                  Text("INR ${item.price}",
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      )),
+                  giveText('INR ${item.price}', 12, 400),
                   const SizedBox(
                     height: 16,
                   ),
                 ],
+              ),
+              SizedBox(
+                width: 16,
               ),
               button
                   ? getAddButton(code: item.code, ref: ref)
                   : const SizedBox()
             ],
           ),
-          Container(
-            height: 1,
-            width: MediaQuery.of(context).size.width - 16 * 2,
-            color: Colors.black,
-          )
         ],
       ),
     );
