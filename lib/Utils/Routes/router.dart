@@ -42,13 +42,13 @@ final GoRouter router = GoRouter(
                                   (BuildContext context, GoRouterState state) {
                                 return ConfirmOrder();
                               },
-                              routes: <RouteBase>[]),
+                              routes:const <RouteBase>[]),
                         ]),
                   ]),
               GoRoute(
                 path: 'status',
                 builder: (BuildContext context, GoRouterState state) {
-                  return Status();
+                  return const Status();
                 },
               )
             ]),

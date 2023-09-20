@@ -28,6 +28,8 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
       ),
       bottomNavigationBar: GestureDetector(
         onTap: () {
+          
+    
           context.go("/menu/${Constants.id}/checkout/checkout2/checkout3");
         },
         child: Container(
@@ -81,13 +83,13 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                   builder: (_, ref, __) {
                     List<int> cartData =
                         CheckoutViewModel().getItemsAndAmount(context);
-                    if (cartData[0] == 0) {
-                      return const SizedBox(
-                        width: double.infinity,
-                        height: 100,
-                        child: Center(child: CircularProgressIndicator()),
-                      );
-                    }
+                    // if (cartData[0] == 0) {
+                    //   return const SizedBox(
+                    //     width: double.infinity,
+                    //     height: 100,
+                    //     child: Center(child: CircularProgressIndicator()),
+                    //   );
+                    // }
                     return SizedBox(
                       width: double.infinity,
                       child: Column(

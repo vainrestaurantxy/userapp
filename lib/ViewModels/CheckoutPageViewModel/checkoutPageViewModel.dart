@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dine/Data/Repositories/MenuPage.dart';
 import 'package:dine/Storage/sharedPreference.dart';
 import 'package:dine/ViewModels/MenuPageViewModel/menuPageViewModel.dart';
@@ -28,5 +29,9 @@ class CheckoutViewModel {
       cartMap[key] = value as int;
     });
     repo.cart = cartMap;
+  }
+
+  placeOrder(String id){
+    FirebaseFirestore.instance.collection("Restaurants").doc(id).collection("Orders").doc('${DateTime.now().toUtc().day}|${DateTime.now().toUtc().month}|${DateTime.now().toUtc().year}').get();
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dine/Models/restaurantMenu.dart';
 import 'package:dine/Network/network.dart';
 import 'package:dine/Storage/sharedPreference.dart';
@@ -12,6 +13,9 @@ import '../../Models/restaurant.dart';
 
 class MenuPageData extends ChangeNotifier {
   Restaurant? restaurant;
+  String? name;
+  String? phone;
+  int? tableNo;
   Map<String, List<RestaurantMenu>>? categoryDividedMenu;
   Map<String, int> cart = {};
   Map<String, RestaurantMenu> code_item = {};
@@ -53,12 +57,35 @@ class MenuPageData extends ChangeNotifier {
       return MapEntry(key, (order[key] ?? 0) + value);
     });
 
-    setLocal(key: 'order', value:jsonEncode(order));
+    setLocal(key: 'order', value: jsonEncode(order));
     remove(key: 'cart');
     cart = {};
     restaurant!.menu.map((e) {
       e.itemCount = 0;
     });
+    notifyListeners();
+  }
+
+  Future<void> setUser(
+      {required String macAdderess,
+      required String name,
+      required String phoneno,
+      required int tableNo}) async {
+    await FirebaseFirestore.instance
+        .collection("Users")
+        .doc(macAdderess)
+        .set({"name": name, "phoneNo": phoneno, "tableNo": tableNo});
+  }
+
+  getUser(macAddress) async {
+    DocumentSnapshot<Map<String, dynamic>> json = await FirebaseFirestore
+        .instance
+        .collection("Users")
+        .doc(macAddress)
+        .get();
+    name = json.data()?["name"] ?? "";
+    phone = json.data()?["phoneNo"] ?? "";
+    tableNo = json.data()?["tableNo"] ?? "";
     notifyListeners();
   }
 }
