@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dine/Models/orders.dart';
 import 'package:dine/Models/restaurantMenu.dart';
 import 'package:dine/Network/network.dart';
 import 'package:dine/Storage/sharedPreference.dart';
@@ -16,6 +17,7 @@ class MenuPageData extends ChangeNotifier {
   String? name;
   String? phone;
   int? tableNo;
+  List<Orders>? orders;
   Map<String, List<RestaurantMenu>>? categoryDividedMenu;
   Map<String, int> cart = {};
   Map<String, RestaurantMenu> code_item = {};
