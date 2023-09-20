@@ -4,6 +4,7 @@ import 'package:dine/ViewModels/StatusPageViewModel/statusPageViewModel.dart';
 import 'package:dine/Views/CheckoutPage/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
 
@@ -40,14 +41,8 @@ class Status extends StatelessWidget {
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.white,
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: const IconThemeData(color: Colors.black),
           backgroundColor: Colors.transparent,
-          title: Text("STATUS",
-              style: TextStyle(
-                fontSize: 24,
-                color: Colors.black,
-                fontWeight: FontWeight.w600,
-              )),
           elevation: 0,
         ),
         bottomNavigationBar:
@@ -59,10 +54,10 @@ class Status extends StatelessWidget {
                     context.go("/menu/${Constants.id}");
                   },
                   child: Container(
-                    color: Color(0xFF970040),
+                    color: const Color(0xFF970040),
                     width: double.infinity,
                     height: 24 + 32,
-                    child: Center(
+                    child: const Center(
                         child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -81,10 +76,10 @@ class Status extends StatelessWidget {
                     context.go("/menu/${Constants.id}");
                   },
                   child: Container(
-                    color: Color(0xFF970040),
+                    color: const Color(0xFF970040),
                     width: double.infinity,
                     height: 24 + 32,
-                    child: Center(
+                    child: const Center(
                         child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -106,7 +101,7 @@ class Status extends StatelessWidget {
                 children: [
                   Container(
                     width: double.infinity,
-                    height: 350,
+                    height: 250,
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
                             begin: Alignment.topCenter,
@@ -122,36 +117,36 @@ class Status extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          height: 120,
+                        const SizedBox(
+                          height: 100,
                         ),
                         Container(
                           width: 100,
                           height: 50,
                           child: Image.network(restaurant!.logo),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 8,
                         ),
                         Text(restaurant!.name,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 24,
                               color: Colors.black,
                               fontWeight: FontWeight.w600,
                             )),
-                        SizedBox(
+                        const SizedBox(
                           height: 4,
                         ),
                         Text("${restaurant!.city}, ${restaurant!.state}",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 13,
                               color: Colors.black,
                               fontWeight: FontWeight.w400,
                             )),
-                        SizedBox(
+                        const SizedBox(
                           height: 4,
                         ),
-                        Text("Your order will be ready in 00:01:23",
+                        const Text("Your order will be ready soon",
                             style: TextStyle(
                               fontSize: 13,
                               color: Colors.black,
@@ -166,31 +161,50 @@ class Status extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("My Orders",
+                          style: GoogleFonts.poppins(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600)),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
                     Consumer<MenuPageData>(
                       builder: (_, ref, __) {
                         final cartData =
                             StatusPageViewModel().getItemsAndAmount(context);
-                        return SizedBox(
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Your Order (${cartData[0]})",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                  )),
-                              ...(ref.order.entries.map((e) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(top: 16.0),
-                                  child: CartItem(
-                                    item: ref.code_item[e.key]!,
-                                    ref: ref,
-                                  ),
-                                );
-                              }).toList())
-                            ],
+                        return Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(11),
+                              boxShadow: const [
+                                BoxShadow(
+                                  spreadRadius: 2,
+                                  blurRadius: 4,
+                                  color: Color.fromARGB(108, 0, 0, 0),
+                                )
+                              ]),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(),
+                                ...(ref.order.entries.map((e) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(top: 16.0),
+                                    child: CartItem(
+                                      item: ref.code_item[e.key]!,
+                                      ref: ref,
+                                    ),
+                                  );
+                                }).toList())
+                              ],
+                            ),
                           ),
                         );
                       },

@@ -7,6 +7,7 @@ import 'package:dine/Views/CheckoutPage/widgets.dart';
 import 'package:dine/Views/MenuPage/menuPage.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../Utils/Constants/staticConstants.dart';
@@ -31,6 +32,27 @@ class ConfirmOrder extends StatelessWidget {
               color: Colors.black,
               fontWeight: FontWeight.w600,
             )),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextButton(
+            onPressed: () {
+              context.go("/menu/${Constants.id}/checkout/checkout2/checkout3");
+            },
+            child: Container(
+                width: 396,
+                height: 53,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: const Color(0xff88001f)),
+                child: Center(
+                    child: Text(
+                  'Add More Items',
+                  style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600),
+                )))),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
