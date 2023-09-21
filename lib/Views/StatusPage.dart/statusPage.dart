@@ -118,7 +118,7 @@ class Status extends StatelessWidget {
                             begin: Alignment.topCenter,
                             end: Alignment.center,
                             colors: [
-                          Color(int.parse(restaurant!.color)),
+                          Color(int.parse(restaurant!.color ?? "0xFFFFFF")),
                           Colors.white
                         ])),
                   ),
@@ -134,12 +134,12 @@ class Status extends StatelessWidget {
                         Container(
                           width: 100,
                           height: 50,
-                          child: Image.network(restaurant!.logo),
+                          child: Image.network(restaurant!.logo!),
                         ),
                         const SizedBox(
                           height: 8,
                         ),
-                        Text(restaurant!.name,
+                        Text(restaurant!.name!,
                             style: const TextStyle(
                               fontSize: 24,
                               color: Colors.black,
@@ -208,10 +208,8 @@ class Status extends StatelessWidget {
                                 ...(ref.order.entries.map((e) {
                                   return Padding(
                                     padding: const EdgeInsets.only(top: 16.0),
-                                    child: CartItem(
-                                      item: ref.code_item[e.key]!,
-                                      ref: ref,
-                                    ),
+                                    // child: CartIte
+                                    child: Container(),
                                   );
                                 }).toList())
                               ],

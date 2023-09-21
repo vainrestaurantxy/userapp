@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dine/Data/Repositories/MenuPage.dart';
+import 'package:dine/Models/orders.dart';
 import 'package:dine/ViewModels/CheckoutPageViewModel/checkoutPageViewModel.dart';
 import 'package:dine/Views/CheckoutPage/widgets.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +36,21 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextButton(
-              onPressed: () {
+              onPressed: () async {
+                Orders order = Orders(
+                    contactNo: Constants.phone,
+                    customerName: Constants.name,
+                    discount: ref.getDiscount(),
+                    quanntity: ref.cart,
+                    items: ref.code_item.values.toList(),
+                    macAdd: Constants.macAddress,
+                    orderStatus: "Order Confirmed",
+                    price: ref.getTotal(),
+                    tableNo: Constants.tableNo,
+                    tax: 5,
+                    totalPrice: (ref.getTotal() + ref.getTotal() * 0.05) -
+                        ref.getDiscount());
+                await CheckoutViewModel().placeOrder(Constants.id, order);
                 CheckoutViewModel().clearCart(context);
                 setLocal(key: "order", value: jsonEncode(ref.order));
                 context.go('/menu/${Constants.id}/status');

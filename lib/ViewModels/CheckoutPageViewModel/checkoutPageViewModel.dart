@@ -46,8 +46,15 @@ class CheckoutViewModel {
         .get();
     List<dynamic> list = json.data()?["order"] ?? [];
     order.orderNo = list.length;
+    print("list" + list.toString());
+    List<dynamic> menulist = order.items!.map((e) {
+      return e.toJson();
+    }).toList();
+    Map<String, dynamic> orderJson = order.toJson();
+    orderJson["items"] = menulist;
 
-    list.add(order.toJson());
+    print(order.toJson());
+    list.add(orderJson);
     await FirebaseFirestore.instance
         .collection("Restaurants")
         .doc(id)

@@ -74,7 +74,7 @@ Widget createCustomSliverAppBar({
                 width: double.infinity,
                 child: Center(
                   child: ListView.builder(
-                    itemCount: restaurant.tags.length,
+                    itemCount: restaurant.tags?.length ?? 0,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) => GestureDetector(
                       onTap: () {
@@ -106,7 +106,7 @@ Widget createCustomSliverAppBar({
                               const SizedBox(
                                 width: 10,
                               ),
-                              Text(restaurant.tags[index],
+                              Text(restaurant.tags![index],
                                   style: const TextStyle(
                                     fontSize: 12,
                                     color: Colors.black,
@@ -133,7 +133,7 @@ Widget createCustomSliverAppBar({
                     begin: Alignment.topCenter,
                     end: Alignment.center,
                     colors: [
-                  Color(int.parse(restaurant.color)),
+                  Color(int.parse(restaurant.color ?? "0xFFFFFF")),
                   Colors.white
                 ])),
           ),
@@ -149,12 +149,12 @@ Widget createCustomSliverAppBar({
                 SizedBox(
                   width: 100,
                   height: 50,
-                  child: Image.network(restaurant.logo),
+                  child: Image.network(restaurant.logo ?? ""),
                 ),
                 const SizedBox(
                   height: 8,
                 ),
-                Text(restaurant.name,
+                Text(restaurant.name ?? "",
                     style: const TextStyle(
                       fontSize: 24,
                       color: Colors.black,

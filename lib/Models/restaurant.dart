@@ -5,18 +5,30 @@ part 'restaurant.g.dart';
 
 @JsonSerializable()
 class Restaurant {
-  final String logo, name, city, state;
-  final List<RestaurantMenu> menu;
-  final String color;
-  final List<String> tags;
+  String? logo;
+  String? staffKey;
+  bool? isRestaurant;
+  String? name;
+  String? city;
+  String? state;
+  String? phone;
+  String? color;
+  int? noTable = 100;
+  String? tags;
+  List<RestaurantMenu>? menu;
+
   Restaurant(
-      {required this.logo,
-      required this.name,
-      required this.city,
-      required this.state,
-      required this.color,
-      required this.tags,
-      required this.menu});
+      {this.logo,
+      this.name,
+      this.city,
+      this.state,
+      this.color,
+      this.tags,
+      this.menu,
+      this.isRestaurant,
+      this.noTable,
+      this.phone,
+      this.staffKey});
 
   factory Restaurant.fromJson(Map<String, dynamic> json) =>
       _$RestaurantFromJson(json);

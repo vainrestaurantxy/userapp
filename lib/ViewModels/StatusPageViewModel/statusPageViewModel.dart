@@ -11,11 +11,13 @@ class StatusPageViewModel {
     final prov = Provider.of<MenuPageData>(context, listen: false);
     int items = 0;
     int amount = 0;
+    print(prov.cart);
+    print(prov.code_item);
     for (var i in prov.order.entries) {
       String code = i.key;
       int count = i.value;
       items += count;
-      amount += count * prov.code_item[code]!.price;
+      amount += count * (prov.code_item[code]!.price ?? 0);
     }
     return [items, amount];
   }
@@ -34,7 +36,7 @@ class StatusPageViewModel {
       repo.cart = cartMap;
     }
     json = await getLocal(key: "order");
-    
+
     if (json != "") {
       Map<String, dynamic> decodedJson = jsonDecode(json);
       Map<String, int> cartMap = {};

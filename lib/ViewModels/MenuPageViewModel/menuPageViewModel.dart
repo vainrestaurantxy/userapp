@@ -11,11 +11,11 @@ class MenuPageViewModel {
   Map<String, List<RestaurantMenu>> reArrangeCategory(
       {required Restaurant restaurant}) {
     Map<String, List<RestaurantMenu>> categoryDividedMenu = {};
-    for (var item in restaurant.menu) {
-      if (categoryDividedMenu[item.category.name] == null) {
-        categoryDividedMenu[item.category.name] = [];
+    for (var item in restaurant.menu!) {
+      if (categoryDividedMenu[item.category] == null) {
+        categoryDividedMenu[item.category ?? ""] = [];
       }
-      categoryDividedMenu[item.category.name]!.add(item);
+      categoryDividedMenu[item.category]!.add(item);
     }
     return categoryDividedMenu;
   }
@@ -23,7 +23,7 @@ class MenuPageViewModel {
   Map<String, RestaurantMenu> mapCodeToItem(List<RestaurantMenu> menu) {
     Map<String, RestaurantMenu> map = {};
     for (RestaurantMenu index in menu) {
-      map[index.code] = index;
+      map[index.name??""] = index;
     }
     return map;
   }
@@ -52,12 +52,12 @@ class MenuPageViewModel {
           children: List.generate(
               i.value.length,
               (index) => Item(
-                  image: i.value[index].image,
-                  desc: i.value[index].description,
-                  price: i.value[index].price,
-                  name: i.value[index].name,
-                  code: i.value[index].code,
-                  tags: i.value[index].tags)),
+                  image: i.value[index].image ?? "",
+                  desc: i.value[index].description ?? "",
+                  price: i.value[index].price ?? 0,
+                  name: i.value[index].name ?? "",
+                  code: i.value[index].code ?? "",
+                  tags: i.value[index].tags ?? [])),
         ),
       );
     }
@@ -68,11 +68,13 @@ class MenuPageViewModel {
     final prov = Provider.of<MenuPageData>(context, listen: false);
     int items = 0;
     int amount = 0;
+    print(prov.cart);
     for (var i in prov.cart.entries) {
       String code = i.key;
       int count = i.value;
       items += count;
-      amount += count * prov.code_item[code]!.price;
+      print(prov.code_item[code]);
+      amount += count * (prov.code_item[code]?.price ?? 0);
     }
     return [items, amount];
   }

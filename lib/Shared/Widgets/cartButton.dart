@@ -3,10 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../Data/Repositories/MenuPage.dart';
 
-getAddButton({required String code, required MenuPageData ref}) {
-  return ref.cart[code] == 0 || ref.cart[code] == null
+getAddButton({required String name, required MenuPageData ref}) {
+  return ref.cart[name] == 0 || ref.cart[name] == null
       ? GestureDetector(
-          onTap: () => ref.addOnTap(code: code),
+          onTap: () => ref.addOnTap(name: name),
           child: Container(
             width: 70,
             height: 40,
@@ -41,27 +41,27 @@ getAddButton({required String code, required MenuPageData ref}) {
               children: [
                 GestureDetector(
                     onTap: () {
-                      ref.subOnTap(code: code);
+                      ref.subOnTap(name: name);
                     },
                     child: const Icon(
                       Icons.remove,
                       size: 20,
                     )),
-                // IconButton(onPressed: (){ref.addOnTap(code: code);}, icon: Icon(Icons.add)),
-                Text("${ref.cart[code]}",
+                // IconButton(onPressed: (){ref.addOnTap(name: name);}, icon: Icon(Icons.add)),
+                Text("${ref.cart[name]}",
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                     )),
                 GestureDetector(
                     onTap: () {
-                      ref.addOnTap(code: code);
+                      ref.addOnTap(name: name);
                     },
                     child: const Icon(
                       Icons.add,
                       size: 20,
                     )),
-                // IconButton(onPressed: (){ref.subOnTap(code: code);}, icon: Icon(Icons.remove)),
+                // IconButton(onPressed: (){ref.subOnTap(name: name);}, icon: Icon(Icons.remove)),
               ],
             ),
           ),

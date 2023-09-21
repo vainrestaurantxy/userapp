@@ -20,7 +20,7 @@ class Item extends ConsumerStatefulWidget {
   String image, desc, name;
   int price;
   String code;
-  List<Tags> tags;
+  List<String> tags;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ItemState();
@@ -59,7 +59,7 @@ class _ItemState extends ConsumerState<Item> {
                   bottom: -7,
                   child: prov.Consumer<MenuPageData>(
                     builder: (context, ref, child) {
-                      return getAddButton(code: widget.code, ref: ref);
+                      return getAddButton(name: widget.name, ref: ref);
                     },
                   ),
                 )
@@ -92,7 +92,7 @@ class _ItemState extends ConsumerState<Item> {
                               horizontal: 8, vertical: 4),
                           child: Row(
                             children: [
-                              Text(widget.tags[index].name,
+                              Text(widget.tags[index],
                                   style: const TextStyle(
                                     fontSize: 8,
                                     color: Colors.white,

@@ -79,11 +79,17 @@ class ConfirmOrder extends StatelessWidget {
                   log(e.key.toString() + ":" + e.value.toString());
                   return Padding(
                     padding: const EdgeInsets.only(top: 16.0),
-                    child: CartItem(
-                      button: false,
-                      item: ref.code_item[e.key]!,
-                      ref: ref,
-                    ),
+                    //   child: CartItem(
+                    //   quantity: ref.cart,
+                    //   image:
+                    //       ref.code_item[ref.cart.keys.toList()[index]]?.image ??
+                    //           "",
+                    //   itemButton: false,
+                    //   name: ref.code_item[ref.cart.keys.toList()[index]]?.name ??
+                    //       "",
+                    //   menu: ref.code_item[ref.cart.keys.toList()[index]]!,
+                    // ),
+                    child: Container(),
                   );
                 }).toList()),
                 SizedBox(

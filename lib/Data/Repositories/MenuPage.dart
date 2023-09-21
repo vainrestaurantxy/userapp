@@ -27,29 +27,52 @@ class MenuPageData extends ChangeNotifier {
     notifyListeners();
   }
 
+  getTotal() {
+    double price = 0.0;
+    for (MapEntry<String, int> a in cart.entries) {
+      if ((code_item[a.key]?.tax ?? 0) == 5) {
+        price += (((code_item[a.key]?.price) ?? 0) * (cart[(a.key)] as int));
+      } else {
+        price += ((code_item[a.key]?.price ?? 0) / 1.01);
+      }
+    }
+    return price;
+  }
+
+  getDiscount() {
+    double discount = 0.0;
+    for (MapEntry<String, int> a in cart.entries) {
+      discount += (((code_item[a.key]?.price ?? 0) * 0.05) +
+              (code_item[a.key]?.price ?? 0)) *
+          (cart[(a.key)] as int) *
+          ((code_item[a.key]?.discount ?? 0) / 100);
+    }
+    return discount;
+  }
+
   Future<void> getRestaurant(String id, context) async {
     Map<String, dynamic>? json = await network.get("Restaurants", id);
     restaurant = Restaurant.fromJson(json!);
     categoryDividedMenu =
         MenuPageViewModel().reArrangeCategory(restaurant: restaurant!);
-    code_item = MenuPageViewModel().mapCodeToItem(restaurant!.menu);
+    code_item = MenuPageViewModel().mapCodeToItem(restaurant!.menu!);
     final builder = Provider.of<RestaurantBuilder>(context, listen: false);
     builder.refreshRestaurant();
   }
 
-  void addOnTap({required String code}) {
+  void addOnTap({required String name}) {
     RestaurantMenu item =
-        restaurant!.menu.where((element) => element.code == code).first;
-    item.itemCount = (item.itemCount) + 1;
-    cart[item.code] = (cart[item.code] ?? 0) + 1;
+        restaurant!.menu!.where((element) => element.name == name).first;
+    item.itemCount = ((item.itemCount) ?? 0) + 1;
+    cart[item.name ?? ""] = (cart[item.name] ?? 0) + 1;
     notifyListeners();
   }
 
-  void subOnTap({required String code}) {
+  void subOnTap({required String name}) {
     RestaurantMenu item =
-        restaurant!.menu.where((element) => element.code == code).first;
-    item.itemCount = (item.itemCount) - 1;
-    cart[item.code] = (cart[item.code] ?? 0) - 1;
+        restaurant!.menu!.where((element) => element.name == name).first;
+    item.itemCount = ((item.itemCount) ?? 0) - 1;
+    cart[item.name ?? ""] = (cart[item.name] ?? 0) - 1;
     notifyListeners();
   }
 
@@ -62,7 +85,7 @@ class MenuPageData extends ChangeNotifier {
     setLocal(key: 'order', value: jsonEncode(order));
     remove(key: 'cart');
     cart = {};
-    restaurant!.menu.map((e) {
+    restaurant!.menu!.map((e) {
       e.itemCount = 0;
     });
     notifyListeners();

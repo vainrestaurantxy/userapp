@@ -8,16 +8,20 @@ part of 'restaurantMenu.dart';
 
 RestaurantMenu _$RestaurantMenuFromJson(Map<String, dynamic> json) =>
     RestaurantMenu(
-      code: json['code'] as String,
-      name: json['name'] as String,
-      price: json['price'] as int,
-      description: json['description'] as String,
-      itemCount: json['itemCount'] as int? ?? 0,
-      tags: (json['tags'] as List<dynamic>)
-          .map((e) => Tags.fromJson(e as Map<String, dynamic>))
+      category: json['category'] as String?,
+      code: json['code'] as String?,
+      name: json['name'] as String?,
+      description: json['description'] as String?,
+      image: json['image'] as String?,
+      discount: json['discount'] as int?,
+      itemCount: json['itemCount'] as int?,
+      itemType: json['itemType'] as String?,
+      price: json['price'] as int?,
+      recommendedWith: (json['recommendedWith'] as List<dynamic>?)
+          ?.map((e) => e as String)
           .toList(),
-      image: json['image'] as String,
-      category: Category.fromJson(json['category'] as Map<String, dynamic>),
+      tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      tax: json['tax'] as int?,
     );
 
 Map<String, dynamic> _$RestaurantMenuToJson(RestaurantMenu instance) =>
@@ -27,7 +31,11 @@ Map<String, dynamic> _$RestaurantMenuToJson(RestaurantMenu instance) =>
       'description': instance.description,
       'image': instance.image,
       'price': instance.price,
-      'tags': instance.tags,
       'itemCount': instance.itemCount,
+      'itemType': instance.itemType,
+      'tax': instance.tax,
+      'discount': instance.discount,
+      'tags': instance.tags,
+      'recommendedWith': instance.recommendedWith,
       'category': instance.category,
     };
