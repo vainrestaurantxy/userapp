@@ -49,9 +49,7 @@ class CartItem extends StatelessWidget {
                             .length,
                         (i) => Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: CheckoutViewModel().getOrder(
-                                snapshot.data!.docs[reversedIndex].id,
-                                context))),
+                            child: Container())),
                   );
                 }),
               );

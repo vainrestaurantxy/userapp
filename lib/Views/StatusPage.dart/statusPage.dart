@@ -4,6 +4,7 @@ import 'package:dine/Models/orders.dart';
 import 'package:dine/Storage/sharedPreference.dart';
 import 'package:dine/ViewModels/StatusPageViewModel/statusPageViewModel.dart';
 import 'package:dine/Views/CheckoutPage/widgets.dart';
+import 'package:dine/Views/StatusPage.dart/statuscard.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -56,55 +57,99 @@ class Status extends StatelessWidget {
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
-        bottomNavigationBar:
-            Consumer<MenuPageData>(builder: (context, ref, child) {
-          List<int> bottomData = MenuPageViewModel().getItemsAndAmount(context);
-          return bottomData[0] == 0
-              ? GestureDetector(
-                  onTap: () {
-                    context.go("/menu/${Constants.id}");
-                  },
-                  child: Container(
-                    color: const Color(0xFF970040),
-                    width: double.infinity,
-                    height: 24 + 32,
-                    child: const Center(
-                        child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Go to menu",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            )),
-                      ],
-                    )),
-                  ),
-                )
-              : GestureDetector(
-                  onTap: () {
-                    context.go("/menu/${Constants.id}");
-                  },
-                  child: Container(
-                    color: const Color(0xFF970040),
-                    width: double.infinity,
-                    height: 24 + 32,
-                    child: const Center(
-                        child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Go to menu and finish order",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            )),
-                      ],
-                    )),
-                  ),
-                );
-        }),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextButton(
+              onPressed: () {
+                Consumer<MenuPageData>(builder: (context, ref, child) {
+                  //  List<int> bottomData = MenuPageViewModel().getItemsAndAmount(context);
+                  return GestureDetector(
+                    onTap: () {
+                      context.go("/menu/${Constants.id}");
+                    },
+                    child: Container(
+                      color: const Color(0xFF970040),
+                      width: double.infinity,
+                      height: 24 + 32,
+                      child: const Center(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Go to menu",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                              )),
+                        ],
+                      )),
+                    ),
+                  );
+                });
+              },
+              child: Container(
+                  width: 396,
+                  height: 53,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: const Color(0xff88001f)),
+                  child: Center(
+                      child: Text(
+                    'Add More Items',
+                    style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600),
+                  )))),
+        ),
+        // Consumer<MenuPageData>(builder: (context, ref, child) {
+        //   List<int> bottomData = MenuPageViewModel().getItemsAndAmount(context);
+        //   return bottomData[0] == 0
+        //       ? GestureDetector(
+        //           onTap: () {
+        //             context.go("/menu/${Constants.id}");
+        //           },
+        //           child: Container(
+        //             color: const Color(0xFF970040),
+        //             width: double.infinity,
+        //             height: 24 + 32,
+        //             child: const Center(
+        //                 child: Row(
+        //               mainAxisAlignment: MainAxisAlignment.center,
+        //               children: [
+        //                 Text("Go to menu",
+        //                     style: TextStyle(
+        //                       fontSize: 16,
+        //                       color: Colors.white,
+        //                       fontWeight: FontWeight.w500,
+        //                     )),
+        //               ],
+        //             )),
+        //           ),
+        //         )
+        //       : GestureDetector(
+        //           onTap: () {
+        //             context.go("/menu/${Constants.id}");
+        //           },
+        //           child: Container(
+        //             color: const Color(0xFF970040),
+        //             width: double.infinity,
+        //             height: 24 + 32,
+        //             child: const Center(
+        //                 child: Row(
+        //               mainAxisAlignment: MainAxisAlignment.center,
+        //               children: [
+        //                 Text("Go to menu and finish order",
+        //                     style: TextStyle(
+        //                       fontSize: 16,
+        //                       color: Colors.white,
+        //                       fontWeight: FontWeight.w500,
+        //                     )),
+        //               ],
+        //             )),
+        //           ),
+        //         );
+        // }),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -188,36 +233,37 @@ class Status extends StatelessWidget {
                         final cartData =
                             StatusPageViewModel().getItemsAndAmount(context);
                         return Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(11),
-                              boxShadow: const [
-                                BoxShadow(
-                                  spreadRadius: 2,
-                                  blurRadius: 4,
-                                  color: Color.fromARGB(108, 0, 0, 0),
-                                )
-                              ]),
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(),
-                                ...(ref.order.entries.map((e) {
-                                  return Padding(
-                                    padding: const EdgeInsets.only(top: 16.0),
-                                    child: CartItem(
-                                      item: ref.code_item[e.key]!,
-                                      ref: ref,
-                                    ),
-                                  );
-                                }).toList())
-                              ],
-                            ),
-                          ),
-                        );
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(11),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    spreadRadius: 2,
+                                    blurRadius: 4,
+                                    color: Color.fromARGB(108, 0, 0, 0),
+                                  )
+                                ]),
+                            child: StatusCard()
+                            //  SizedBox(
+                            //   width: double.infinity,
+                            //   child: Column(
+                            //     crossAxisAlignment: CrossAxisAlignment.start,
+                            //     children: [
+                            //       const SizedBox(),
+                            //       ...(ref.order.entries.map((e) {
+                            //         return Padding(
+                            //           padding: const EdgeInsets.only(top: 16.0),
+                            //           child: CartItem(
+                            //             item: ref.code_item[e.key]!,
+                            //             ref: ref,
+                            //           ),
+                            //         );
+                            //       }).toList())
+                            //     ],
+                            //   ),
+                            // ),
+                            );
                       },
                     )
                   ],

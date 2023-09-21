@@ -75,14 +75,14 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                 width: 151,
                                 height: 48,
                                 decoration: BoxDecoration(
-                                    color: Color(0xff88001f),
+                                    color: const Color(0xff88001f),
                                     borderRadius: BorderRadius.circular(16)),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.shopping_cart_outlined,
+                                    const Icon(Icons.shopping_cart_outlined,
                                         color: Colors.white),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 4,
                                     ),
                                     Text(
