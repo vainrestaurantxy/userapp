@@ -57,22 +57,51 @@ class CheckoutViewModel {
         .set({"order": list});
   }
 
-  getOrder(String id, context) async {
-    DocumentSnapshot<Map<String, dynamic>> json = await FirebaseFirestore
-        .instance
+  // getOrder(String id, context) async {
+  //   DocumentSnapshot<Map<String, dynamic>> json = await FirebaseFirestore
+  //       .instance
+  //       .collection("Restaurants")
+  //       .doc(id)
+  //       .collection("Orders")
+  //       .doc(
+  //           '${DateTime.now().toUtc().day}|${DateTime.now().toUtc().month}|${DateTime.now().toUtc().year}')
+  //       .get();
+  //   List<Orders>? order = json.data()?["orders"].map((v) => Orders.fromJson(v));
+  //   order?.removeWhere((element) {
+  //     return element.macAdd != Constants.macAddress;
+  //   });
+  //   order?.removeWhere((element) {
+  //     return element.orderStatus == "";
+  //   });
+  //   Provider.of<MenuPageData>(context, listen: false).orders = order;
+  // }
+
+  Stream<List<Orders>> getOrderStream(String id) {
+    return FirebaseFirestore.instance
         .collection("Restaurants")
         .doc(id)
         .collection("Orders")
         .doc(
             '${DateTime.now().toUtc().day}|${DateTime.now().toUtc().month}|${DateTime.now().toUtc().year}')
-        .get();
-    List<Orders>? order = json.data()?["orders"].map((v) => Orders.fromJson(v));
-    order?.removeWhere((element) {
-      return element.macAdd != Constants.macAddress;
+        .snapshots()
+        .map((snapshot) {
+      if (snapshot.exists) {
+        final data = snapshot.data() as Map<String, dynamic>;
+        final List<dynamic> orderList = data["orders"];
+
+        // Filter orders by macAddress and non-empty orderStatus
+        final filteredOrders = orderList
+            .where((orderData) =>
+                orderData["macAdd"] == Constants.macAddress &&
+                orderData["orderStatus"] != "")
+            .map((orderData) => Orders.fromJson(orderData))
+            .toList();
+
+        return filteredOrders;
+      } else {
+        // If the document doesn't exist, return an empty list
+        return <Orders>[];
+      }
     });
-    order?.removeWhere((element) {
-      return element.orderStatus =="";
-    });
-    Provider.of<MenuPageData>(context, listen: false).orders = order ;
   }
 }
