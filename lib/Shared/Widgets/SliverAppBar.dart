@@ -74,6 +74,7 @@ Widget createCustomSliverAppBar({
                 width: double.infinity,
                 child: Center(
                   child: ListView.builder(
+                    controller: controller,
                     itemCount: restaurant.tags?.length ?? 0,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) => GestureDetector(
