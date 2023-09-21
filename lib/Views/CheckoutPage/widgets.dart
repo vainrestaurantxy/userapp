@@ -18,13 +18,13 @@ class CartItem extends StatelessWidget {
       this.name,
       this.price,
       this.image,
-      required this.quantity,
+      this.quantity,
       this.menu,
       this.itemButton = true});
   String? name;
   int? price;
   bool itemButton;
-  Map<String, dynamic> quantity;
+  Map<String, dynamic>? quantity;
   String? image;
   RestaurantMenu? menu;
   @override
@@ -80,7 +80,7 @@ class CartItem extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              'AED ${price}      ',
+                              'AED ${price}  ',
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 12,
@@ -89,18 +89,18 @@ class CartItem extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              child:
-                                  quantity[name] == null || quantity[name] == 0
-                                      ? const SizedBox()
-                                      : Text(
-                                          'Qty: ${quantity[name]} ',
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 12,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
+                              child: quantity![name] == null ||
+                                      quantity![name] == 0
+                                  ? const SizedBox()
+                                  : Text(
+                                      'Qty: ${quantity![name]} ',
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 12,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
                             ),
                           ],
                         ),
