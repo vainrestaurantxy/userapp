@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dine/Data/Repositories/MenuPage.dart';
+import 'package:dine/Models/orders.dart';
 import 'package:dine/Storage/sharedPreference.dart';
 import 'package:dine/ViewModels/StatusPageViewModel/statusPageViewModel.dart';
 import 'package:dine/Views/CheckoutPage/widgets.dart';
@@ -13,7 +15,16 @@ import '../../Models/restaurant.dart';
 import '../../ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 
 class Status extends StatelessWidget {
-  const Status({super.key});
+  Status({super.key});
+  List<Orders> orders = [
+    Orders(
+      contactNo: "12312",
+      customerName: "AYUSH",
+      discount: .5,
+      items: [],
+      macAdd: "",
+    )
+  ];
 
   getRestaurant(context) async {
     final prov = Provider.of<MenuPageData>(context, listen: false);
@@ -177,7 +188,7 @@ class Status extends StatelessWidget {
                         final cartData =
                             StatusPageViewModel().getItemsAndAmount(context);
                         return Container(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(11),
@@ -193,7 +204,7 @@ class Status extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(),
+                                const SizedBox(),
                                 ...(ref.order.entries.map((e) {
                                   return Padding(
                                     padding: const EdgeInsets.only(top: 16.0),

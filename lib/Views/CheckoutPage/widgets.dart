@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dine/Shared/Widgets/cartButton.dart';
 import 'package:dine/Utils/texts.dart';
 import 'package:flutter/material.dart';
@@ -23,41 +24,39 @@ class CartItem extends StatelessWidget {
       height: 60,
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                  clipBehavior: Clip.antiAlias,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(8)),
-                  child: Image.network(
-                    item.image,
-                    height: 43,
-                    width: 43,
-                    fit: BoxFit.fill,
-                  )),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  giveText(item.name, 14, 400),
-                  const SizedBox(
-                    height: 4,
-                  ),
-                  giveText('INR ${item.price}', 12, 400),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                ],
-              ),
-              SizedBox(
-                width: 16,
-              ),
-              button
-                  ? getAddButton(code: item.code, ref: ref)
-                  : const SizedBox()
-            ],
-          ),
+          StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection("Restaurants")
+                .doc(Constants.id)
+                .collection("Orders")
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.data == null) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              return Column(
+                children: List.generate(snapshot.data!.docs.length, (index) {
+                  final reversedIndex = snapshot.data!.docs.length - 1 - index;
+                  return ExpansionTile(
+                    initiallyExpanded: true,
+                    title: Text(snapshot.data!.docs[reversedIndex].id),
+                    children: List.generate(
+                        snapshot.data!.docs[reversedIndex]
+                            .data()["order"]
+                            .length,
+                        (i) => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: CheckoutViewModel().getOrder(
+                                snapshot.data!.docs[reversedIndex].id,
+                                context))),
+                  );
+                }),
+              );
+            },
+          )
         ],
       ),
     );
