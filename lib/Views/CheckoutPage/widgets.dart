@@ -29,7 +29,6 @@ class CartItem extends StatelessWidget {
   RestaurantMenu? menu;
   @override
   Widget build(BuildContext context) {
-<<<<<<< Updated upstream
     return Column(
       children: [
         Container(
@@ -124,46 +123,6 @@ class CartItem extends StatelessWidget {
           ),
         ),
       ],
-=======
-    return SizedBox(
-      width: double.infinity,
-      height: 60,
-      child: Column(
-        children: [
-          StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection("Restaurants")
-                .doc(Constants.id)
-                .collection("Orders")
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (snapshot.data == null) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-
-              return Column(
-                children: List.generate(snapshot.data!.docs.length, (index) {
-                  final reversedIndex = snapshot.data!.docs.length - 1 - index;
-                  return ExpansionTile(
-                    initiallyExpanded: true,
-                    title: Text(snapshot.data!.docs[reversedIndex].id),
-                    children: List.generate(
-                        snapshot.data!.docs[reversedIndex]
-                            .data()["order"]
-                            .length,
-                        (i) => Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Container())),
-                  );
-                }),
-              );
-            },
-          )
-        ],
-      ),
->>>>>>> Stashed changes
     );
   }
 }

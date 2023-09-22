@@ -29,17 +29,24 @@ class _QrScannerState extends ConsumerState<QrScanner> {
   bc.Barcode? result;
   QrController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  // @override
+  // void reassemble() {
+  //   super.reassemble();
+  //   if (Platform.isAndroid) {
+  //     controller!.pauseCamera();
+  //     controller!.resumeCamera();
+  //   }
+  //   controller!.resumeCamera();
+  // }
 
   void _onQRViewCreated(QrController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) async {
       result = scanData;
-
       if (result?.code?.isNotEmpty ?? false) {
         String id = result!.code!.split('/')[0];
         String tableNo = result!.code!.split('/')[1];
         Constants.tableNo = int.parse(tableNo);
-
         setLocal(key: "id", value: id);
         Constants.id = id;
         bool status = await viewModel.getRestaurant(id: id, context: context);
@@ -59,6 +66,8 @@ class _QrScannerState extends ConsumerState<QrScanner> {
         }
       }
     });
+    // controller.pauseCamera();
+    // controller.resumeCamera();
   }
 
   void _onPermissionSet(BuildContext context, QrController ctrl, bool p) {
