@@ -29,102 +29,6 @@ class CartItem extends StatelessWidget {
   RestaurantMenu? menu;
   @override
   Widget build(BuildContext context) {
-<<<<<<< Updated upstream
-    return Column(
-      children: [
-        Container(
-          // height: 43,
-          width: double.infinity,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 43,
-                    height: 43,
-                    child: Image.network(
-                      image!,
-                      fit: BoxFit.cover,
-                    ),
-                    decoration: ShapeDecoration(
-                      color: const Color(0xFFD9D9D9),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Container(
-                    width: 253 / 2,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: 297 / 2,
-                          child: Text(
-                            '${name}',
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Row(
-                          children: [
-                            Text(
-                              'AED ${price}  ',
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            SizedBox(
-                              child: quantity![name] == null ||
-                                      quantity![name] == 0
-                                  ? const SizedBox()
-                                  : Text(
-                                      'Qty: ${quantity![name]} ',
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 12,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(width: 8),
-              SizedBox(
-                child: itemButton
-                    ? Consumer<MenuPageData>(
-                        builder: (_, ref, __) {
-                          return getAddButton(name: name!, ref: ref);
-                        },
-                      )
-                    : const SizedBox(),
-              )
-            ],
-          ),
-        ),
-      ],
-=======
     return SizedBox(
       width: double.infinity,
       height: 60,
@@ -163,7 +67,6 @@ class CartItem extends StatelessWidget {
           )
         ],
       ),
->>>>>>> Stashed changes
     );
   }
 }

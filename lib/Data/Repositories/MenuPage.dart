@@ -113,6 +113,24 @@ class MenuPageData extends ChangeNotifier {
     tableNo = json.data()?["tableNo"] ?? "";
     notifyListeners();
   }
+
+  Future<void> getData(Restaurant res) async {
+    final id = await getLocal(key: "id");
+    log("$id : NULL ");
+    DocumentSnapshot<Map<String, dynamic>> snapshot =
+        await FirebaseFirestore.instance.collection('Category').doc(id).get();
+
+    if (snapshot.exists) {
+      log((snapshot.data()?['categories'] ?? []).toString());
+      List<String> tempList =
+          ((snapshot.data()?['categories'] ?? []) as List<dynamic>)
+              .map((e) => e as String)
+              .toList();
+      res.tags = tempList;
+
+      notifyListeners();
+    }
+  }
 }
 
 class RestaurantBuilder extends ChangeNotifier {
