@@ -94,7 +94,9 @@ class CheckoutViewModel {
         .map((snapshot) {
       if (snapshot.exists) {
         final data = snapshot.data() as Map<String, dynamic>;
-        final List<dynamic> orderList = data["orders"];
+
+        final List<dynamic> orderList = data["order"];
+        print(data);
         // Filter orders by macAddress and non-empty orderStatus
         final filteredOrders = orderList
             .where((orderData) =>

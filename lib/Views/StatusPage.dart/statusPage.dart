@@ -1,19 +1,20 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dine/Data/Repositories/MenuPage.dart';
 import 'package:dine/Models/orders.dart';
 import 'package:dine/Storage/sharedPreference.dart';
+import 'package:dine/ViewModels/CheckoutPageViewModel/checkoutPageViewModel.dart';
 import 'package:dine/ViewModels/StatusPageViewModel/statusPageViewModel.dart';
-import 'package:dine/Views/CheckoutPage/widgets.dart';
+// import 'package:dine/Views/CheckoutPage/widgets.dart';
 import 'package:dine/Views/StatusPage.dart/statuscard.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 import '../../Utils/Constants/staticConstants.dart';
 import '../../Models/restaurant.dart';
-import '../../ViewModels/MenuPageViewModel/menuPageViewModel.dart';
+// import '../../ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 
 class Status extends StatelessWidget {
   Status({super.key});
@@ -61,31 +62,7 @@ class Status extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: TextButton(
               onPressed: () {
-                Consumer<MenuPageData>(builder: (context, ref, child) {
-                  //  List<int> bottomData = MenuPageViewModel().getItemsAndAmount(context);
-                  return GestureDetector(
-                    onTap: () {
-                      context.go("/menu/${Constants.id}");
-                    },
-                    child: Container(
-                      color: const Color(0xFF970040),
-                      width: double.infinity,
-                      height: 24 + 32,
-                      child: const Center(
-                          child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Go to menu",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                              )),
-                        ],
-                      )),
-                    ),
-                  );
-                });
+                context.go("/menu/${Constants.id}");
               },
               child: Container(
                   width: 396,
@@ -105,7 +82,7 @@ class Status extends StatelessWidget {
         // Consumer<MenuPageData>(builder: (context, ref, child) {
         //   List<int> bottomData = MenuPageViewModel().getItemsAndAmount(context);
         //   return bottomData[0] == 0
-        //       ? GestureDetector(
+        // ? GestureDetector(
         //           onTap: () {
         //             context.go("/menu/${Constants.id}");
         //           },
@@ -233,37 +210,67 @@ class Status extends StatelessWidget {
                         final cartData =
                             StatusPageViewModel().getItemsAndAmount(context);
                         return Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(11),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    spreadRadius: 2,
-                                    blurRadius: 4,
-                                    color: Color.fromARGB(108, 0, 0, 0),
-                                  )
-                                ]),
-                            child: StatusCard()
-                            //  SizedBox(
-                            //   width: double.infinity,
-                            //   child: Column(
-                            //     crossAxisAlignment: CrossAxisAlignment.start,
-                            //     children: [
-                            //       const SizedBox(),
-                            //       ...(ref.order.entries.map((e) {
-                            //         return Padding(
-                            //           padding: const EdgeInsets.only(top: 16.0),
-                            //           child: CartItem(
-                            //             item: ref.code_item[e.key]!,
-                            //             ref: ref,
-                            //           ),
-                            //         );
-                            //       }).toList())
-                            //     ],
-                            //   ),
-                            // ),
-                            );
+                          padding: const EdgeInsets.all(8),
+
+                          child: StreamBuilder(
+                            stream: CheckoutViewModel()
+                                .getOrderStream(Constants.id),
+                            builder: (context, snapshot) {
+                              print(snapshot.connectionState);
+                              print(snapshot.data);
+                              if (snapshot.hasData) {
+                                return Column(
+                                  children: [
+                                    ...List.generate(
+                                      snapshot.data?.length ?? 0,
+                                      (index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 8.0),
+                                          child: StatusCard(
+                                              order: snapshot.data?[index]),
+                                        );
+                                      },
+                                    )
+                                  ],
+                                );
+
+                                // ;
+
+                                ListView.builder(
+                                  itemCount: snapshot.data?.length ?? 0,
+                                  itemBuilder: (_, index) {
+                                    return StatusCard(
+                                        order: snapshot.data?[index]);
+                                  },
+                                );
+                              } else {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            },
+                          ),
+                          // child: StatusCard()
+                          //  SizedBox(
+                          //   width: double.infinity,
+                          //   child: Column(
+                          //     crossAxisAlignment: CrossAxisAlignment.start,
+                          //     children: [
+                          //       const SizedBox(),
+                          //       ...(ref.order.entries.map((e) {
+                          //         return Padding(
+                          //           padding: const EdgeInsets.only(top: 16.0),
+                          //           child: CartItem(
+                          //             item: ref.code_item[e.key]!,
+                          //             ref: ref,
+                          //           ),
+                          //         );
+                          //       }).toList())
+                          //     ],
+                          //   ),
+                          // ),
+                        );
                       },
                     )
                   ],
