@@ -29,36 +29,14 @@ class _MenuPageState extends ConsumerState<MenuPage> {
   ScrollController controller = ScrollController();
   List<Widget> items = [];
   List<Widget> cats = [];
-  @override
-  void initState() {
-    super.initState();
-    // getData();
-  }
-
-  Future<void> getData() async {
-    var id = await getLocal(key: "id");
-    log(id + " : NULL ");
-    DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await FirebaseFirestore.instance.collection('Category').doc(id).get();
-
-    if (snapshot.exists) {
-      log((snapshot.data()?['categories'] ?? []).toString());
-      List<String> tempList =
-          ((snapshot.data()?['categories'] ?? []) as List<dynamic>)
-              .map((e) => e as String)
-              .toList();
-      // log(tempList.toString());
-      restaurant.tags = tempList;
-      log('tags ${restaurant.tags.toString()}');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     final repo = prov.Provider.of<MenuPageData>(context, listen: false);
+    repo.getData(restaurant);
     repo.getRestaurant(widget.id, context);
     Constants.id = widget.id;
-    getData();
+
     return prov.Consumer<RestaurantBuilder>(
       builder: (context, ref, __) {
         if (repo.restaurant == null) {
@@ -76,7 +54,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
             children: [
               CustomScrollView(controller: controller, slivers: [
                 createCustomSliverAppBar(
-                    restaurant: repo.restaurant!, controller: controller),
+                    rest: repo.restaurant!, controller: controller),
                 SliverToBoxAdapter(
                   child: Column(
                     children:
