@@ -14,7 +14,7 @@ class Restaurant {
   String? phone;
   String? color;
   int? noTable = 100;
-  String? tags;
+  List<String>? tags;
   List<RestaurantMenu>? menu;
 
   Restaurant(

@@ -12,7 +12,7 @@ Restaurant _$RestaurantFromJson(Map<String, dynamic> json) => Restaurant(
       city: json['city'] as String?,
       state: json['state'] as String?,
       color: json['color'] as String?,
-      tags: json['tags'] as String?,
+      tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList(),
       menu: (json['menu'] as List<dynamic>?)
           ?.map((e) => RestaurantMenu.fromJson(e as Map<String, dynamic>))
           .toList(),

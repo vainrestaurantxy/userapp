@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dine/Models/restaurant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,8 +9,9 @@ import './../../ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 
 Widget createCustomSliverAppBar({
   required Restaurant restaurant,
-  ScrollController? controller,
+  required ScrollController controller,
 }) {
+  log('length ${restaurant.tags?.length.toString()}');
   Widget customSliverAppBar = SliverAppBar(
     automaticallyImplyLeading: false,
     floating: false,
@@ -69,6 +72,7 @@ Widget createCustomSliverAppBar({
               const SizedBox(
                 height: 8,
               ),
+
               SizedBox(
                 height: 32,
                 width: double.infinity,
@@ -77,47 +81,49 @@ Widget createCustomSliverAppBar({
                     controller: controller,
                     itemCount: restaurant.tags?.length ?? 0,
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => GestureDetector(
-                      onTap: () {
-                        Scrollable.ensureVisible(
-                            MenuPageViewModel.keys[index].currentContext!);
-                        // controller?.scrollTo(
-                        //     index: stamps?[restaurant.tags[index]] ?? 0,
-                        //     duration: const Duration(seconds: 1));
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 4),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              border:
-                                  Border.all(color: const Color(0xFFF4F4FF)),
-                              borderRadius: BorderRadius.circular(4)),
-                          child: Row(
-                            children: [
-                              Column(children: [
+                    itemBuilder: (context, index) {
+                      log('Sliverbar page tags ${restaurant.tags.toString()}');
+                      return GestureDetector(
+                        onTap: () {
+                          log('anything? hui');
+                          Scrollable.ensureVisible(
+                              MenuPageViewModel.keys[index].currentContext!);
+                          // controller?.scrollTo(
+                          //     index: stamps?[restaurant.tags[index]] ?? 0,
+                          //     duration: const Duration(seconds: 1));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0, vertical: 4),
+                            decoration: BoxDecoration(
+                                // color: Colors.white,
+                                border:
+                                    Border.all(color: const Color(0xFFF4F4FF)),
+                                borderRadius: BorderRadius.circular(4)),
+                            child: Row(
+                              children: [
                                 SvgPicture.asset(
                                   "assets/fastfood.svg",
                                   width: 20,
                                   height: 20,
                                 ),
-                              ]),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(restaurant.tags![index],
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                  ))
-                            ],
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(restaurant.tags![index],
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ))
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
                 ),
               )
@@ -177,6 +183,6 @@ Widget createCustomSliverAppBar({
       ),
     ),
   );
-
+  log('anything?');
   return customSliverAppBar;
 }
