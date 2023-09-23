@@ -29,100 +29,127 @@ class CartItem extends StatelessWidget {
   RestaurantMenu? menu;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          // height: 43,
-          width: double.infinity,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return SizedBox(
+      width: double.infinity,
+      // height: 100,
+      child: Column(
+        children: [
+          StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection("Restaurants")
+                .doc(Constants.id)
+                .collection("Orders")
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.data == null) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              return Column(
                 children: [
-                  Container(
-                    width: 43,
-                    height: 43,
-                    child: Image.network(
-                      image!,
-                      fit: BoxFit.cover,
-                    ),
-                    decoration: ShapeDecoration(
-                      color: const Color(0xFFD9D9D9),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Container(
-                    width: 253 / 2,
-                    child: Column(
+                  SizedBox(
+                    // height: 43,
+                    width: double.infinity,
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          width: 297 / 2,
-                          child: Text(
-                            '${name}',
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 14,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 4),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'AED ${price}  ',
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w400,
+                            Container(
+                              width: 43,
+                              height: 43,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: ShapeDecoration(
+                                color: const Color(0xFFD9D9D9),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                              ),
+                              child: Image.network(
+                                image!,
+                                fit: BoxFit.cover,
                               ),
                             ),
+                            const SizedBox(width: 8),
                             SizedBox(
-                              child: quantity![name] == null ||
-                                      quantity![name] == 0
-                                  ? const SizedBox()
-                                  : Text(
-                                      'Qty: ${quantity![name]} ',
+                              width: 253 / 2,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: 297 / 2,
+                                    child: Text(
+                                      '${name}',
                                       style: const TextStyle(
                                         color: Colors.black,
-                                        fontSize: 12,
+                                        fontSize: 14,
                                         fontFamily: 'Poppins',
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        'AED ${price}  ',
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 25,
+                                      ),
+                                      SizedBox(
+                                        child: quantity![name] == null ||
+                                                quantity![name] == 0
+                                            ? const SizedBox()
+                                            : Text(
+                                                'Qty: ${quantity![name]} ',
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 12,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
+                        const SizedBox(width: 8),
+                        SizedBox(
+                          child: itemButton
+                              ? Consumer<MenuPageData>(
+                                  builder: (_, ref, __) {
+                                    return getAddButton(name: name!, ref: ref);
+                                  },
+                                )
+                              : const SizedBox(),
+                        )
                       ],
                     ),
                   ),
                 ],
-              ),
-              const SizedBox(width: 8),
-              SizedBox(
-                child: itemButton
-                    ? Consumer<MenuPageData>(
-                        builder: (_, ref, __) {
-                          return getAddButton(name: name!, ref: ref);
-                        },
-                      )
-                    : const SizedBox(),
-              )
-            ],
-          ),
-        ),
-      ],
+              );
+            },
+          )
+        ],
+      ),
     );
   }
 }
@@ -302,7 +329,7 @@ class CardTexts extends StatelessWidget {
               const Divider(),
               SizedBox(
                 width: double.infinity,
-                child: (ref.cart.length == 0)
+                child: (ref.cart.isEmpty)
                     ? const SizedBox()
                     : Container(
                         width: 364,

@@ -10,14 +10,14 @@ import 'package:provider/provider.dart';
 import './../../ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 
 Widget createCustomSliverAppBar({
-  required Restaurant rest,
-  required ScrollController controller,
+  required Restaurant? rest,
+  required ScrollController? controller,
 }) {
   // log('length ${restaurant.tags?.length.toString()}');
   Widget customSliverAppBar = Consumer<MenuPageData>(
     builder: (context, res, child) {
       final restaurant = res.restaurant;
-      log('bhai length ${restaurant?.tags?.length.toString()}');
+      log('length of res.tags is ${restaurant?.tags?.length.toString()}');
       return SliverAppBar(
         automaticallyImplyLeading: false,
         floating: false,

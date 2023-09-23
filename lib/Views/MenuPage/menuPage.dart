@@ -28,12 +28,11 @@ class _MenuPageState extends ConsumerState<MenuPage> {
   List<dynamic> keys = [];
   ScrollController controller = ScrollController();
   List<Widget> items = [];
-  List<Widget> cats = [];
 
   @override
   Widget build(BuildContext context) {
     final repo = prov.Provider.of<MenuPageData>(context, listen: false);
-    repo.getData(restaurant);
+
     repo.getRestaurant(widget.id, context);
     Constants.id = widget.id;
 
@@ -47,14 +46,14 @@ class _MenuPageState extends ConsumerState<MenuPage> {
               ));
         }
         items = MenuPageViewModel().createMenu(repo.categoryDividedMenu!);
-
+        log('repo.res ${repo.restaurant!.tags}');
         return Scaffold(
           body: Stack(
             alignment: Alignment.topCenter,
             children: [
               CustomScrollView(controller: controller, slivers: [
                 createCustomSliverAppBar(
-                    rest: repo.restaurant!, controller: controller),
+                    rest: repo.restaurant, controller: controller),
                 SliverToBoxAdapter(
                   child: Column(
                     children:

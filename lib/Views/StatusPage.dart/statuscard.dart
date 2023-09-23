@@ -60,7 +60,7 @@ class StatusCard extends StatelessWidget {
                               Text.rich(
                                 TextSpan(
                                   children: [
-                                    TextSpan(
+                                    const TextSpan(
                                       text: 'Order ID:',
                                       style: TextStyle(
                                         color: Color(0xFF323232),
@@ -69,7 +69,7 @@ class StatusCard extends StatelessWidget {
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
-                                    TextSpan(
+                                    const TextSpan(
                                       text: ' ',
                                       style: TextStyle(
                                         color: Color(0xFF323232),
@@ -81,7 +81,7 @@ class StatusCard extends StatelessWidget {
                                     TextSpan(
                                       text: '${order?.orderNo ?? ""}',
                                       // order["orderNo"]!.toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Color(0xFF53389E),
                                         fontSize: 12,
                                         fontFamily: 'Poppins',
@@ -170,7 +170,7 @@ class StatusCard extends StatelessWidget {
                                               "Order Delivered" ||
                                           (order?.orderStatus ?? "") ==
                                               "Order Paid")
-                                      ? Color(0xFF241C43)
+                                      ? const Color(0xFF241C43)
                                       : Colors.white,
                                   shape: RoundedRectangleBorder(
                                     side: const BorderSide(
@@ -195,7 +195,7 @@ class StatusCard extends StatelessWidget {
                                                 (order?.orderStatus ?? "") ==
                                                     "Order Paid")
                                             ? Colors.white
-                                            : Color(0xFF241C43),
+                                            : const Color(0xFF241C43),
                                         size: 18,
                                       ),
                                     ),
@@ -236,7 +236,7 @@ class StatusCard extends StatelessWidget {
                                 decoration: ShapeDecoration(
                                   color: ((order?.orderStatus ?? "") ==
                                           "Order Paid")
-                                      ? Color(0xFF241C43)
+                                      ? const Color(0xFF241C43)
                                       : Colors.white,
                                   shape: RoundedRectangleBorder(
                                     side: const BorderSide(
@@ -260,7 +260,7 @@ class StatusCard extends StatelessWidget {
                                         color: ((order?.orderStatus ?? "") ==
                                                 "Order Paid")
                                             ? Colors.white
-                                            : Color(0xFF241C43),
+                                            : const Color(0xFF241C43),
                                       ),
                                     ),
                                   ],
@@ -285,7 +285,7 @@ class StatusCard extends StatelessWidget {
                           child: Text.rich(
                             TextSpan(
                               children: [
-                                TextSpan(
+                                const TextSpan(
                                   text: 'Table Number: ',
                                   style: TextStyle(
                                     color: Color(0xFF3B3F5C),
@@ -297,7 +297,7 @@ class StatusCard extends StatelessWidget {
                                 TextSpan(
                                   // text: '21',
                                   text: order?.tableNo.toString(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Color(0xFF53389E),
                                     fontSize: 16,
                                     fontFamily: 'Poppins',
@@ -308,13 +308,13 @@ class StatusCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         SizedBox(
                           width: 100,
                           child: Text.rich(
                             TextSpan(
                               children: [
-                                TextSpan(
+                                const TextSpan(
                                   text: 'Status:',
                                   style: TextStyle(
                                     color: Color(0xFF323232),
@@ -323,7 +323,7 @@ class StatusCard extends StatelessWidget {
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
-                                TextSpan(
+                                const TextSpan(
                                   text: ' ',
                                   style: TextStyle(
                                     color: Color(0xFF323232),
@@ -335,7 +335,7 @@ class StatusCard extends StatelessWidget {
                                 TextSpan(
                                   // text: 'Order Paid',
                                   text: order?.orderStatus,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Color(0xFF53389E),
                                     fontSize: 12,
                                     fontFamily: 'Poppins',
@@ -356,13 +356,16 @@ class StatusCard extends StatelessWidget {
             ...List.generate(order?.items?.length ?? 0, (index) {
               Map<String, int> temp = {};
               temp[order?.items?[index].name ?? ""] = 0;
-              return CartItem(
-                quantity: temp,
-                image: order?.items?[index].image,
-                itemButton: false,
-                name: order?.items?[index].name,
-                price: order?.items?[index].price,
-                menu: order?.items?[index],
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CartItem(
+                  quantity: temp,
+                  image: order?.items?[index].image,
+                  itemButton: false,
+                  name: order?.items?[index].name,
+                  price: order?.items?[index].price,
+                  menu: order?.items?[index],
+                ),
               );
             }),
             Container(
@@ -383,7 +386,7 @@ class StatusCard extends StatelessWidget {
                       children: [
                         TextSpan(
                             text: 'Order Total:',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(0xFF3B3F5C),
                               fontSize: 12,
                               fontFamily: 'Poppins',
@@ -393,7 +396,7 @@ class StatusCard extends StatelessWidget {
                               TextSpan(
                                 // text: '512 AED',
                                 text: ' ${order?.price ?? ""} AED\n',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Color(0xFF3B3F5C),
                                   fontSize: 12,
                                   fontFamily: 'Poppins',
@@ -403,7 +406,7 @@ class StatusCard extends StatelessWidget {
                             ]),
                         TextSpan(
                             text: 'Tax (5%):',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(0xFF3B3F5C),
                               fontSize: 12,
                               fontFamily: 'Poppins',
@@ -413,7 +416,7 @@ class StatusCard extends StatelessWidget {
                               TextSpan(
                                 // text: '3 AED',
                                 text: '${order?.tax ?? 0} AED\n',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Color(0xFF3B3F5C),
                                   fontSize: 12,
                                   fontFamily: 'Poppins',
@@ -423,7 +426,7 @@ class StatusCard extends StatelessWidget {
                             ]),
                         TextSpan(
                             text: 'Discount :',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(0xFF3B3F5C),
                               fontSize: 12,
                               fontFamily: 'Poppins',
@@ -434,7 +437,7 @@ class StatusCard extends StatelessWidget {
                                 text:
                                     // ' AED',
                                     '${order?.discount} AED\n',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Color(0xFF3B3F5C),
                                   fontSize: 12,
                                   fontFamily: 'Poppins',
@@ -444,7 +447,7 @@ class StatusCard extends StatelessWidget {
                             ]),
                         TextSpan(
                             text: 'Total: ',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Color(0xFF3B3F5C),
                               fontSize: 16,
                               fontFamily: 'Poppins',
@@ -454,7 +457,7 @@ class StatusCard extends StatelessWidget {
                               TextSpan(
                                 // text: '402 AED',
                                 text: '${order?.totalPrice ?? 0} AED',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Color(0xFF53389E),
                                   fontSize: 16,
                                   fontFamily: 'Poppins',
@@ -488,7 +491,7 @@ class StatusCard extends StatelessWidget {
                             children: [
                               TextSpan(
                                   text: 'Customer Name: ',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Color(0xFF323232),
                                     fontSize: 12,
                                     fontFamily: 'Poppins',
@@ -498,7 +501,7 @@ class StatusCard extends StatelessWidget {
                                     TextSpan(
                                       // text: 'Mr Lelouch',
                                       text: '${order?.customerName ?? ""}\n',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Color(0xFF53389E),
                                         fontSize: 12,
                                         fontFamily: 'Poppins',
@@ -518,7 +521,7 @@ class StatusCard extends StatelessWidget {
 
                               TextSpan(
                                   text: 'Customer Contact: ',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Color(0xFF323232),
                                     fontSize: 12,
                                     fontFamily: 'Poppins',
@@ -528,7 +531,7 @@ class StatusCard extends StatelessWidget {
                                     TextSpan(
                                       // text: '1234567890',
                                       text: '${order?.contactNo}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Color(0xFF53389E),
                                         fontSize: 12,
                                         fontFamily: 'Poppins',
@@ -552,7 +555,7 @@ class StatusCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
               ],
             ),
           ],
