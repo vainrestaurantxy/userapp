@@ -29,10 +29,7 @@ class Item extends ConsumerStatefulWidget {
 class _ItemState extends ConsumerState<Item> {
   @override
   Widget build(BuildContext context) {
-    return
-        // padding: const EdgeInsets.all(15.0),
-
-        SizedBox(
+    return SizedBox(
       height: 150,
       width: MediaQuery.of(context).size.width - 35,
       child: Row(

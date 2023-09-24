@@ -2,12 +2,14 @@ import 'package:dine/Data/Repositories/MenuPage.dart';
 import 'package:dine/Views/MenuPage/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'dart:developer';
 import '../../Models/restaurant.dart';
 import '../../Models/restaurantMenu.dart';
 
 class MenuPageViewModel {
   static List<GlobalKey> keys = [];
+  List<String> selectedTags = [];
+
   Map<String, List<RestaurantMenu>> reArrangeCategory(
       {required Restaurant restaurant}) {
     Map<String, List<RestaurantMenu>> categoryDividedMenu = {};
@@ -17,13 +19,14 @@ class MenuPageViewModel {
       }
       categoryDividedMenu[item.category]!.add(item);
     }
+
     return categoryDividedMenu;
   }
 
   Map<String, RestaurantMenu> mapCodeToItem(List<RestaurantMenu> menu) {
     Map<String, RestaurantMenu> map = {};
     for (RestaurantMenu index in menu) {
-      map[index.name??""] = index;
+      map[index.name ?? ""] = index;
     }
     return map;
   }

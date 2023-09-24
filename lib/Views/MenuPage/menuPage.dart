@@ -1,6 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
-import 'dart:js_interop';
+
 import 'package:dine/Models/restaurant.dart';
 import 'package:dine/Shared/Widgets/AppBar.dart';
 import 'package:dine/Shared/Widgets/SliverAppBar.dart';
@@ -13,7 +12,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart' as prov;
 import '../../Utils/Constants/staticConstants.dart';
 import '../../Data/Repositories/MenuPage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MenuPage extends ConsumerStatefulWidget {
   const MenuPage({super.key, required this.id});
@@ -46,7 +44,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
               ));
         }
         items = MenuPageViewModel().createMenu(repo.categoryDividedMenu!);
-        log('repo.res ${repo.restaurant!.tags}');
+
         restaurant = repo.restaurant!;
         repo.getData(restaurant);
         return Scaffold(

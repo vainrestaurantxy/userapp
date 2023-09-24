@@ -5,7 +5,7 @@ import 'package:dine/Models/restaurant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:provider/provider.dart' as prov;
 
 import './../../ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 
@@ -15,7 +15,8 @@ Widget createCustomSliverAppBar({
 }) {
   // log('length ${restaurant.tags?.length.toString()}');
   List<String> genre = ['Veg', 'Non-Veg'];
-  Widget customSliverAppBar = Consumer<MenuPageData>(
+  //List<String> selectedTags = [];
+  Widget customSliverAppBar = prov.Consumer<MenuPageData>(
     builder: (context, res, child) {
       final restaurant = res.restaurant;
       log('length of res.tags is ${restaurant?.tags?.length.toString()}');
@@ -96,8 +97,23 @@ Widget createCustomSliverAppBar({
                             return GestureDetector(
                               onTap: () {
                                 log('anything? hui');
-                                Scrollable.ensureVisible(MenuPageViewModel
-                                    .keys[index].currentContext!);
+                                // Scrollable.ensureVisible(MenuPageViewModel
+                                //     .keys[index].currentContext!);
+                                // if (!MenuPageViewModel()
+                                //     .selectedTags
+                                //     .contains(genre[index])) {
+                                //   MenuPageViewModel()
+                                //       .selectedTags
+                                //       .add(genre[index]);
+                                //   log('kuch bhi? ${MenuPageViewModel().selectedTags.toString()}');
+                                //   res.notifyListeners();
+                                // } else {
+                                //   MenuPageViewModel()
+                                //       .selectedTags
+                                //       .remove(genre[index]);
+                                //   res.notifyListeners();
+                                // }
+
                                 // controller?.scrollTo(
                                 //     index: stamps?[restaurant.tags[index]] ?? 0,
                                 //     duration: const Duration(seconds: 1));
@@ -137,12 +153,25 @@ Widget createCustomSliverAppBar({
                             final resIndex = index - genre.length;
                             return GestureDetector(
                               onTap: () {
-                                log('anything? hui');
-                                Scrollable.ensureVisible(MenuPageViewModel
-                                    .keys[index].currentContext!);
+                                // Scrollable.ensureVisible(MenuPageViewModel
+                                //     .keys[resIndex].currentContext!);
                                 // controller?.scrollTo(
                                 //     index: stamps?[restaurant.tags[index]] ?? 0,
                                 //     duration: const Duration(seconds: 1));
+                                if (!MenuPageViewModel()
+                                    .selectedTags
+                                    .contains(restaurant.tags)) {
+                                  MenuPageViewModel()
+                                      .selectedTags
+                                      .add(restaurant.tags![resIndex]);
+                                  log('haha tag ${MenuPageViewModel().selectedTags.toString()}');
+                                  res.notifyListeners();
+                                } else {
+                                  MenuPageViewModel()
+                                      .selectedTags
+                                      .remove(restaurant.tags![resIndex]);
+                                  res.notifyListeners();
+                                }
                               },
                               child: Padding(
                                 padding:
@@ -200,8 +229,6 @@ Widget createCustomSliverAppBar({
               SizedBox(
                 width: double.infinity,
                 child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.center,
-                  // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const SizedBox(
                       height: 100,
