@@ -7,7 +7,7 @@ import '../../Models/restaurant.dart';
 import '../../Models/restaurantMenu.dart';
 
 class MenuPageViewModel extends ChangeNotifier {
-  static List<GlobalKey> keys = [];
+  static Map<String, GlobalKey> keys = {};
   List<String> selectedTags = [];
 
   Map<String, List<RestaurantMenu>> reArrangeCategory(
@@ -36,10 +36,10 @@ class MenuPageViewModel extends ChangeNotifier {
     List<Widget> items = [];
     if (selectedTags == null) {
       for (var i in categoryDividedMenu.entries) {
-        keys.add(GlobalKey());
+        // keys.add(GlobalKey());
         items.add(
           ExpansionTile(
-            key: keys[keys.length - 1],
+            // key: keys[keys.length - 1],
             title: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
@@ -66,7 +66,7 @@ class MenuPageViewModel extends ChangeNotifier {
       }
     } else {
       for (var i in categoryDividedMenu.entries) {
-        keys.add(GlobalKey());
+        // keys.add(GlobalKey());
         items.add(
           ExpansionTile(
             key: keys[keys.length - 1],
