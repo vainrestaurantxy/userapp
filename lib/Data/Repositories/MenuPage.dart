@@ -127,7 +127,7 @@ class MenuPageData extends ChangeNotifier {
               .map((e) => e as String)
               .toList();
       res.tags = tempList;
-
+      print('res tags : ${res.tags!.length.toString()}');
       notifyListeners();
     }
   }

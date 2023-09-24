@@ -1,6 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
-import 'dart:js_interop';
+
 import 'package:dine/Models/restaurant.dart';
 import 'package:dine/Shared/Widgets/AppBar.dart';
 import 'package:dine/Shared/Widgets/SliverAppBar.dart';
@@ -13,7 +12,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart' as prov;
 import '../../Utils/Constants/staticConstants.dart';
 import '../../Data/Repositories/MenuPage.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MenuPage extends ConsumerStatefulWidget {
   const MenuPage({super.key, required this.id});
@@ -28,12 +26,11 @@ class _MenuPageState extends ConsumerState<MenuPage> {
   List<dynamic> keys = [];
   ScrollController controller = ScrollController();
   List<Widget> items = [];
-  List<Widget> cats = [];
 
   @override
   Widget build(BuildContext context) {
     final repo = prov.Provider.of<MenuPageData>(context, listen: false);
-    repo.getData(restaurant);
+
     repo.getRestaurant(widget.id, context);
     Constants.id = widget.id;
 
@@ -48,13 +45,15 @@ class _MenuPageState extends ConsumerState<MenuPage> {
         }
         items = MenuPageViewModel().createMenu(repo.categoryDividedMenu!);
 
+        restaurant = repo.restaurant!;
+        repo.getData(restaurant);
         return Scaffold(
           body: Stack(
             alignment: Alignment.topCenter,
             children: [
               CustomScrollView(controller: controller, slivers: [
                 createCustomSliverAppBar(
-                    rest: repo.restaurant!, controller: controller),
+                    rest: repo.restaurant, controller: controller),
                 SliverToBoxAdapter(
                   child: Column(
                     children:

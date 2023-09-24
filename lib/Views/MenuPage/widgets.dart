@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dine/Data/Repositories/MenuPage.dart';
 import 'package:dine/Shared/Widgets/cartButton.dart';
+import 'package:dine/ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart' as prov;
@@ -29,10 +30,9 @@ class Item extends ConsumerStatefulWidget {
 class _ItemState extends ConsumerState<Item> {
   @override
   Widget build(BuildContext context) {
-    return
-        // padding: const EdgeInsets.all(15.0),
+    final repo = prov.Provider.of<MenuPageViewModel>(context, listen: false);
 
-        SizedBox(
+    return SizedBox(
       height: 150,
       width: MediaQuery.of(context).size.width - 35,
       child: Row(
@@ -120,7 +120,7 @@ class _ItemState extends ConsumerState<Item> {
                       SizedBox(
                         width: (MediaQuery.of(context).size.width / 428) * 252 -
                             60,
-                        child: Text("INR ${widget.price}",
+                        child: Text("AED ${widget.price}",
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,

@@ -42,7 +42,7 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                     customerName: Constants.name,
                     discount: ref.getDiscount(),
                     quanntity: ref.cart,
-                    items: ref.code_item.values.toList(),
+                    items: ref.cart.keys.map((e) => ref.code_item[e]!).toList(),
                     macAdd: Constants.macAddress,
                     orderStatus: "Order Confirmed",
                     price: ref.getTotal(),

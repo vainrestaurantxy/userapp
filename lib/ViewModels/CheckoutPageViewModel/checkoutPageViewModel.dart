@@ -96,6 +96,8 @@ class CheckoutViewModel {
         final data = snapshot.data() as Map<String, dynamic>;
 
         final List<dynamic> orderList = data["order"];
+        // final latestOrder = orderList[orderList.length - 1];
+        // log('latest $latestOrder');
         print(data);
         // Filter orders by macAddress and non-empty orderStatus
         final filteredOrders = orderList
@@ -104,7 +106,8 @@ class CheckoutViewModel {
                 orderData["orderStatus"] != "Order Paid")
             .map((orderData) => Orders.fromJson(orderData))
             .toList();
-
+        print("Filtered Orders");
+        print(filteredOrders);
         return filteredOrders;
       } else {
         // If the document doesn't exist, return an empty list

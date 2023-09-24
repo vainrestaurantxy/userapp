@@ -2,12 +2,14 @@ import 'package:dine/Data/Repositories/MenuPage.dart';
 import 'package:dine/Views/MenuPage/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'dart:developer';
 import '../../Models/restaurant.dart';
 import '../../Models/restaurantMenu.dart';
 
-class MenuPageViewModel {
+class MenuPageViewModel extends ChangeNotifier {
   static Map<String, GlobalKey> keys = {};
+  List<String> selectedTags = [];
+
   Map<String, List<RestaurantMenu>> reArrangeCategory(
       {required Restaurant restaurant}) {
     Map<String, List<RestaurantMenu>> categoryDividedMenu = {};
@@ -17,6 +19,7 @@ class MenuPageViewModel {
       }
       categoryDividedMenu[item.category]!.add(item);
     }
+
     return categoryDividedMenu;
   }
 
@@ -31,37 +34,70 @@ class MenuPageViewModel {
   List<Widget> createMenu(
       Map<String, List<RestaurantMenu>> categoryDividedMenu) {
     List<Widget> items = [];
-
-    for (var i in categoryDividedMenu.entries) {
-      GlobalKey tempkey = GlobalKey();
-      keys[i.key] = tempkey;
-      items.add(
-        ExpansionTile(
-          key: tempkey,
-          title: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              i.key,
-              style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700),
+    if (selectedTags == null) {
+      for (var i in categoryDividedMenu.entries) {
+        // keys.add(GlobalKey());
+        items.add(
+          ExpansionTile(
+            // key: keys[keys.length - 1],
+            title: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                i.key,
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700),
+              ),
             ),
+            childrenPadding: const EdgeInsets.all(8),
+            initiallyExpanded: true,
+            children: List.generate(
+                i.value.length,
+                (index) => Item(
+                    image: i.value[index].image ?? "",
+                    desc: i.value[index].description ?? "",
+                    price: i.value[index].price ?? 0,
+                    name: i.value[index].name ?? "",
+                    code: i.value[index].code ?? "",
+                    tags: i.value[index].tags ?? [])),
           ),
-          childrenPadding: const EdgeInsets.all(8),
-          initiallyExpanded: true,
-          children: List.generate(
-              i.value.length,
-              (index) => Item(
-                  image: i.value[index].image ?? "",
-                  desc: i.value[index].description ?? "",
-                  price: i.value[index].price ?? 0,
-                  name: i.value[index].name ?? "",
-                  code: i.value[index].code ?? "",
-                  tags: i.value[index].tags ?? [])),
-        ),
-      );
+        );
+      }
+    } else {
+      for (var i in categoryDividedMenu.entries) {
+        // keys.add(GlobalKey());
+        items.add(
+          ExpansionTile(
+            key: keys[keys.length - 1],
+            title: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                i.key,
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700),
+              ),
+            ),
+            childrenPadding: const EdgeInsets.all(8),
+            initiallyExpanded: true,
+            children: List.generate(
+                i.value.length,
+                (index) => Item(
+                    image: i.value[index].image ?? "",
+                    desc: i.value[index].description ?? "",
+                    price: i.value[index].price ?? 0,
+                    name: i.value[index].name ?? "",
+                    code: i.value[index].code ?? "",
+                    tags: i.value[index].tags ?? [])),
+          ),
+        );
+      }
     }
+
+    log('menu ${categoryDividedMenu['Grills']![0].tags.toString()}');
+    log('selectedTags: $selectedTags');
     return items;
   }
 
