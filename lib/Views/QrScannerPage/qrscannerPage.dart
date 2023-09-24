@@ -44,8 +44,10 @@ class _QrScannerState extends ConsumerState<QrScanner> {
     controller.scannedDataStream.listen((scanData) async {
       result = scanData;
       if (result?.code?.isNotEmpty ?? false) {
-        String id = result!.code!.split('/')[0];
-        String tableNo = result!.code!.split('/')[1];
+        String id = result!.code!
+            .replaceFirst('https://customer.feastdubai.com/#/menu/', '');
+        String id2 = id.split('/')[0];
+        String tableNo = id.split('/')[2];
         Constants.tableNo = int.parse(tableNo);
         setLocal(key: "id", value: id);
         Constants.id = id;

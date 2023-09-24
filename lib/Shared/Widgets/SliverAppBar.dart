@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dine/Data/Repositories/MenuPage.dart';
 import 'package:dine/Models/restaurant.dart';
+import 'package:dine/Views/MenuPage/menuPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,7 +16,7 @@ Widget createCustomSliverAppBar({
   required ScrollController? controller,
 }) {
   // log('length ${restaurant.tags?.length.toString()}');
-  List<String> genre = ['Veg', 'Non-Veg'];
+  List<String> genre = ['Veg', 'Non Veg'];
   //List<String> selectedTags = [];
   Widget customSliverAppBar = prov.Consumer<MenuPageData>(
     builder: (context, res, child) {
@@ -99,18 +100,22 @@ Widget createCustomSliverAppBar({
                               if (index < genre.length) {
                                 return GestureDetector(
                                   onTap: () {
-                                    log('anything? hui');
+                                    // print("filter");
+                                    if (index == 0) {
+                                      MenuPageViewModel.tag = "Veg";
+                                    } else {
+                                      MenuPageViewModel.tag = "Non Veg";
+                                    }
+                                    // ref.tag = "${}";
+                                    print(ref.selectedTags);
+                                    final provider =
+                                        prov.Provider.of<RestaurantBuilder>(
+                                            context,
+                                            listen: false);
+                                    provider.notifyListeners();
+                                    // log('anything? hui');
                                     // Scrollable.ensureVisible(MenuPageViewModel
                                     //     .keys[index].currentContext!);
-                                    if (!ref.selectedTags
-                                        .contains(genre[index])) {
-                                      ref.selectedTags.add(genre[index]);
-                                      log('selected tags me kuch bhi? ${ref.selectedTags.toString()}');
-                                      res.notifyListeners();
-                                    } else {
-                                      ref.selectedTags.remove(genre[index]);
-                                      res.notifyListeners();
-                                    }
 
                                     // controller?.scrollTo(
                                     //     index: stamps?[restaurant.tags[index]] ?? 0,
@@ -152,22 +157,24 @@ Widget createCustomSliverAppBar({
                                 final resIndex = index - genre.length;
                                 return GestureDetector(
                                   onTap: () {
-                                    // Scrollable.ensureVisible(MenuPageViewModel
-                                    //     .keys[resIndex].currentContext!);
+                                    // print(MenuPageViewModel.keys);
+                                    Scrollable.ensureVisible(MenuPageViewModel
+                                        .keys[restaurant.tags![resIndex]]!
+                                        .currentContext!);
                                     // controller?.scrollTo(
                                     //     index: stamps?[restaurant.tags[index]] ?? 0,
                                     //     duration: const Duration(seconds: 1));
-                                    if (!ref.selectedTags
-                                        .contains(restaurant.tags)) {
-                                      ref.selectedTags
-                                          .add(restaurant.tags![resIndex]);
-                                      log('haha selectedtag ${ref.selectedTags.toString()}');
-                                      res.notifyListeners();
-                                    } else {
-                                      ref.selectedTags
-                                          .remove(restaurant.tags![resIndex]);
-                                      res.notifyListeners();
-                                    }
+                                    // if (!ref.selectedTags
+                                    //     .contains(restaurant.tags)) {
+                                    //   ref.selectedTags
+                                    //       .add(restaurant.tags![resIndex]);
+                                    //   log('haha selectedtag ${ref.selectedTags.toString()}');
+                                    //   res.notifyListeners();
+                                    // } else {
+                                    //   ref.selectedTags
+                                    //       .remove(restaurant.tags![resIndex]);
+                                    //   res.notifyListeners();
+                                    // }
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
