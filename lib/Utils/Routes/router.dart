@@ -25,6 +25,16 @@ final GoRouter router = GoRouter(
             },
             routes: <RouteBase>[
               GoRoute(
+                  path: 'table/:no',
+                  redirect: (context, state) {
+                    return '/menu/${state.pathParameters['id']}';
+                  },
+                  builder: (BuildContext context, GoRouterState state) {
+                    return MenuPage(
+                      id: state.pathParameters["id"]!,
+                    );
+                  }),
+              GoRoute(
                   path: 'checkout',
                   builder: (BuildContext context, GoRouterState state) {
                     return const CheckoutPage();

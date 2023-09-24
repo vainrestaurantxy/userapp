@@ -8,7 +8,8 @@ import '../../Models/restaurantMenu.dart';
 
 class MenuPageViewModel extends ChangeNotifier {
   static Map<String, GlobalKey> keys = {};
-  List<String> selectedTags = [];
+  String selectedTags = "Ayush";
+  static String tag = "";
 
   Map<String, List<RestaurantMenu>> reArrangeCategory(
       {required Restaurant restaurant}) {
@@ -34,12 +35,17 @@ class MenuPageViewModel extends ChangeNotifier {
   List<Widget> createMenu(
       Map<String, List<RestaurantMenu>> categoryDividedMenu) {
     List<Widget> items = [];
-    if (selectedTags == null) {
+    print("object");
+    print(tag);
+
+    if (tag == "") {
       for (var i in categoryDividedMenu.entries) {
         // keys.add(GlobalKey());
+        GlobalKey key = GlobalKey();
+        keys[i.key] = key;
         items.add(
           ExpansionTile(
-            // key: keys[keys.length - 1],
+            key: keys[i.key],
             title: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
@@ -67,9 +73,16 @@ class MenuPageViewModel extends ChangeNotifier {
     } else {
       for (var i in categoryDividedMenu.entries) {
         // keys.add(GlobalKey());
+        print("filterd");
+        GlobalKey key = GlobalKey();
+        keys[i.key] = key;
+        List<RestaurantMenu> filterdItems = i.value
+            .where((element) => (element.tags?[0] ?? "") == tag)
+            .toList();
+        print(filterdItems);
         items.add(
           ExpansionTile(
-            key: keys[keys.length - 1],
+            key: keys[i.key],
             title: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
@@ -83,14 +96,14 @@ class MenuPageViewModel extends ChangeNotifier {
             childrenPadding: const EdgeInsets.all(8),
             initiallyExpanded: true,
             children: List.generate(
-                i.value.length,
+                filterdItems.length,
                 (index) => Item(
-                    image: i.value[index].image ?? "",
-                    desc: i.value[index].description ?? "",
-                    price: i.value[index].price ?? 0,
-                    name: i.value[index].name ?? "",
-                    code: i.value[index].code ?? "",
-                    tags: i.value[index].tags ?? [])),
+                    image: filterdItems[index].image ?? "",
+                    desc: filterdItems[index].description ?? "",
+                    price: filterdItems[index].price ?? 0,
+                    name: filterdItems[index].name ?? "",
+                    code: filterdItems[index].code ?? "",
+                    tags: filterdItems[index].tags ?? [])),
           ),
         );
       }
