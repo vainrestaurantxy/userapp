@@ -106,7 +106,8 @@ class CheckoutViewModel {
                 orderData["orderStatus"] != "Order Paid")
             .map((orderData) => Orders.fromJson(orderData))
             .toList();
-
+        print("Filtered Orders");
+        print(filteredOrders);
         return filteredOrders;
       } else {
         // If the document doesn't exist, return an empty list

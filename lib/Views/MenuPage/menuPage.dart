@@ -47,6 +47,8 @@ class _MenuPageState extends ConsumerState<MenuPage> {
         }
         items = MenuPageViewModel().createMenu(repo.categoryDividedMenu!);
         log('repo.res ${repo.restaurant!.tags}');
+        restaurant = repo.restaurant!;
+        repo.getData(restaurant);
         return Scaffold(
           body: Stack(
             alignment: Alignment.topCenter,

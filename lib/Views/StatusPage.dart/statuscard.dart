@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dine/Views/CheckoutPage/widgets.dart';
 import 'package:flutter/material.dart';
@@ -356,6 +358,7 @@ class StatusCard extends StatelessWidget {
             ...List.generate(order?.items?.length ?? 0, (index) {
               Map<String, int> temp = {};
               temp[order?.items?[index].name ?? ""] = 0;
+              log('database ${order!.items![index].image}');
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CartItem(

@@ -14,6 +14,7 @@ Widget createCustomSliverAppBar({
   required ScrollController? controller,
 }) {
   // log('length ${restaurant.tags?.length.toString()}');
+  List<String> genre = ['Veg', 'Non-Veg'];
   Widget customSliverAppBar = Consumer<MenuPageData>(
     builder: (context, res, child) {
       final restaurant = res.restaurant;
@@ -86,51 +87,95 @@ Widget createCustomSliverAppBar({
                     child: Center(
                       child: ListView.builder(
                         controller: controller,
-                        itemCount: restaurant?.tags?.length ?? 0,
+                        itemCount:
+                            (restaurant?.tags?.length ?? 0) + genre.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
                           log('Sliverbar page tags ${restaurant?.tags.toString()}');
-                          return GestureDetector(
-                            onTap: () {
-                              log('anything? hui');
-                              Scrollable.ensureVisible(MenuPageViewModel
-                                  .keys[index].currentContext!);
-                              // controller?.scrollTo(
-                              //     index: stamps?[restaurant.tags[index]] ?? 0,
-                              //     duration: const Duration(seconds: 1));
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 4.0),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8.0, vertical: 4),
-                                decoration: BoxDecoration(
-                                    // color: Colors.white,
-                                    border: Border.all(
-                                        color: const Color(0xFFF4F4FF)),
-                                    borderRadius: BorderRadius.circular(4)),
-                                child: Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      "assets/fastfood.svg",
-                                      width: 20,
-                                      height: 20,
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(restaurant!.tags![index],
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500,
-                                        ))
-                                  ],
+                          if (index < genre.length) {
+                            return GestureDetector(
+                              onTap: () {
+                                log('anything? hui');
+                                Scrollable.ensureVisible(MenuPageViewModel
+                                    .keys[index].currentContext!);
+                                // controller?.scrollTo(
+                                //     index: stamps?[restaurant.tags[index]] ?? 0,
+                                //     duration: const Duration(seconds: 1));
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 4.0),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0, vertical: 4),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: const Color(0xFFF4F4FF)),
+                                      borderRadius: BorderRadius.circular(4)),
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/fastfood.svg",
+                                        width: 20,
+                                        height: 20,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(genre[index],
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500,
+                                          ))
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
+                            );
+                          } else {
+                            final resIndex = index - genre.length;
+                            return GestureDetector(
+                              onTap: () {
+                                log('anything? hui');
+                                Scrollable.ensureVisible(MenuPageViewModel
+                                    .keys[index].currentContext!);
+                                // controller?.scrollTo(
+                                //     index: stamps?[restaurant.tags[index]] ?? 0,
+                                //     duration: const Duration(seconds: 1));
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 4.0),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0, vertical: 4),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: const Color(0xFFF4F4FF)),
+                                      borderRadius: BorderRadius.circular(4)),
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/fastfood.svg",
+                                        width: 20,
+                                        height: 20,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(restaurant!.tags![resIndex],
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500,
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
                         },
                       ),
                     ),

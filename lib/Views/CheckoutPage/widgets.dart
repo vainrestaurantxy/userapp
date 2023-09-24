@@ -304,6 +304,7 @@ class CardTexts extends StatelessWidget {
                     ),
               Column(
                 children: List.generate(ref.cart.keys.length, (index) {
+                  print("Cart : ");
                   print(ref.cart.keys.length);
                   print(ref.code_item[ref.cart.keys.toList()[index]]?.name ??
                       "NULL");
