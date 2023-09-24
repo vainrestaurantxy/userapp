@@ -6,12 +6,13 @@ import 'package:dine/Data/Repositories/MenuPage.dart';
 import 'package:dine/Models/orders.dart';
 import 'package:dine/Storage/sharedPreference.dart';
 import 'package:dine/ViewModels/MenuPageViewModel/menuPageViewModel.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../Models/restaurantMenu.dart';
 import '../../Utils/Constants/staticConstants.dart';
 
-class CheckoutViewModel {
+class CheckoutViewModel extends ChangeNotifier {
   getItemsAndAmount(context) {
     return MenuPageViewModel().getItemsAndAmount(context);
   }
@@ -114,5 +115,22 @@ class CheckoutViewModel {
         return <Orders>[];
       }
     });
+  }
+
+  getSuggestions() async {
+    List<Orders> suggestions = [];
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+        .instance
+        .collection("Restaurants")
+        .doc(Constants.id)
+        .get();
+
+    if (snapshot.exists) {
+      final data = snapshot.data();
+      final menu = data!['menu'];
+      suggestions = menu;
+    }
+    print('sugestions $suggestions');
+    // return suggestions;
   }
 }
