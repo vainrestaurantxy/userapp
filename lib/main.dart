@@ -1,4 +1,5 @@
 import 'package:dine/Data/Repositories/MenuPage.dart';
+import 'package:dine/ViewModels/CheckoutPageViewModel/checkoutPageViewModel.dart';
 import 'package:dine/ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -18,6 +19,8 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        // ListenableProvider<CheckoutViewModel>(
+        //     create: (_) => CheckoutViewModel()),
         ListenableProvider<MenuPageViewModel>(
             create: (_) => MenuPageViewModel()),
         ListenableProvider<MenuPageData>(create: (_) => MenuPageData()),

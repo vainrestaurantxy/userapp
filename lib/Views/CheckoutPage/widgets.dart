@@ -6,7 +6,7 @@ import 'package:dine/Shared/Widgets/cartButton.dart';
 import 'package:dine/Utils/texts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:provider/provider.dart' as prov;
 
 import '../../Data/Repositories/MenuPage.dart';
 import '../../Models/restaurantMenu.dart';
@@ -135,7 +135,7 @@ class CartItem extends StatelessWidget {
                         const SizedBox(width: 8),
                         SizedBox(
                           child: itemButton
-                              ? Consumer<MenuPageData>(
+                              ? prov.Consumer<MenuPageData>(
                                   builder: (_, ref, __) {
                                     return getAddButton(name: name!, ref: ref);
                                   },
@@ -161,8 +161,8 @@ class Card2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Orders> suggested = [];
-    final CheckoutViewModel cm = CheckoutViewModel();
-    log('sug ${cm.getSuggestions()}');
+    // final repo = prov.Provider.of<CheckoutViewModel>(context, listen: false);
+    // repo.getSuggestions();
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -208,7 +208,14 @@ class Card2 extends StatelessWidget {
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height,
-              child: ListView.builder(
+              child:
+                  // builder: (context, value, child) {
+                  //   suggested = value.suggestions;
+                  //   //  value.notifyListeners();
+                  //   print('list printing');
+                  //   log(suggested.toString());
+                  //return
+                  ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: 20,
                 itemBuilder: (context, index) {
@@ -217,6 +224,9 @@ class Card2 extends StatelessWidget {
                     child: Container(
                       height: 20,
                       color: Colors.red,
+                      child: Text(
+                        'list[index].items.toString()',
+                      ),
                     ),
                   );
                 },
@@ -234,7 +244,7 @@ class CardTexts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MenuPageData>(
+    return prov.Consumer<MenuPageData>(
       builder: (_, ref, __) {
         List<int> cartData = CheckoutViewModel().getItemsAndAmount(context);
         if (cartData[0] == 0) {
