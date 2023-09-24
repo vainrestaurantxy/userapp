@@ -206,8 +206,7 @@ class Card2 extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
+            Expanded(
               child:
                   // builder: (context, value, child) {
                   //   suggested = value.suggestions;
@@ -217,7 +216,7 @@ class Card2 extends StatelessWidget {
                   //return
                   ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: 20,
+                itemCount: 10,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -231,7 +230,7 @@ class Card2 extends StatelessWidget {
                   );
                 },
               ),
-            )
+            ),
           ],
         ),
       ),
