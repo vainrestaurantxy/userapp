@@ -46,12 +46,15 @@ class _QrScannerState extends ConsumerState<QrScanner> {
       if (result?.code?.isNotEmpty ?? false) {
         String id = result!.code!
             .replaceFirst('https://customer.feastdubai.com/#/menu/', '');
+        log(id);
         String id2 = id.split('/')[0];
+        log(id2);
         String tableNo = id.split('/')[2];
+        log(tableNo);
         Constants.tableNo = int.parse(tableNo);
-        setLocal(key: "id", value: id);
-        Constants.id = id;
-        bool status = await viewModel.getRestaurant(id: id, context: context);
+        setLocal(key: "id", value: id2);
+        Constants.id = id2;
+        bool status = await viewModel.getRestaurant(id: id2, context: context);
         String mac = await viewModel.getMacAdderess();
         await prov.Provider.of<MenuPageData>(context, listen: false).setUser(
             macAdderess: mac,
