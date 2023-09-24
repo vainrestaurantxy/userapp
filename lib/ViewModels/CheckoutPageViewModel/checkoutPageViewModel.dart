@@ -12,7 +12,8 @@ import 'package:provider/provider.dart';
 import '../../Models/restaurantMenu.dart';
 import '../../Utils/Constants/staticConstants.dart';
 
-class CheckoutViewModel extends ChangeNotifier {
+class CheckoutViewModel {
+  List<Orders> suggestions = [];
   getItemsAndAmount(context) {
     return MenuPageViewModel().getItemsAndAmount(context);
   }
@@ -117,20 +118,28 @@ class CheckoutViewModel extends ChangeNotifier {
     });
   }
 
-  getSuggestions() async {
-    List<Orders> suggestions = [];
-    DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
-        .instance
+  Stream<List<Orders>> getSuggestions() {
+    return FirebaseFirestore.instance
         .collection("Restaurants")
         .doc(Constants.id)
-        .get();
+        .snapshots()
+        .map((snapshot) {
+      if (snapshot.exists) {
+        final menu = snapshot.data()?['menu'] as List<dynamic>;
+        final suggestions = menu
+            .map((item) => (item['recommendedWith'] ?? []) as List<dynamic>)
+            .toList();
+      }
+      return suggestions;
+    });
 
-    if (snapshot.exists) {
-      final data = snapshot.data();
-      final menu = data!['menu'];
-      suggestions = menu;
-    }
-    print('sugestions $suggestions');
-    // return suggestions;
+    // if (snapshot.exists) {
+    //   final data = snapshot.data();
+    //   final menu = data!['menu'];
+    //   suggestions = menu;
+    //   // notifyListeners();
+    // }
+    // print('sugestions $suggestions');
+    // // return suggestions;
   }
 }
