@@ -70,6 +70,6 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                         fontWeight: FontWeight.w600),
                   )))),
         ),
-        body: Card2());
+        body: SingleChildScrollView(child: Card2()));
   }
 }

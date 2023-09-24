@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dine/Models/orders.dart';
 import 'package:dine/Shared/Widgets/cartButton.dart';
 import 'package:dine/Utils/texts.dart';
 import 'package:flutter/material.dart';
@@ -107,7 +108,7 @@ class CartItem extends StatelessWidget {
                                           fontWeight: FontWeight.w400,
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 25,
                                       ),
                                       SizedBox(
@@ -159,47 +160,71 @@ class Card2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const SizedBox(
-                  height: 5,
-                ),
-                Align(
-                    alignment: Alignment.bottomLeft,
-                    child: giveText('Cart', 20, 600)),
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: giveText(
-                        'Verify order details & place order', 14, 400)),
-                const SizedBox(
-                  height: 35,
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(4, 0, 0, 16),
-                  child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(11),
-                          boxShadow: const [
-                            BoxShadow(
-                                spreadRadius: 2,
-                                color: Color.fromARGB(124, 0, 0, 0),
-                                blurRadius: 8)
-                          ]),
-                      child: const CardTexts()),
-                ),
-              ],
+    List<Orders> suggested = [];
+    final CheckoutViewModel cm = CheckoutViewModel();
+    log('sug ${cm.getSuggestions()}');
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(
+              height: 5,
             ),
-          ),
+            Align(
+                alignment: Alignment.bottomLeft,
+                child: giveText('Cart', 20, 600)),
+            Align(
+                alignment: Alignment.centerLeft,
+                child: giveText('Verify order details & place order', 14, 400)),
+            const SizedBox(
+              height: 35,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(4, 0, 0, 16),
+              child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(11),
+                      boxShadow: const [
+                        BoxShadow(
+                            spreadRadius: 2,
+                            color: Color.fromARGB(124, 0, 0, 0),
+                            blurRadius: 8)
+                      ]),
+                  child: const CardTexts()),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Align(
+                alignment: Alignment.bottomLeft,
+                child: giveText('Suggested', 16, 500)),
+            const SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 20,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 20,
+                      color: Colors.red,
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
         ),
-      ],
+      ),
     );
   }
 }
