@@ -1,4 +1,5 @@
 import 'package:dine/Data/Repositories/MenuPage.dart';
+import 'package:dine/ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
@@ -17,6 +18,8 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        ListenableProvider<MenuPageViewModel>(
+            create: (_) => MenuPageViewModel()),
         ListenableProvider<MenuPageData>(create: (_) => MenuPageData()),
         ListenableProvider<RestaurantBuilder>(
             create: (_) => RestaurantBuilder()),

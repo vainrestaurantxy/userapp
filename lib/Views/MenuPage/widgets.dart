@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dine/Data/Repositories/MenuPage.dart';
 import 'package:dine/Shared/Widgets/cartButton.dart';
+import 'package:dine/ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart' as prov;
@@ -29,6 +30,8 @@ class Item extends ConsumerStatefulWidget {
 class _ItemState extends ConsumerState<Item> {
   @override
   Widget build(BuildContext context) {
+    final repo = prov.Provider.of<MenuPageViewModel>(context, listen: false);
+
     return SizedBox(
       height: 150,
       width: MediaQuery.of(context).size.width - 35,

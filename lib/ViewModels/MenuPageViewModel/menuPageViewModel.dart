@@ -6,7 +6,7 @@ import 'dart:developer';
 import '../../Models/restaurant.dart';
 import '../../Models/restaurantMenu.dart';
 
-class MenuPageViewModel {
+class MenuPageViewModel extends ChangeNotifier {
   static List<GlobalKey> keys = [];
   List<String> selectedTags = [];
 
@@ -34,36 +34,70 @@ class MenuPageViewModel {
   List<Widget> createMenu(
       Map<String, List<RestaurantMenu>> categoryDividedMenu) {
     List<Widget> items = [];
-
-    for (var i in categoryDividedMenu.entries) {
-      keys.add(GlobalKey());
-      items.add(
-        ExpansionTile(
-          key: keys[keys.length - 1],
-          title: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              i.key,
-              style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700),
+    if (selectedTags == null) {
+      for (var i in categoryDividedMenu.entries) {
+        keys.add(GlobalKey());
+        items.add(
+          ExpansionTile(
+            key: keys[keys.length - 1],
+            title: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                i.key,
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700),
+              ),
             ),
+            childrenPadding: const EdgeInsets.all(8),
+            initiallyExpanded: true,
+            children: List.generate(
+                i.value.length,
+                (index) => Item(
+                    image: i.value[index].image ?? "",
+                    desc: i.value[index].description ?? "",
+                    price: i.value[index].price ?? 0,
+                    name: i.value[index].name ?? "",
+                    code: i.value[index].code ?? "",
+                    tags: i.value[index].tags ?? [])),
           ),
-          childrenPadding: const EdgeInsets.all(8),
-          initiallyExpanded: true,
-          children: List.generate(
-              i.value.length,
-              (index) => Item(
-                  image: i.value[index].image ?? "",
-                  desc: i.value[index].description ?? "",
-                  price: i.value[index].price ?? 0,
-                  name: i.value[index].name ?? "",
-                  code: i.value[index].code ?? "",
-                  tags: i.value[index].tags ?? [])),
-        ),
-      );
+        );
+      }
+    } else {
+      for (var i in categoryDividedMenu.entries) {
+        keys.add(GlobalKey());
+        items.add(
+          ExpansionTile(
+            key: keys[keys.length - 1],
+            title: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                i.key,
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700),
+              ),
+            ),
+            childrenPadding: const EdgeInsets.all(8),
+            initiallyExpanded: true,
+            children: List.generate(
+                i.value.length,
+                (index) => Item(
+                    image: i.value[index].image ?? "",
+                    desc: i.value[index].description ?? "",
+                    price: i.value[index].price ?? 0,
+                    name: i.value[index].name ?? "",
+                    code: i.value[index].code ?? "",
+                    tags: i.value[index].tags ?? [])),
+          ),
+        );
+      }
     }
+
+    log('menu ${categoryDividedMenu['Grills']![0].tags.toString()}');
+    log('selectedTags: $selectedTags');
     return items;
   }
 
