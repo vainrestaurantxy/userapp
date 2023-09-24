@@ -89,15 +89,13 @@ Widget createCustomSliverAppBar({
                         itemCount: restaurant?.tags?.length ?? 0,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          log('Sliverbar page tags ${restaurant?.tags.toString()}');
+                          // log('Sliverbar page tags ${restaurant?.tags.toString()}');
                           return GestureDetector(
                             onTap: () {
-                              log('anything? hui');
+                              // log('anything? hui');
                               Scrollable.ensureVisible(MenuPageViewModel
-                                  .keys[index].currentContext!);
-                              // controller?.scrollTo(
-                              //     index: stamps?[restaurant.tags[index]] ?? 0,
-                              //     duration: const Duration(seconds: 1));
+                                  .keys[restaurant.tags![index]]!
+                                  .currentContext!);
                             },
                             child: Padding(
                               padding:

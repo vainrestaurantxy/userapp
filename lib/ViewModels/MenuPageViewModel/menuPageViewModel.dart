@@ -7,7 +7,7 @@ import '../../Models/restaurant.dart';
 import '../../Models/restaurantMenu.dart';
 
 class MenuPageViewModel {
-  static List<GlobalKey> keys = [];
+  static Map<String, GlobalKey> keys = {};
   Map<String, List<RestaurantMenu>> reArrangeCategory(
       {required Restaurant restaurant}) {
     Map<String, List<RestaurantMenu>> categoryDividedMenu = {};
@@ -23,7 +23,7 @@ class MenuPageViewModel {
   Map<String, RestaurantMenu> mapCodeToItem(List<RestaurantMenu> menu) {
     Map<String, RestaurantMenu> map = {};
     for (RestaurantMenu index in menu) {
-      map[index.name??""] = index;
+      map[index.name ?? ""] = index;
     }
     return map;
   }
@@ -33,10 +33,11 @@ class MenuPageViewModel {
     List<Widget> items = [];
 
     for (var i in categoryDividedMenu.entries) {
-      keys.add(GlobalKey());
+      GlobalKey tempkey = GlobalKey();
+      keys[i.key] = tempkey;
       items.add(
         ExpansionTile(
-          key: keys[keys.length - 1],
+          key: tempkey,
           title: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
