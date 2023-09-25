@@ -17,10 +17,12 @@ class MenuPageData extends ChangeNotifier {
   String? name;
   String? phone;
   int? tableNo;
+  List<String>? sugg;
   List<Orders>? orders;
   Map<String, List<RestaurantMenu>>? categoryDividedMenu;
   Map<String, int> cart = {};
-  Map<String, RestaurantMenu> code_item = {};
+  Map<String, RestaurantMenu> code_item =
+      {}; //code_item stores a map of restaurant name as key and res menu as value
   Network network = Network();
   Map<String, int> order = {};
   refresh() {
@@ -56,6 +58,7 @@ class MenuPageData extends ChangeNotifier {
     categoryDividedMenu =
         MenuPageViewModel().reArrangeCategory(restaurant: restaurant!);
     code_item = MenuPageViewModel().mapCodeToItem(restaurant!.menu!);
+    notifyListeners();
     final builder = Provider.of<RestaurantBuilder>(context, listen: false);
     builder.refreshRestaurant();
   }
@@ -77,18 +80,18 @@ class MenuPageData extends ChangeNotifier {
   }
 
   void confirmOrder() {
-    log(cart.entries.length.toString());
-    order = cart.map((key, value) {
-      return MapEntry(key, (order[key] ?? 0) + value);
-    });
+    // log(cart.entries.length.toString());
+    // order = cart.map((key, value) {
+    //   return MapEntry(key, (order[key] ?? 0) + value);
+    // });
 
-    setLocal(key: 'order', value: jsonEncode(order));
-    remove(key: 'cart');
-    cart = {};
-    restaurant!.menu!.map((e) {
-      e.itemCount = 0;
-    });
-    notifyListeners();
+    // setLocal(key: 'order', value: jsonEncode(order));
+    // remove(key: 'cart');
+    // cart = {};
+    // restaurant!.menu!.map((e) {
+    //   e.itemCount = 0;
+    // });
+    // notifyListeners();
   }
 
   Future<void> setUser(
@@ -116,7 +119,7 @@ class MenuPageData extends ChangeNotifier {
 
   Future<void> getData(Restaurant res) async {
     final id = await getLocal(key: "id");
-    log("$id : NULL ");
+    //log("$id : NULL ");
     DocumentSnapshot<Map<String, dynamic>> snapshot =
         await FirebaseFirestore.instance.collection('Category').doc(id).get();
 
@@ -127,7 +130,7 @@ class MenuPageData extends ChangeNotifier {
               .map((e) => e as String)
               .toList();
       res.tags = tempList;
-      print('res tags : ${res.tags!.length.toString()}');
+      // print('res tags : ${res.tags!.length.toString()}');
       notifyListeners();
     }
   }

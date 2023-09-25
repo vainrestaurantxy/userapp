@@ -216,8 +216,8 @@ class Status extends StatelessWidget {
                             stream: CheckoutViewModel()
                                 .getOrderStream(Constants.id),
                             builder: (context, snapshot) {
-                              print(snapshot.connectionState);
-                              print(snapshot.data);
+                              // print(snapshot.connectionState);
+                              // print(snapshot.data);
                               if (snapshot.hasData) {
                                 return Column(
                                   children: [

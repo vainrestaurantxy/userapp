@@ -13,7 +13,6 @@ import '../../Models/restaurantMenu.dart';
 import '../../Utils/Constants/staticConstants.dart';
 
 class CheckoutViewModel {
-  List<Orders> suggestions = [];
   getItemsAndAmount(context) {
     return MenuPageViewModel().getItemsAndAmount(context);
   }
@@ -48,14 +47,14 @@ class CheckoutViewModel {
         .get();
     List<dynamic> list = json.data()?["order"] ?? [];
     order.orderNo = list.length;
-    print("list" + list.toString());
+    // print("list" + list.toString());
     List<dynamic> menulist = order.items!.map((e) {
       return e.toJson();
     }).toList();
     Map<String, dynamic> orderJson = order.toJson();
     orderJson["items"] = menulist;
 
-    print(order.toJson());
+    //  print(order.toJson());
     list.add(orderJson);
     await FirebaseFirestore.instance
         .collection("Restaurants")
@@ -100,7 +99,7 @@ class CheckoutViewModel {
         final List<dynamic> orderList = data["order"];
         // final latestOrder = orderList[orderList.length - 1];
         // log('latest $latestOrder');
-        print(data);
+        // print(data);
         // Filter orders by macAddress and non-empty orderStatus
         final filteredOrders = orderList
             .where((orderData) =>
@@ -108,8 +107,8 @@ class CheckoutViewModel {
                 orderData["orderStatus"] != "Order Paid")
             .map((orderData) => Orders.fromJson(orderData))
             .toList();
-        print("Filtered Orders");
-        print(filteredOrders);
+        // print("Filtered Orders");
+        // print(filteredOrders);
         return filteredOrders;
       } else {
         // If the document doesn't exist, return an empty list
@@ -118,28 +117,14 @@ class CheckoutViewModel {
     });
   }
 
-  Stream<List<Orders>> getSuggestions() {
-    return FirebaseFirestore.instance
-        .collection("Restaurants")
-        .doc(Constants.id)
-        .snapshots()
-        .map((snapshot) {
-      if (snapshot.exists) {
-        final menu = snapshot.data()?['menu'] as List<dynamic>;
-        final suggestions = menu
-            .map((item) => (item['recommendedWith'] ?? []) as List<dynamic>)
-            .toList();
-      }
-      return suggestions;
-    });
-
-    // if (snapshot.exists) {
-    //   final data = snapshot.data();
-    //   final menu = data!['menu'];
-    //   suggestions = menu;
-    //   // notifyListeners();
-    // }
-    // print('sugestions $suggestions');
-    // // return suggestions;
+  getSuggestions(context) {
+    // getCart(context);
+    final prov = Provider.of<MenuPageData>(context, listen: false);
+    prov.cart.removeWhere((key, value) => value == 0);
+    List<RestaurantMenu> menuCorrected =
+        prov.cart.entries.map((e) => prov.code_item[e.key]!).toList();
+    List<String> suggestion = [];
+    menuCorrected.forEach((e) => suggestion.addAll(e.recommendedWith ?? []));
+    Provider.of<MenuPageData>(context, listen: false).sugg = suggestion;
   }
 }

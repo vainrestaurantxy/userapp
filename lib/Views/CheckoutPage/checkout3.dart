@@ -76,7 +76,7 @@ class ConfirmOrder extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     )),
                 ...(ref.cart.entries.map((e) {
-                  log(e.key.toString() + ":" + e.value.toString());
+                  // log(e.key.toString() + ":" + e.value.toString());
                   return Padding(
                     padding: const EdgeInsets.only(top: 16.0),
                     //   child: CartItem(

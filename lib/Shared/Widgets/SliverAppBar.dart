@@ -21,7 +21,7 @@ Widget createCustomSliverAppBar({
   Widget customSliverAppBar = prov.Consumer<MenuPageData>(
     builder: (context, res, child) {
       final restaurant = res.restaurant;
-      log('length of res.tags is ${restaurant?.tags?.length.toString()}');
+      // log('length of res.tags is ${restaurant?.tags?.length.toString()}');
       return SliverAppBar(
         automaticallyImplyLeading: false,
         floating: false,
@@ -94,7 +94,7 @@ Widget createCustomSliverAppBar({
                             (restaurant?.tags?.length ?? 0) + genre.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          log('Sliverbar page tags ${restaurant?.tags.toString()}');
+                          // log('Sliverbar page tags ${restaurant?.tags.toString()}');
                           return prov.Consumer<MenuPageViewModel>(
                             builder: (context, ref, child) {
                               if (index < genre.length) {
@@ -107,7 +107,7 @@ Widget createCustomSliverAppBar({
                                       MenuPageViewModel.tag = "Non Veg";
                                     }
                                     // ref.tag = "${}";
-                                    print(ref.selectedTags);
+                                    //   print(ref.selectedTags);
                                     final provider =
                                         prov.Provider.of<RestaurantBuilder>(
                                             context,
@@ -272,6 +272,6 @@ Widget createCustomSliverAppBar({
     },
   );
 
-  log('anything?');
+  //log('anything?');
   return customSliverAppBar;
 }

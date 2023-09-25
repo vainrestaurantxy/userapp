@@ -11,8 +11,8 @@ class StatusPageViewModel {
     final prov = Provider.of<MenuPageData>(context, listen: false);
     int items = 0;
     int amount = 0;
-    print(prov.cart);
-    print(prov.code_item);
+    // print(prov.cart);
+    // print(prov.code_item);
     for (var i in prov.order.entries) {
       String code = i.key;
       int count = i.value;

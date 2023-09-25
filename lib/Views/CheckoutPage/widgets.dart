@@ -5,6 +5,7 @@ import 'package:dine/Models/orders.dart';
 import 'package:dine/Shared/Widgets/cartButton.dart';
 import 'package:dine/Utils/texts.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart' as prov;
 
@@ -12,6 +13,7 @@ import '../../Data/Repositories/MenuPage.dart';
 import '../../Models/restaurantMenu.dart';
 import '../../Utils/Constants/staticConstants.dart';
 import '../../ViewModels/CheckoutPageViewModel/checkoutPageViewModel.dart';
+import '../MenuPage/menuPage.dart';
 
 class CartItem extends StatelessWidget {
   CartItem(
@@ -160,9 +162,14 @@ class Card2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Orders> suggested = [];
-    // final repo = prov.Provider.of<CheckoutViewModel>(context, listen: false);
-    // repo.getSuggestions();
+    // List<Orders> suggested = [];
+    final repo = prov.Provider.of<MenuPageData>(context, listen: false);
+    // // repo.getSuggestions();
+    // print("Cart:");
+    // print(repo.cart);
+    CheckoutViewModel().getSuggestions(
+      context,
+    );
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -206,31 +213,56 @@ class Card2 extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Expanded(
-              child:
-                  // builder: (context, value, child) {
-                  //   suggested = value.suggestions;
-                  //   //  value.notifyListeners();
-                  //   print('list printing');
-                  //   log(suggested.toString());
-                  //return
-                  ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: 20,
-                      color: Colors.red,
-                      child: Text(
-                        'list[index].items.toString()',
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+            prov.Consumer<MenuPageData>(
+              builder: (context, ref, child) {
+                List<String>? suggestionList = ref.sugg;
+                return Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Builder(
+                    builder: (context) {
+                      // print('printing snapshot');
+                      // print(suggestionList);
+
+                      //  print(snapshot.connectionState);
+                      if (suggestionList == null) {
+                        // log('Data NULL');
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      // log('data $suggestionList');
+                      if (!suggestionList.isNotEmpty) {
+                        return const CircularProgressIndicator();
+                      }
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: suggestionList?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CartItem(
+                              image:
+                                  ref.code_item[suggestionList[index]]?.image ??
+                                      "",
+                              name:
+                                  ref.code_item[suggestionList[index]]?.name ??
+                                      "",
+                              price:
+                                  ref.code_item[suggestionList[index]]?.price ??
+                                      0,
+                              itemButton: true,
+                              quantity: ref.cart,
+                              menu: ref.code_item[suggestionList[index]],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                );
+              },
+            )
           ],
         ),
       ),
@@ -338,10 +370,10 @@ class CardTexts extends StatelessWidget {
                     ),
               Column(
                 children: List.generate(ref.cart.keys.length, (index) {
-                  print("Cart : ");
-                  print(ref.cart.keys.length);
-                  print(ref.code_item[ref.cart.keys.toList()[index]]?.name ??
-                      "NULL");
+                  // print("Cart : ");
+                  // print(ref.cart.keys.length);
+                  // print(ref.code_item[ref.cart.keys.toList()[index]]?.name ??
+                  // "NULL");
                   return Padding(
                     padding: const EdgeInsets.only(top: 16.0),
                     child: CartItem(
