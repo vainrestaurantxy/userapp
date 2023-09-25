@@ -35,8 +35,8 @@ class MenuPageViewModel extends ChangeNotifier {
   List<Widget> createMenu(
       Map<String, List<RestaurantMenu>> categoryDividedMenu) {
     List<Widget> items = [];
-    print("object");
-    print(tag);
+    // print("object");
+    // print(tag);
 
     if (tag == "") {
       for (var i in categoryDividedMenu.entries) {
@@ -73,13 +73,13 @@ class MenuPageViewModel extends ChangeNotifier {
     } else {
       for (var i in categoryDividedMenu.entries) {
         // keys.add(GlobalKey());
-        print("filterd");
+        //  print("filterd");
         GlobalKey key = GlobalKey();
         keys[i.key] = key;
         List<RestaurantMenu> filterdItems = i.value
             .where((element) => (element.tags?[0] ?? "") == tag)
             .toList();
-        print(filterdItems);
+        //  print(filterdItems);
         items.add(
           ExpansionTile(
             key: keys[i.key],
@@ -109,8 +109,8 @@ class MenuPageViewModel extends ChangeNotifier {
       }
     }
 
-    log('menu ${categoryDividedMenu['Grills']![0].tags.toString()}');
-    log('selectedTags: $selectedTags');
+    // log('menu ${categoryDividedMenu['Grills']![0].tags.toString()}');
+    // log('selectedTags: $selectedTags');
     return items;
   }
 
@@ -118,12 +118,12 @@ class MenuPageViewModel extends ChangeNotifier {
     final prov = Provider.of<MenuPageData>(context, listen: false);
     int items = 0;
     int amount = 0;
-    print(prov.cart);
+    //  print(prov.cart);
     for (var i in prov.cart.entries) {
       String code = i.key;
       int count = i.value;
       items += count;
-      print(prov.code_item[code]);
+      //  print(prov.code_item[code]);
       amount += count * (prov.code_item[code]?.price ?? 0);
     }
     return [items, amount];

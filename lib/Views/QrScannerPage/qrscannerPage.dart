@@ -46,11 +46,11 @@ class _QrScannerState extends ConsumerState<QrScanner> {
       if (result?.code?.isNotEmpty ?? false) {
         String id = result!.code!
             .replaceFirst('https://customer.feastdubai.com/#/menu/', '');
-        log(id);
+        // log(id);
         String id2 = id.split('/')[0];
-        log(id2);
+        //log(id2);
         String tableNo = id.split('/')[2];
-        log(tableNo);
+        // log(tableNo);
         Constants.tableNo = int.parse(tableNo);
         setLocal(key: "id", value: id2);
         Constants.id = id2;
@@ -76,7 +76,7 @@ class _QrScannerState extends ConsumerState<QrScanner> {
   }
 
   void _onPermissionSet(BuildContext context, QrController ctrl, bool p) {
-    log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
+    // log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
     if (!p) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('no Permission')),
