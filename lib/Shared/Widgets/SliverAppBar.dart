@@ -102,9 +102,17 @@ Widget createCustomSliverAppBar({
                                   onTap: () {
                                     // print("filter");
                                     if (index == 0) {
-                                      MenuPageViewModel.tag = "Veg";
+                                      if (MenuPageViewModel.tag != "Veg") {
+                                        MenuPageViewModel.tag = "Veg";
+                                      } else {
+                                        MenuPageViewModel.tag = "";
+                                      }
                                     } else {
-                                      MenuPageViewModel.tag = "Non Veg";
+                                      if (MenuPageViewModel.tag != "Non Veg") {
+                                        MenuPageViewModel.tag = "Non Veg";
+                                      } else {
+                                        MenuPageViewModel.tag = "";
+                                      }
                                     }
                                     // ref.tag = "${}";
                                     print(ref.selectedTags);
