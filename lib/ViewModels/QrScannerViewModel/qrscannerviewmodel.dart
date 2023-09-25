@@ -1,8 +1,9 @@
 import 'package:dine/Data/Repositories/MenuPage.dart';
+import 'package:get_ip_address/get_ip_address.dart';
 import 'package:get_mac_address/get_mac_address.dart';
 import 'package:provider/provider.dart';
 
-import '../../Utils/Constants/staticConstants.dart';
+import '../../Utils/Constants/staticConstants.dart' as constant;
 
 class QrScannerViewModel {
   Future<bool> getRestaurant({required String id, required context}) async {
@@ -16,9 +17,9 @@ class QrScannerViewModel {
   }
 
   Future<String> getMacAdderess() async {
-    final _getMacAddressPlugin = GetMacAddress();
-    String macAdd = await _getMacAddressPlugin.getMacAddress() ?? "";
-    Constants.macAddress = macAdd;
-    return macAdd;
+    var ipAddress = IpAddress();
+    dynamic data = await ipAddress.getIpAddress();
+    constant.Constants.macAddress = data;
+    return data;
   }
 }

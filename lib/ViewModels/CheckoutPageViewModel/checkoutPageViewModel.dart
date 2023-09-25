@@ -102,6 +102,7 @@ class CheckoutViewModel {
         // log('latest $latestOrder');
         print(data);
         // Filter orders by macAddress and non-empty orderStatus
+
         final filteredOrders = orderList
             .where((orderData) =>
                 orderData["macAdd"] == Constants.macAddress &&

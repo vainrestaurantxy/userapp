@@ -46,6 +46,7 @@ dependencies:
   shared_preferences: ^2.2.0
   google_fonts: ^6.0.0
   get_mac_address: ^0.0.2
+  get_ip_address: ^0.0.6
 
 dev_dependencies:
   flutter_test:
