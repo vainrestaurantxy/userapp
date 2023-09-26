@@ -127,5 +127,7 @@ class CheckoutViewModel {
     List<String> suggestion = [];
     menuCorrected.forEach((e) => suggestion.addAll(e.recommendedWith ?? []));
     Provider.of<MenuPageData>(context, listen: false).sugg = suggestion;
+    return suggestion;
+    // print(menuCorrected);
   }
 }

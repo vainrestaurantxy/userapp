@@ -56,6 +56,8 @@ class _QrScannerState extends ConsumerState<QrScanner> {
         Constants.id = id2;
         bool status = await viewModel.getRestaurant(id: id2, context: context);
         String mac = await viewModel.getMacAdderess();
+
+        print('ip address $mac');
         await prov.Provider.of<MenuPageData>(context, listen: false).setUser(
             macAdderess: mac,
             name: "",

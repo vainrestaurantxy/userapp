@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import '../../Storage/sharedPreference.dart';
 import '../../Utils/Constants/staticConstants.dart';
 import '../../Utils/texts.dart';
+import '../../ViewModels/QrScannerViewModel/qrscannerviewmodel.dart';
 
 class CheckoutCartPage extends StatefulWidget {
   const CheckoutCartPage({super.key});
@@ -24,6 +25,7 @@ class CheckoutCartPage extends StatefulWidget {
 class _CheckoutCartPageState extends State<CheckoutCartPage> {
   @override
   Widget build(BuildContext context) {
+    QrScannerViewModel viewModel = QrScannerViewModel();
     CheckoutViewModel().getCart(context);
     final ref = Provider.of<MenuPageData>(context, listen: false);
 
@@ -37,13 +39,15 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
           padding: const EdgeInsets.all(8.0),
           child: TextButton(
               onPressed: () async {
+                String mac = await viewModel.getMacAdderess();
+                print('ip add haww ${mac}');
                 Orders order = Orders(
                     contactNo: Constants.phone,
                     customerName: Constants.name,
                     discount: ref.getDiscount(),
                     quanntity: ref.cart,
                     items: ref.cart.keys.map((e) => ref.code_item[e]!).toList(),
-                    macAdd: Constants.macAddress,
+                    macAdd: mac,
                     orderStatus: "Order Confirmed",
                     price: ref.getTotal(),
                     tableNo: Constants.tableNo,
@@ -70,6 +74,6 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                         fontWeight: FontWeight.w600),
                   )))),
         ),
-        body: SingleChildScrollView(child: Card2()));
+        body: const SingleChildScrollView(child: Card2()));
   }
 }

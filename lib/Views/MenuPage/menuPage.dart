@@ -45,6 +45,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
         }
         items = MenuPageViewModel().createMenu(repo.categoryDividedMenu!);
         // print("items:" + items.toString());
+        print('ip addr ${Constants.macAddress}');
         restaurant = repo.restaurant!;
         repo.getData(restaurant);
         return Scaffold(
