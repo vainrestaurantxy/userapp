@@ -482,7 +482,7 @@ class CardTexts extends StatelessWidget {
                                       ),
                                       TextSpan(
                                         text:
-                                            '${(ref.getTotal() + ref.getTotal() * 0.05) - ref.getDiscount()} AED',
+                                            '${((ref.getTotal() + ref.getTotal() * 0.05) - ref.getDiscount()).toStringAsFixed(2)} AED',
                                         style: const TextStyle(
                                           color: Color(0xFF53389E),
                                           fontSize: 16,

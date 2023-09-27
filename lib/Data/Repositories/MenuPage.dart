@@ -29,7 +29,7 @@ class MenuPageData extends ChangeNotifier {
     notifyListeners();
   }
 
-  getTotal() {
+  double getTotal() {
     double price = 0.0;
     for (MapEntry<String, int> a in cart.entries) {
       if ((code_item[a.key]?.tax ?? 0) == 5) {
@@ -38,10 +38,11 @@ class MenuPageData extends ChangeNotifier {
         price += ((code_item[a.key]?.price ?? 0) / 1.01);
       }
     }
-    return price;
+
+    return double.parse(price.toStringAsFixed(2));
   }
 
-  getDiscount() {
+  double getDiscount() {
     double discount = 0.0;
     for (MapEntry<String, int> a in cart.entries) {
       discount += (((code_item[a.key]?.price ?? 0) * 0.05) +
@@ -49,7 +50,8 @@ class MenuPageData extends ChangeNotifier {
           (cart[(a.key)] as int) *
           ((code_item[a.key]?.discount ?? 0) / 100);
     }
-    return discount;
+
+    return double.parse(discount.toStringAsFixed(2));
   }
 
   Future<void> getRestaurant(String id, context) async {
