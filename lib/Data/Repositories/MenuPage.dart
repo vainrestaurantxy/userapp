@@ -25,6 +25,7 @@ class MenuPageData extends ChangeNotifier {
       {}; //code_item stores a map of restaurant name as key and res menu as value
   Network network = Network();
   Map<String, int> order = {};
+  bool myOrders = false;
   refresh() {
     notifyListeners();
   }

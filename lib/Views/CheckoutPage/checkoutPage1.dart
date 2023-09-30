@@ -16,6 +16,8 @@ class CheckoutPage extends StatefulWidget {
 class _CheckoutPageState extends State<CheckoutPage> {
   TextEditingController nameCtrl = TextEditingController();
   TextEditingController phnCtrl = TextEditingController();
+  TextEditingController tableCtrl =
+      TextEditingController(text: Constants.tableNo.toString());
   @override
   Widget build(BuildContext context) {
     CheckoutViewModel().getCart(context);
@@ -43,14 +45,20 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 height: 35,
               ),
               TextFormField(
-                readOnly: true,
-                initialValue: Constants.tableNo.toString(),
+                controller: tableCtrl,
+                onChanged: (value) {
+                  Constants.tableNo = int.parse(value);
+                },
+                //  readOnly: true,
+                //  initialValue: Constants.tableNo.toString(),
                 decoration: InputDecoration(
-                  label: const Text("Table Number"),
-                  enabledBorder: OutlineInputBorder(
+                    label: const Text("Table Number"),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(color: Color(0xFF8C8C8C))),
+                    focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Color(0xFF8C8C8C))),
-                ),
+                    )),
               ),
               const SizedBox(
                 height: 20,

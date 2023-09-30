@@ -10,6 +10,7 @@ import '../../Utils/Constants/staticConstants.dart';
 import '../../Data/Repositories/MenuPage.dart';
 
 createAppBar(BuildContext context) {
+  final repo = Provider.of<MenuPageData>(context, listen: false);
   return AppBar(
     automaticallyImplyLeading: false,
     elevation: 0,
@@ -40,10 +41,20 @@ createAppBar(BuildContext context) {
               }
             }
           },
-          child: Image.asset(
-            'assets/Icon.png',
-            height: 10,
-          )),
+          child: repo.myOrders
+              ? GestureDetector(
+                  onTap: () {
+                    context.go('/menu/${Constants.id}/status');
+                  },
+                  child: Image.asset(
+                    'assets/restaurantIcon.png',
+                    height: 10,
+                  ),
+                )
+              : Image.asset(
+                  'assets/Icon.png',
+                  height: 10,
+                )),
       // const SizedBox(
       //   width: 24,
       // ),

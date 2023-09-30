@@ -50,18 +50,27 @@ class Status extends StatelessWidget {
             ));
       }
       restaurant = prov.restaurant;
+      final provi = Provider.of<MenuPageData>(context, listen: false);
       return Scaffold(
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.white,
         appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.black),
+          leading: IconButton(
+              onPressed: () {
+                context.go("/menu/${Constants.id}");
+                provi.myOrders = true;
+                provi.cart = {};
+              },
+              icon: Icon(Icons.arrow_back)),
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextButton(
-              onPressed: () {
+              onPressed: () async {
+                provi.cart = {};
+                provi.myOrders = true;
                 context.go("/menu/${Constants.id}");
               },
               child: Container(
