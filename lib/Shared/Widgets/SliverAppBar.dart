@@ -9,14 +9,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart' as prov;
 
-import './../../ViewModels/MenuPageViewModel/menuPageViewModel.dart';
+import '../../ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 
 Widget createCustomSliverAppBar({
   required Restaurant? rest,
   required ScrollController? controller,
 }) {
   // log('length ${restaurant.tags?.length.toString()}');
-  List<String> genre = ['Veg', 'Non Veg'];
+  List<String> genre = ['Veg', 'Non Veg', 'Recommended'];
   //List<String> selectedTags = [];
   Widget customSliverAppBar = prov.Consumer<MenuPageData>(
     builder: (context, res, child) {
@@ -25,17 +25,17 @@ Widget createCustomSliverAppBar({
       return SliverAppBar(
         automaticallyImplyLeading: false,
         floating: false,
-        expandedHeight: 350,
+        expandedHeight: 355,
         elevation: 0,
         pinned: true,
-        collapsedHeight: 125,
+        collapsedHeight: 130,
         flexibleSpace: FlexibleSpaceBar(
           expandedTitleScale: 1,
           titlePadding: const EdgeInsets.all(0),
           title: Container(
             color: Colors.white,
             width: double.infinity,
-            height: 125,
+            height: 130,
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
@@ -67,7 +67,7 @@ Widget createCustomSliverAppBar({
                   //   ),
                   // )),
                   const SizedBox(
-                    height: 35,
+                    height: 50,
                   ),
 
                   Align(
@@ -102,20 +102,25 @@ Widget createCustomSliverAppBar({
                                   onTap: () {
                                     // print("filter");
                                     if (index == 0) {
-                                      if (MenuPageViewModel.tag != "Veg") {
+                                      if (ref.selectedFilterIndex != 0) {
+                                        ref.selectedFilterIndex = 0;
+                                        MenuPageViewModel.tag = "";
+                                      } else {
+                                        ref.selectedFilterIndex = -1;
                                         MenuPageViewModel.tag = "Veg";
-                                      } else {
-                                        MenuPageViewModel.tag = "";
                                       }
-                                    } else {
-                                      if (MenuPageViewModel.tag != "Non Veg") {
+                                    } else if (index == 1) {
+                                      if (ref.selectedFilterIndex != 1) {
+                                        ref.selectedFilterIndex = 1;
+                                        MenuPageViewModel.tag = "";
+                                      } else {
+                                        ref.selectedFilterIndex = -1;
                                         MenuPageViewModel.tag = "Non Veg";
-                                      } else {
-                                        MenuPageViewModel.tag = "";
                                       }
+                                    } else if (index == 2) {
+                                      ref.selectedFilterIndex = 2;
+                                      MenuPageViewModel.tag = "Recommended";
                                     }
-                                    // ref.tag = "${}";
-                                    //   print(ref.selectedTags);
                                     final provider =
                                         prov.Provider.of<RestaurantBuilder>(
                                             context,
@@ -136,24 +141,38 @@ Widget createCustomSliverAppBar({
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 8.0, vertical: 4),
                                       decoration: BoxDecoration(
+                                          color:
+                                              ref.selectedFilterIndex == index
+                                                  ? Color(0xff323232)
+                                                  : Colors.transparent,
                                           border: Border.all(
                                               color: const Color(0xFFF4F4FF)),
                                           borderRadius:
                                               BorderRadius.circular(4)),
                                       child: Row(
                                         children: [
-                                          SvgPicture.asset(
-                                            "assets/fastfood.svg",
-                                            width: 20,
-                                            height: 20,
-                                          ),
+                                          ref.selectedFilterIndex != index
+                                              ? SvgPicture.asset(
+                                                  "assets/fastfood.svg",
+                                                  width: 20,
+                                                  height: 20,
+                                                )
+                                              : Image.asset(
+                                                  'assets/fastfoodwhite.png',
+                                                  height: 20,
+                                                  width: 20,
+                                                ),
                                           const SizedBox(
                                             width: 10,
                                           ),
                                           Text(genre[index],
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 fontSize: 12,
-                                                color: Colors.black,
+                                                color:
+                                                    ref.selectedFilterIndex !=
+                                                            index
+                                                        ? Colors.black
+                                                        : Colors.white,
                                                 fontWeight: FontWeight.w500,
                                               ))
                                         ],
@@ -166,6 +185,8 @@ Widget createCustomSliverAppBar({
                                 return GestureDetector(
                                   onTap: () {
                                     // print(MenuPageViewModel.keys);
+                                    ref.selectedFilterIndex = -1;
+                                    ref.notifyListeners();
                                     Scrollable.ensureVisible(MenuPageViewModel
                                         .keys[restaurant.tags![resIndex]]!
                                         .currentContext!);

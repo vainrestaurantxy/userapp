@@ -45,7 +45,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
         }
         items = MenuPageViewModel().createMenu(repo.categoryDividedMenu!);
         // print("items:" + items.toString());
-        print('ip addr ${Constants.macAddress}');
+        //  print('ip addr ${Constants.macAddress}');
         restaurant = repo.restaurant!;
         repo.getData(restaurant);
         return Scaffold(
@@ -80,6 +80,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                               onTap: () {
                                 setLocal(
                                     key: "cart", value: jsonEncode(ref.cart));
+
                                 context.go("/menu/${Constants.id}/checkout");
                               },
                               child: Container(

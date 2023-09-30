@@ -10,7 +10,7 @@ class MenuPageViewModel extends ChangeNotifier {
   static Map<String, GlobalKey> keys = {};
   String selectedTags = "Ayush";
   static String tag = "";
-
+  int selectedFilterIndex = -1;
   Map<String, List<RestaurantMenu>> reArrangeCategory(
       {required Restaurant restaurant}) {
     Map<String, List<RestaurantMenu>> categoryDividedMenu = {};

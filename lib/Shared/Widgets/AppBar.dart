@@ -15,17 +15,17 @@ createAppBar(BuildContext context) {
     elevation: 0,
     backgroundColor: Colors.transparent,
     title: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SvgPicture.asset(
-          'assets/logo.svg',
-          theme: const SvgTheme(currentColor: Colors.black),
+        SizedBox(
+          height: 100,
+          child: Image.asset(
+            'assets/Smallwith White BG.png',
+          ),
         ),
-        const SizedBox(
-          width: 5,
-        ),
-        Text("DINE",
+        Text("Feast",
             style: GoogleFonts.poppins(
-                fontSize: 24, color: Colors.black, fontWeight: FontWeight.w600))
+                fontSize: 23, color: Colors.black, fontWeight: FontWeight.w600))
       ],
     ),
     actions: [

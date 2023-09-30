@@ -5,6 +5,7 @@ import 'package:dine/Views/CheckoutPage/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../Data/Repositories/MenuPage.dart';
 import '../../Models/orders.dart';
 import '../../Models/restaurantMenu.dart';
 
@@ -14,6 +15,7 @@ class StatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ref = Provider.of<MenuPageData>(context, listen: false);
     return Container(
       decoration: BoxDecoration(
           color: Colors.white,

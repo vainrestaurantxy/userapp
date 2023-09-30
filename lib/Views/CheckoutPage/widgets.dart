@@ -32,6 +32,7 @@ class CartItem extends StatelessWidget {
   RestaurantMenu? menu;
   @override
   Widget build(BuildContext context) {
+    print(quantity);
     return SizedBox(
       width: double.infinity,
       // height: 100,
@@ -311,10 +312,6 @@ class CardTexts extends StatelessWidget {
                               fontWeight: FontWeight.w600)),
                     ]),
                   ),
-                  const Icon(
-                    Icons.edit,
-                    size: 20,
-                  )
                 ],
               ),
               Constants.name == ''
