@@ -1,8 +1,10 @@
+import 'package:dine/Storage/sharedPreference.dart';
 import 'package:dine/Utils/texts.dart';
 import 'package:dine/ViewModels/CheckoutPageViewModel/checkoutPageViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Utils/Constants/staticConstants.dart';
 
@@ -14,13 +16,33 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
+  @override
+  void initState() {
+    super.initState();
+    getTableNo();
+  }
+
+  Future<void> getTableNo() async {
+    final table = await getLocal(key: 'tableNo');
+    print('table $table');
+    // final prefs = await SharedPreferences.getInstance();
+    // final table = prefs.getInt('tableNo') ?? 9;
+    setState(() async {
+      Constants.tableNo = await int.parse(table);
+      tableCtrl.text = Constants.tableNo.toString();
+    });
+  }
+
   TextEditingController nameCtrl = TextEditingController();
   TextEditingController phnCtrl = TextEditingController();
   TextEditingController tableCtrl =
       TextEditingController(text: Constants.tableNo.toString());
+
   @override
   Widget build(BuildContext context) {
+    //Future<String> tableNo = getLocal(key: 'tableNo');
     CheckoutViewModel().getCart(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -47,6 +69,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               TextFormField(
                 controller: tableCtrl,
                 onChanged: (value) {
+                  setLocal(key: 'tableNo', value: value);
                   Constants.tableNo = int.parse(value);
                 },
                 //  readOnly: true,

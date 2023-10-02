@@ -5,7 +5,7 @@ import 'package:dine/Data/Repositories/MenuPage.dart';
 import 'package:dine/Shared/Widgets/AppBar.dart';
 import 'package:dine/Storage/sharedPreference.dart';
 import 'package:dine/ViewModels/QrScannerViewModel/qrscannerviewmodel.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_code_scanner/flutter_code_scanner.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -42,6 +42,7 @@ class _QrScannerState extends ConsumerState<QrScanner> {
   void _onQRViewCreated(QrController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) async {
+      final prefs = await SharedPreferences.getInstance();
       result = scanData;
       if (result?.code?.isNotEmpty ?? false) {
         String id = result!.code!
@@ -50,10 +51,12 @@ class _QrScannerState extends ConsumerState<QrScanner> {
         String id2 = id.split('/')[0];
         //log(id2);
         String tableNo = id.split('/')[2];
-        // log(tableNo);
-        Constants.tableNo = int.parse(tableNo);
+        log(tableNo);
+        prefs.setInt('tableNo', int.parse(tableNo));
         setLocal(key: "id", value: id2);
+        setLocal(key: 'tableNo', value: tableNo);
         Constants.id = id2;
+        Constants.tableNo = int.parse(tableNo);
         bool status = await viewModel.getRestaurant(id: id2, context: context);
         String mac = await viewModel.getMacAdderess();
 

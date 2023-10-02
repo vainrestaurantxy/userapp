@@ -8,6 +8,7 @@ import 'package:dine/Storage/sharedPreference.dart';
 import 'package:dine/ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../Models/restaurantMenu.dart';
 import '../../Utils/Constants/staticConstants.dart';
