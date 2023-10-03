@@ -50,7 +50,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
               const SizedBox(
