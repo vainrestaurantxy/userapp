@@ -71,7 +71,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   setLocal(key: 'tableNo', value: value);
                   Constants.tableNo = int.parse(value);
                 },
-                //  readOnly: true,
+                readOnly: false,
                 //  initialValue: Constants.tableNo.toString(),
                 decoration: InputDecoration(
                     label: const Text("Table Number"),
