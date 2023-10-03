@@ -68,7 +68,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               TextFormField(
                 controller: tableCtrl,
                 onChanged: (value) {
-                  setLocal(key: 'tableNo', value: value);
+                  // setLocal(key: 'tableNo', value: value);
                   Constants.tableNo = int.parse(value);
                 },
                 readOnly: false,
