@@ -58,8 +58,7 @@ class MenuPageData extends ChangeNotifier {
   Future<void> getRestaurant(String id, context) async {
     Map<String, dynamic>? json = await network.get("Restaurants", id);
     restaurant = Restaurant.fromJson(json!);
-    categoryDividedMenu =
-        MenuPageViewModel().reArrangeCategory(restaurant: restaurant!);
+    categoryDividedMenu = MenuPageViewModel().reArrangeCategory(restaurant: restaurant!);
     code_item = MenuPageViewModel().mapCodeToItem(restaurant!.menu!);
     notifyListeners();
     final builder = Provider.of<RestaurantBuilder>(context, listen: false);

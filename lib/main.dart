@@ -40,8 +40,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: router,
       title: 'Dine',
-      theme: ThemeData(
-        colorScheme: const ColorScheme.light(primary: Color(0xFF8C8C8C)),
+      theme: ThemeData(colorScheme: const ColorScheme.light(primary: Color(0xFF8C8C8C)),
         // useMaterial3: true,
       ),
       // home: const QrScanner(),
