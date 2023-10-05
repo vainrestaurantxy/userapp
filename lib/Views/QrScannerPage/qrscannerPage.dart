@@ -25,10 +25,11 @@ class QrScanner extends ConsumerStatefulWidget {
 }
 
 class _QrScannerState extends ConsumerState<QrScanner> {
-  QrScannerViewModel viewModel = QrScannerViewModel();
-  bc.Barcode? result;
-  QrController? controller;
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  // QrScannerViewModel viewModel = QrScannerViewModel();
+  // bc.Barcode? result;
+  // QrController? controller;
+  // final GlobalKey qrKey = GlobalKey(debugLabel: 'QR_${UniqueKey().toString()}');
+
   // @override
   // void reassemble() {
   //   super.reassemble();
@@ -39,81 +40,83 @@ class _QrScannerState extends ConsumerState<QrScanner> {
   //   controller!.resumeCamera();
   // }
 
-  void _onQRViewCreated(QrController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) async {
-      final prefs = await SharedPreferences.getInstance();
-      result = scanData;
-      if (result?.code?.isNotEmpty ?? false) {
-        String id = result!.code!
-            .replaceFirst('https://customer.feastdubai.com/#/menu/', '');
-        // log(id);
-        String id2 = id.split('/')[0];
-        //log(id2);
-        String tableNo = id.split('/')[2];
-        log(tableNo);
-        prefs.setInt('tableNo', int.parse(tableNo));
-        setLocal(key: "id", value: id2);
-        setLocal(key: 'tableNo', value: tableNo);
-        Constants.id = id2;
-        Constants.tableNo = int.parse(tableNo);
-        bool status = await viewModel.getRestaurant(id: id2, context: context);
-        String mac = await viewModel.getMacAdderess();
+  // void _onQRViewCreated(QrController controller) {
+  //   // this.controller = controller;
+  //   // controller.scannedDataStream.listen((scanData) async {
+  //   //   final prefs = await SharedPreferences.getInstance();
+  //   //   result = scanData;
+  //   //   if (result?.code?.isNotEmpty ?? false) {
+  //   //     String id = result!.code!
+  //   //         .replaceFirst('https://customer.feastdubai.com/#/menu/', '');
+  //       // log(id);
+  //       String id2 = id.split('/')[0];
+  //       //log(id2);
+  //       String tableNo = id.split('/')[2];
+  //       log(tableNo);
+  //       prefs.setInt('tableNo', int.parse(tableNo));
+  //       setLocal(key: "id", value: id2);
+  //       setLocal(key: 'tableNo', value: tableNo);
+  //       Constants.id = id2;
+  //       Constants.tableNo = int.parse(tableNo);
+  //       bool status = await viewModel.getRestaurant(id: id2, context: context);
+  //       String mac = await viewModel.getMacAdderess();
 
-        // print('ip address $mac');
-        await prov.Provider.of<MenuPageData>(context, listen: false).setUser(
-            macAdderess: mac,
-            name: "",
-            phoneno: "",
-            tableNo: Constants.tableNo);
-        await prov.Provider.of<MenuPageData>(context, listen: false)
-            .getUser(mac);
-        if (status) {
-          controller.dispose();
-          context.go(
-            '/menu/${id}',
-          );
-        }
-      }
-    });
-    // controller.pauseCamera();
-    // controller.resumeCamera();
-  }
+  //       // print('ip address $mac');
+  //       await prov.Provider.of<MenuPageData>(context, listen: false).setUser(
+  //           macAdderess: mac,
+  //           name: "",
+  //           phoneno: "",
+  //           tableNo: Constants.tableNo);
+  //       await prov.Provider.of<MenuPageData>(context, listen: false)
+  //           .getUser(mac);
+  //       if (status) {
+  //         controller.dispose();
+  //         context.go(
+  //           '/menu/${id}',
+  //         );
+  //       }
+  //     }
+  //   });
+  // controller.pauseCamera();
+  // controller.resumeCamera();
+  // }
 
-  void _onPermissionSet(BuildContext context, QrController ctrl, bool p) {
-    // log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
-    if (!p) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('no Permission')),
-      );
-    }
-  }
+  // void _onPermissionSet(BuildContext context, QrController ctrl, bool p) {
+  //   // log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
+  //   if (!p) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text('no Permission')),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    var scanArea = (MediaQuery.of(context).size.width < 400 ||
-            MediaQuery.of(context).size.height < 400)
-        ? 180.0
-        : 240.0;
+    // var scanArea = (MediaQuery.of(context).size.width < 400 ||
+    //         MediaQuery.of(context).size.height < 400)
+    //     ? 180.0
+    //     : 240.0;
     return Scaffold(
       appBar: createAppBar(context),
-      body: QRView(
-        key: qrKey,
-        onQRViewCreated: _onQRViewCreated,
-        overlay: QrScannerOverlayShape(
-          borderColor: Colors.white,
-          borderLength: 30,
-          borderWidth: 5,
-          cutOutSize: scanArea,
-        ),
-        onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
-      ),
+      body: Center(child: Text("Please Scan the Table QR Code To open a Menu"),),
+      // body: QRView(
+      //   key: qrKey,
+      //   onQRViewCreated: _onQRViewCreated,
+      //   overlay: QrScannerOverlayShape(
+      //     borderColor: Colors.white,
+      //     borderLength: 30,
+      //     borderWidth: 5,
+      //     cutOutSize: scanArea,
+      //   ),
+      //   onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+      // ),
     );
   }
 
   @override
   void dispose() {
-    controller?.dispose();
+    // controller?.dispose();
+
     super.dispose();
   }
 }
