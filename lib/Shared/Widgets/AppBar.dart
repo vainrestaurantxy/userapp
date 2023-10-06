@@ -19,9 +19,9 @@ createAppBar(BuildContext context) {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(
-          height: 100,
+          height: 30,
           child: Image.asset(
-            'assets/Smallwith White BG.png',
+            'assets/Logo Feast.png',
           ),
         ),
         Text("Feast",
