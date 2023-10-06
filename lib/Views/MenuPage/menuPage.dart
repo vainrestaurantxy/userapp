@@ -122,7 +122,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                               child: ListView.builder(
                                 controller: controller,
                                 itemCount: (restaurant?.tags?.length ?? 0) + genre.length,
-                                // scrollDirection: Axis.horizontal,
+                                scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
                                   // log('Sliverbar page tags ${restaurant?.tags.toString()}');
                                   return prov.Consumer<MenuPageViewModel>(
