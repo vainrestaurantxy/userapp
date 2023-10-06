@@ -7,12 +7,12 @@ import '../../Models/restaurant.dart';
 import '../../Models/restaurantMenu.dart';
 
 class MenuPageViewModel extends ChangeNotifier {
-
+  static Map<String, GlobalKey> keys = {};
   String selectedTags = "Ayush";
   static String tag = "";
   int selectedFilterIndex = -1;
-  Map<String, List<RestaurantMenu>> reArrangeCategory(
-      {required Restaurant restaurant}) {
+
+  Map<String, List<RestaurantMenu>> reArrangeCategory({required Restaurant restaurant}) {
     Map<String, List<RestaurantMenu>> categoryDividedMenu = {};
     for (var item in restaurant.menu!) {
       if (categoryDividedMenu[item.category] == null) {
@@ -20,7 +20,6 @@ class MenuPageViewModel extends ChangeNotifier {
       }
       categoryDividedMenu[item.category]!.add(item);
     }
-
     return categoryDividedMenu;
   }
 
@@ -32,86 +31,82 @@ class MenuPageViewModel extends ChangeNotifier {
     return map;
   }
 
-  // List<Widget> createMenu(Map<String, List<RestaurantMenu>> categoryDividedMenu) {
-  //   List<Widget> items = [];
-  //   // print("object");
-  //   // print(tag);
-  //
-  //   if (tag == "") {
-  //     for (var i in categoryDividedMenu.entries) {
-  //       // keys.add(GlobalKey());
-  //       GlobalKey key = GlobalKey();
-  //       keys[i.key] = key;
-  //       items.add(
-  //         ExpansionTile(
-  //           key: keys[i.key],
-  //           title: Padding(
-  //             padding: const EdgeInsets.all(16.0),
-  //             child: Text(
-  //               i.key,
-  //               style: const TextStyle(
-  //                   color: Colors.black,
-  //                   fontSize: 18,
-  //                   fontWeight: FontWeight.w700),
-  //             ),
-  //           ),
-  //           childrenPadding: const EdgeInsets.all(8),
-  //           initiallyExpanded: true,
-  //           children: List.generate(
-  //               i.value.length,
-  //               (index) => Item(
-  //                   image: i.value[index].image ?? "",
-  //                   desc: i.value[index].description ?? "",
-  //                   price: i.value[index].price ?? 0,
-  //                   name: i.value[index].name ?? "",
-  //                   code: i.value[index].code ?? "",
-  //                   tags: i.value[index].tags ?? [])),
-  //         ),
-  //       );
-  //     }
-  //   } else {
-  //     for (var i in categoryDividedMenu.entries) {
-  //       // keys.add(GlobalKey());
-  //       //  print("filterd");
-  //       GlobalKey key = GlobalKey();
-  //       keys[i.key] = key;
-  //       List<RestaurantMenu> filterdItems = i.value
-  //           .where((element) => (element.tags?[0] ?? "") == tag)
-  //           .toList();
-  //       //  print(filterdItems);
-  //       items.add(
-  //         ExpansionTile(
-  //           key: keys[i.key],
-  //           title: Padding(
-  //             padding: const EdgeInsets.all(16.0),
-  //             child: Text(
-  //               i.key,
-  //               style: const TextStyle(
-  //                   color: Colors.black,
-  //                   fontSize: 18,
-  //                   fontWeight: FontWeight.w700),
-  //             ),
-  //           ),
-  //           childrenPadding: const EdgeInsets.all(8),
-  //           initiallyExpanded: true,
-  //           children: List.generate(
-  //               filterdItems.length,
-  //               (index) => Item(
-  //                   image: filterdItems[index].image ?? "",
-  //                   desc: filterdItems[index].description ?? "",
-  //                   price: filterdItems[index].price ?? 0,
-  //                   name: filterdItems[index].name ?? "",
-  //                   code: filterdItems[index].code ?? "",
-  //                   tags: filterdItems[index].tags ?? [])),
-  //         ),
-  //       );
-  //     }
-  //   }
-  //
-  //   // log('menu ${categoryDividedMenu['Grills']![0].tags.toString()}');
-  //   // log('selectedTags: $selectedTags');
-  //   return items;
-  // }
+  List<Widget> createMenu(Map<String, List<RestaurantMenu>> categoryDividedMenu) {
+    List<Widget> items = [];
+    // print("object");
+    // print(tag);
+
+    if (tag == "") {
+      for (var i in categoryDividedMenu.entries) {
+        // keys.add(GlobalKey());
+        GlobalKey key = GlobalKey();
+        keys[i.key] = key;
+        items.add(
+          ExpansionTile(
+            key: keys[i.key],
+            title: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                i.key,
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700),
+              ),
+            ),
+            childrenPadding: const EdgeInsets.all(8),
+            initiallyExpanded: true,
+            children: List.generate(
+                i.value.length,
+                (index) => Item(
+                    image: i.value[index].image ?? "",
+                    desc: i.value[index].description ?? "",
+                    price: i.value[index].price ?? 0,
+                    name: i.value[index].name ?? "",
+                    code: i.value[index].code ?? "",
+                    tags: i.value[index].tags ?? [])),
+          ),
+        );
+      }
+    }
+    else {
+      for (var i in categoryDividedMenu.entries) {
+        GlobalKey key = GlobalKey();
+        keys[i.key] = key;
+        List<RestaurantMenu> filterdItems = i.value.where((element) => (element.tags?[0] ?? "") == tag).toList();
+        items.add(
+          ExpansionTile(
+            key: keys[i.key],
+            title: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                i.key,
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700),
+              ),
+            ),
+            childrenPadding: const EdgeInsets.all(8),
+            initiallyExpanded: true,
+            children: List.generate(
+                filterdItems.length,
+                (index) => Item(
+                    image: filterdItems[index].image ?? "",
+                    desc: filterdItems[index].description ?? "",
+                    price: filterdItems[index].price ?? 0,
+                    name: filterdItems[index].name ?? "",
+                    code: filterdItems[index].code ?? "",
+                    tags: filterdItems[index].tags ?? [])),
+          ),
+        );
+      }
+    }
+
+    // log('menu ${categoryDividedMenu['Grills']![0].tags.toString()}');
+    // log('selectedTags: $selectedTags');
+    return items;
+  }
 
   List<int> getItemsAndAmount(context) {
     final prov = Provider.of<MenuPageData>(context, listen: false);
