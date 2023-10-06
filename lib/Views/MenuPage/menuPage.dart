@@ -40,7 +40,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
           return const Scaffold(
               backgroundColor: (Colors.black),
               body: Center(
-                child: CircularProgressIndicator(),
+                child: Text("Nothing to show here"),
               ));
         }
         items = MenuPageViewModel().createMenu(repo.categoryDividedMenu!);
