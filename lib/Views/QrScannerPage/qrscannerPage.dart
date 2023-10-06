@@ -80,7 +80,9 @@ class _QrScannerState extends ConsumerState<QrScanner> {
   // controller.pauseCamera();
   // controller.resumeCamera();
   // }
+  
 
+  
   // void _onPermissionSet(BuildContext context, QrController ctrl, bool p) {
   //   // log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
   //   if (!p) {
