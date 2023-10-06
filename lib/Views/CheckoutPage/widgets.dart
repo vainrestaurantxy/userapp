@@ -208,60 +208,51 @@ class Card2 extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            Align(
-                alignment: Alignment.bottomLeft,
-                child: giveText('Suggested', 16, 500)),
-            const SizedBox(
-              height: 10,
-            ),
             prov.Consumer<MenuPageData>(
               builder: (context, ref, child) {
                 List<String>? suggestionList = ref.sugg;
-                return Container(
-                  padding: const EdgeInsets.all(8),
-                  child: Builder(
-                    builder: (context) {
-                      // print('printing snapshot');
-                      // print(suggestionList);
-
-                      //  print(snapshot.connectionState);
-                      if (suggestionList == null) {
-                        // log('Data NULL');
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      // log('data $suggestionList');
-                      if (!suggestionList.isNotEmpty) {
-                        return const CircularProgressIndicator();
-                      }
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: suggestionList?.length ?? 0,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CartItem(
-                              image:
-                                  ref.code_item[suggestionList[index]]?.image ??
-                                      "",
-                              name:
-                                  ref.code_item[suggestionList[index]]?.name ??
-                                      "",
-                              price:
-                                  ref.code_item[suggestionList[index]]?.price ??
-                                      0,
-                              itemButton: true,
-                              quantity: ref.cart,
-                              menu: ref.code_item[suggestionList[index]],
-                            ),
+                return suggestionList!.length>0?
+                Column(
+                  children: [
+                    Align(
+                        alignment: Alignment.bottomLeft,
+                        child: giveText('Suggested', 16, 500)),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      child: Builder(
+                        builder: (context) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: suggestionList?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CartItem(
+                                  image:
+                                      ref.code_item[suggestionList[index]]?.image ??
+                                          "",
+                                  name:
+                                      ref.code_item[suggestionList[index]]?.name ??
+                                          "",
+                                  price:
+                                      ref.code_item[suggestionList[index]]?.price ??
+                                          0,
+                                  itemButton: true,
+                                  quantity: ref.cart,
+                                  menu: ref.code_item[suggestionList[index]],
+                                ),
+                              );
+                            },
                           );
                         },
-                      );
-                    },
-                  ),
-                );
+                      ),
+                    ),
+                  ],
+                ):SizedBox();
               },
             )
           ],
