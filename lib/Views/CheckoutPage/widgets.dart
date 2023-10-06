@@ -233,12 +233,12 @@ class Card2 extends StatelessWidget {
                       }
                       // log('data $suggestionList');
                       if (!suggestionList.isNotEmpty) {
-                        return const SizedBox();
+                        return const CircularProgressIndicator();
                       }
                       return ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: suggestionList.length,
+                        itemCount: suggestionList?.length ?? 0,
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
