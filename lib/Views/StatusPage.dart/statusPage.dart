@@ -30,10 +30,10 @@ class Status extends StatelessWidget {
 
   getRestaurant(context) async {
     final prov = Provider.of<MenuPageData>(context, listen: false);
-    String id = await getLocal(key: "id");
-    await prov.getRestaurant(id, context);
+    // String id = await getLocal(key: "id");
+    await prov.getRestaurant(Constants.id, context);
     StatusPageViewModel().getCartandOrder(context);
-    Constants.id = id;
+    // Constants.id = id;
   }
 
   @override

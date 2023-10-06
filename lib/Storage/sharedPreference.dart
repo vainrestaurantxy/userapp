@@ -1,4 +1,5 @@
 import 'dart:html';
+
 setLocal({required String key, required String value}) async {
   // SharedPreferences local = await SharedPreferences.getInstance();
   // local.setString(key, value);

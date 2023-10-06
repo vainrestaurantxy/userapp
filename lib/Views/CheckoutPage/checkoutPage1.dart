@@ -23,14 +23,14 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   Future<void> getTableNo() async {
-    final table = await getLocal(key: 'tableNo');
-    print('table $table');
+    // final table = await getLocal(key: 'tableNo');
+    // print('table $table');
     // final prefs = await SharedPreferences.getInstance();
     // final table = prefs.getInt('tableNo') ?? 9;
-    setState(() async {
-      Constants.tableNo = await int.parse(table);
-      tableCtrl.text = Constants.tableNo.toString();
-    });
+    // setState(() async {
+    //   Constants.tableNo = await int.parse(table);
+    //   tableCtrl.text = Constants.tableNo.toString();
+    // });
   }
 
   TextEditingController nameCtrl = TextEditingController();

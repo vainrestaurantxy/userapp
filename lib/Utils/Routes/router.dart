@@ -1,3 +1,4 @@
+import 'package:dine/Utils/Constants/staticConstants.dart';
 import 'package:dine/Views/CheckoutPage/checkout3.dart';
 import 'package:dine/Views/MenuPage/menuPage.dart';
 import 'package:dine/Views/StatusPage.dart/statusPage.dart';
@@ -27,6 +28,8 @@ final GoRouter router = GoRouter(
               GoRoute(
                   path: 'table/:no',
                   redirect: (context, state) {
+                    Constants.tableNo =
+                        int.parse(state.pathParameters['no'] ?? "0");
                     return '/menu/${state.pathParameters['id']}';
                   },
                   builder: (BuildContext context, GoRouterState state) {
