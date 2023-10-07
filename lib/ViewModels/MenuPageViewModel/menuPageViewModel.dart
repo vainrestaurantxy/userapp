@@ -10,6 +10,7 @@ class MenuPageViewModel extends ChangeNotifier {
   static Map<String, GlobalKey> keys = {};
   String selectedTags = "Ayush";
   static String tag = "";
+  static bool boolTag = false;
   int selectedFilterIndex = -1;
 
   Map<String, List<RestaurantMenu>> reArrangeCategory({required Restaurant restaurant}) {
@@ -34,9 +35,10 @@ class MenuPageViewModel extends ChangeNotifier {
   List<Widget> createMenu(Map<String, List<RestaurantMenu>> categoryDividedMenu) {
     List<Widget> items = [];
     // print("object");
-    // print(tag);
+     print("from create menu $tag");
+    print("from create menu $boolTag");
 
-    if (tag == "") {
+    if ((tag == "Veg" || tag == "Non Veg" || tag=="" || tag=="Non Alcoholic" || tag=="Alcoholic") && boolTag!=true) {
       for (var i in categoryDividedMenu.entries) {
         // keys.add(GlobalKey());
         GlobalKey key = GlobalKey();
@@ -69,13 +71,12 @@ class MenuPageViewModel extends ChangeNotifier {
         );
       }
     }
-    else {
+    else if(boolTag ==true){
       for (var i in categoryDividedMenu.entries) {
         GlobalKey key = GlobalKey();
         keys[i.key] = key;
         List<RestaurantMenu> filterdItems = i.value.where((element) => (element.tags?[0] ?? "") == tag).toList();
-        items.add(
-          ExpansionTile(
+        items.add(ExpansionTile(
             key: keys[i.key],
             title: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -98,8 +99,7 @@ class MenuPageViewModel extends ChangeNotifier {
                     name: filterdItems[index].name ?? "",
                     code: filterdItems[index].code ?? "",
                     tags: filterdItems[index].tags ?? [])),
-          ),
-        );
+          ),);
       }
     }
 

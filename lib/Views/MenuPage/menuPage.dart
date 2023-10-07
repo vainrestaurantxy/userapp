@@ -50,6 +50,8 @@ class _MenuPageState extends ConsumerState<MenuPage> {
         List<String> genre = [
           'Veg',
           'Non Veg',
+          'Non Alcoholic',
+          'Alcoholic'
         ];
         repo.getData(restaurant);
         log(Color(int.parse(restaurant.color!)).toString());
@@ -138,42 +140,92 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                           child: Center(
                             child: ListView.builder(
                               controller: controller,
-                              itemCount: (restaurant?.tags?.length ?? 0) +
-                                  genre.length,
+                              itemCount: genre.length,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
                                 // log('Sliverbar page tags ${restaurant?.tags.toString()}');
                                 return prov.Consumer<MenuPageViewModel>(
                                   builder: (context, ref, child) {
-                                    if (index < genre.length) {
+                                    // if (index < genre.length) {
                                       return GestureDetector(
                                         onTap: () {
-                                          // print("filter");
-                                          if (index == 0) {
-                                            if (ref.selectedFilterIndex != 0) {
-                                              ref.selectedFilterIndex = 0;
-                                              MenuPageViewModel.tag = "";
-                                            } else {
-                                              ref.selectedFilterIndex = -1;
-                                              MenuPageViewModel.tag = "Veg";
-                                            }
-                                          } else if (index == 1) {
-                                            if (ref.selectedFilterIndex != 1) {
-                                              ref.selectedFilterIndex = 1;
-                                              MenuPageViewModel.tag = "";
-                                            } else {
-                                              ref.selectedFilterIndex = -1;
-                                              MenuPageViewModel.tag = "Non Veg";
-                                            }
-                                          } else if (index == 2) {
-                                            ref.selectedFilterIndex = 2;
-                                            MenuPageViewModel.tag =
-                                                "Recommended";
+                                          switch(index) {
+                                            case 0: {
+                                              if(  MenuPageViewModel.boolTag==false){
+                                                MenuPageViewModel.boolTag=true;
+                                                MenuPageViewModel.tag = "Veg";
+                                                ref.selectedFilterIndex=index;
+                                              } else{
+                                                MenuPageViewModel.boolTag=false;
+                                                MenuPageViewModel.tag = "";
+                                                ref.selectedFilterIndex=-1;
+                                              }
+                                            }break;
+                                            case 1 :{
+                                              if(  MenuPageViewModel.boolTag==false){
+                                                MenuPageViewModel.boolTag=true;
+                                                MenuPageViewModel.tag = "Non Veg";
+                                                ref.selectedFilterIndex=index;
+                                              } else{
+                                                MenuPageViewModel.boolTag=false;
+                                                MenuPageViewModel.tag = "";
+                                                ref.selectedFilterIndex=-1;
+                                              }
+                                            } break;
+                                            case 2: {
+                                              if(  MenuPageViewModel.boolTag==false){
+                                                MenuPageViewModel.boolTag=true;
+                                                MenuPageViewModel.tag = "Non Alcoholic";
+                                                ref.selectedFilterIndex=index;
+                                              } else{
+                                                MenuPageViewModel.boolTag=false;
+                                                MenuPageViewModel.tag = "";
+                                                ref.selectedFilterIndex=-1;
+                                              }
+                                            }break;
+                                            case 3 :{
+                                              if(  MenuPageViewModel.boolTag==false){
+                                                MenuPageViewModel.boolTag=true;
+                                                MenuPageViewModel.tag = "Alcoholic";
+                                                ref.selectedFilterIndex=index;
+                                              } else{
+                                                MenuPageViewModel.boolTag=false;
+                                                MenuPageViewModel.tag = "";
+                                                ref.selectedFilterIndex=-1;
+                                              }
+                                            } break;
                                           }
-                                          final provider = prov.Provider.of<
-                                                  RestaurantBuilder>(context,
-                                              listen: false);
-                                          provider.notifyListeners();
+                                          // if (index == 0) {
+                                          //     if(  MenuPageViewModel.boolTag==false){
+                                          //       MenuPageViewModel.boolTag=true;
+                                          //       MenuPageViewModel.tag = "Veg";
+                                          //       ref.selectedFilterIndex=index;
+                                          //     } else{
+                                          //       MenuPageViewModel.boolTag=false;
+                                          //       MenuPageViewModel.tag = "Veg";
+                                          //       ref.selectedFilterIndex=-1;
+                                          //     }
+                                          // }
+                                          // else if (index == 1) {
+                                          //   //
+                                          //   if(  MenuPageViewModel.boolTag==false){
+                                          //     MenuPageViewModel.boolTag=true;
+                                          //     MenuPageViewModel.tag = "Non Veg";
+                                          //     ref.selectedFilterIndex=index;
+                                          //   }else {
+                                          //     MenuPageViewModel.boolTag = false;
+                                          //     MenuPageViewModel.tag = "Non Veg";
+                                          //     ref.selectedFilterIndex=-1;
+                                          //   }
+                                          // }
+
+
+                                          // else if (index == 2) {
+                                          //   ref.selectedFilterIndex = 2;
+                                          //   MenuPageViewModel.tag =
+                                          //       "Recommended";
+                                          // }
+                                          final provider = prov.Provider.of<RestaurantBuilder>(context, listen: false);provider.notifyListeners();
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
@@ -182,10 +234,8 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 8.0, vertical: 4),
                                             decoration: BoxDecoration(
-                                                color:
-                                                    ref.selectedFilterIndex ==
-                                                            index
-                                                        ? Color(0xff323232)
+                                                color: ref.selectedFilterIndex == index && MenuPageViewModel.boolTag==true
+                                                        ? Colors.red
                                                         : Colors.transparent,
                                                 border: Border.all(
                                                     color: const Color(
@@ -224,50 +274,50 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                           ),
                                         ),
                                       );
-                                    } else {
-                                      final resIndex = index - genre.length;
-                                      return GestureDetector(
-                                        onTap: () {
-                                          // print(MenuPageViewModel.keys);
-                                          ref.selectedFilterIndex = -1;
-                                          ref.notifyListeners();
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 4.0),
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8.0, vertical: 4),
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: const Color(
-                                                        0xFFF4F4FF)),
-                                                borderRadius:
-                                                    BorderRadius.circular(4)),
-                                            child: Row(
-                                              children: [
-                                                SvgPicture.asset(
-                                                  "assets/fastfood.svg",
-                                                  width: 20,
-                                                  height: 20,
-                                                ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Text(
-                                                    restaurant!.tags![resIndex],
-                                                    style: const TextStyle(
-                                                      fontSize: 12,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ))
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }
+                                    // else {
+                                    //   final resIndex = index - genre.length;
+                                    //   return GestureDetector(
+                                    //     onTap: () {
+                                    //       // print(MenuPageViewModel.keys);
+                                    //       ref.selectedFilterIndex = -1;
+                                    //       ref.notifyListeners();
+                                    //     },
+                                    //     child: Padding(
+                                    //       padding: const EdgeInsets.symmetric(
+                                    //           horizontal: 4.0),
+                                    //       child: Container(
+                                    //         padding: const EdgeInsets.symmetric(
+                                    //             horizontal: 8.0, vertical: 4),
+                                    //         decoration: BoxDecoration(
+                                    //             border: Border.all(
+                                    //                 color: const Color(
+                                    //                     0xFFF4F4FF)),
+                                    //             borderRadius:
+                                    //                 BorderRadius.circular(4)),
+                                    //         child: Row(
+                                    //           children: [
+                                    //             SvgPicture.asset(
+                                    //               "assets/fastfood.svg",
+                                    //               width: 20,
+                                    //               height: 20,
+                                    //             ),
+                                    //             const SizedBox(
+                                    //               width: 10,
+                                    //             ),
+                                    //             Text(
+                                    //                 restaurant!.tags![resIndex],
+                                    //                 style: const TextStyle(
+                                    //                   fontSize: 12,
+                                    //                   color: Colors.black,
+                                    //                   fontWeight:
+                                    //                       FontWeight.w500,
+                                    //                 ))
+                                    //           ],
+                                    //         ),
+                                    //       ),
+                                    //     ),
+                                    //   );
+                                    // }
                                   },
                                 );
                               },
