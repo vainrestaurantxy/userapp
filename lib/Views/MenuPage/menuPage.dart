@@ -47,15 +47,54 @@ class _MenuPageState extends ConsumerState<MenuPage> {
         // print("items:" + items.toString());
         //  print('ip addr ${Constants.macAddress}');
         restaurant = repo.restaurant!;
-        List<String> genre = [
-          'Veg',
-          'Non Veg',
-          'Non Alcoholic',
-          'Alcoholic'
-        ];
+        List<String> genre = ['Veg', 'Non Veg', 'Non Alcoholic', 'Alcoholic'];
         repo.getData(restaurant);
         log(Color(int.parse(restaurant.color!)).toString());
         return Scaffold(
+          floatingActionButton: prov.Consumer<MenuPageData>(
+            builder: (context, ref, child) {
+              List<int> bottomData =
+                  MenuPageViewModel().getItemsAndAmount(context);
+              return bottomData[0] == 0
+                  ? const SizedBox()
+                  : Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            setLocal(key: "cart", value: jsonEncode(ref.cart));
+                            context.go("/menu/${Constants.id}/checkout");
+                          },
+                          child: Container(
+                            width: 151,
+                            height: 48,
+                            decoration: BoxDecoration(
+                                color: const Color(0xff88001f),
+                                borderRadius: BorderRadius.circular(16)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.shopping_cart_outlined,
+                                    color: Colors.white),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                Text(
+                                  'View Cart (${bottomData[0]})',
+                                  style: GoogleFonts.poppins(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+            },
+          ),
           appBar: createAppBar(context),
           body: SingleChildScrollView(
             child: Column(
@@ -124,7 +163,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: Text(
-                            'Categories & Filters',
+                            'Filters',
                             style: GoogleFonts.poppins(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
@@ -147,133 +186,162 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                 return prov.Consumer<MenuPageViewModel>(
                                   builder: (context, ref, child) {
                                     // if (index < genre.length) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          switch(index) {
-                                            case 0: {
-                                              if(  MenuPageViewModel.boolTag==false){
-                                                MenuPageViewModel.boolTag=true;
+                                    return GestureDetector(
+                                      onTap: () {
+                                        switch (index) {
+                                          case 0:
+                                            {
+                                              if (MenuPageViewModel.boolTag ==
+                                                  false) {
+                                                MenuPageViewModel.boolTag =
+                                                    true;
                                                 MenuPageViewModel.tag = "Veg";
-                                                ref.selectedFilterIndex=index;
-                                              } else{
-                                                MenuPageViewModel.boolTag=false;
+                                                ref.selectedFilterIndex = index;
+                                              } else {
+                                                MenuPageViewModel.boolTag =
+                                                    false;
                                                 MenuPageViewModel.tag = "";
-                                                ref.selectedFilterIndex=-1;
+                                                ref.selectedFilterIndex = -1;
                                               }
-                                            }break;
-                                            case 1 :{
-                                              if(  MenuPageViewModel.boolTag==false){
-                                                MenuPageViewModel.boolTag=true;
-                                                MenuPageViewModel.tag = "Non Veg";
-                                                ref.selectedFilterIndex=index;
-                                              } else{
-                                                MenuPageViewModel.boolTag=false;
+                                            }
+                                            break;
+                                          case 1:
+                                            {
+                                              if (MenuPageViewModel.boolTag ==
+                                                  false) {
+                                                MenuPageViewModel.boolTag =
+                                                    true;
+                                                MenuPageViewModel.tag =
+                                                    "Non Veg";
+                                                ref.selectedFilterIndex = index;
+                                              } else {
+                                                MenuPageViewModel.boolTag =
+                                                    false;
                                                 MenuPageViewModel.tag = "";
-                                                ref.selectedFilterIndex=-1;
+                                                ref.selectedFilterIndex = -1;
                                               }
-                                            } break;
-                                            case 2: {
-                                              if(  MenuPageViewModel.boolTag==false){
-                                                MenuPageViewModel.boolTag=true;
-                                                MenuPageViewModel.tag = "Non Alcoholic";
-                                                ref.selectedFilterIndex=index;
-                                              } else{
-                                                MenuPageViewModel.boolTag=false;
+                                            }
+                                            break;
+                                          case 2:
+                                            {
+                                              if (MenuPageViewModel.boolTag ==
+                                                  false) {
+                                                MenuPageViewModel.boolTag =
+                                                    true;
+                                                MenuPageViewModel.tag =
+                                                    "Non Alcoholic";
+                                                ref.selectedFilterIndex = index;
+                                              } else {
+                                                MenuPageViewModel.boolTag =
+                                                    false;
                                                 MenuPageViewModel.tag = "";
-                                                ref.selectedFilterIndex=-1;
+                                                ref.selectedFilterIndex = -1;
                                               }
-                                            }break;
-                                            case 3 :{
-                                              if(  MenuPageViewModel.boolTag==false){
-                                                MenuPageViewModel.boolTag=true;
-                                                MenuPageViewModel.tag = "Alcoholic";
-                                                ref.selectedFilterIndex=index;
-                                              } else{
-                                                MenuPageViewModel.boolTag=false;
+                                            }
+                                            break;
+                                          case 3:
+                                            {
+                                              if (MenuPageViewModel.boolTag ==
+                                                  false) {
+                                                MenuPageViewModel.boolTag =
+                                                    true;
+                                                MenuPageViewModel.tag =
+                                                    "Alcoholic";
+                                                ref.selectedFilterIndex = index;
+                                              } else {
+                                                MenuPageViewModel.boolTag =
+                                                    false;
                                                 MenuPageViewModel.tag = "";
-                                                ref.selectedFilterIndex=-1;
+                                                ref.selectedFilterIndex = -1;
                                               }
-                                            } break;
-                                          }
-                                          // if (index == 0) {
-                                          //     if(  MenuPageViewModel.boolTag==false){
-                                          //       MenuPageViewModel.boolTag=true;
-                                          //       MenuPageViewModel.tag = "Veg";
-                                          //       ref.selectedFilterIndex=index;
-                                          //     } else{
-                                          //       MenuPageViewModel.boolTag=false;
-                                          //       MenuPageViewModel.tag = "Veg";
-                                          //       ref.selectedFilterIndex=-1;
-                                          //     }
-                                          // }
-                                          // else if (index == 1) {
-                                          //   //
-                                          //   if(  MenuPageViewModel.boolTag==false){
-                                          //     MenuPageViewModel.boolTag=true;
-                                          //     MenuPageViewModel.tag = "Non Veg";
-                                          //     ref.selectedFilterIndex=index;
-                                          //   }else {
-                                          //     MenuPageViewModel.boolTag = false;
-                                          //     MenuPageViewModel.tag = "Non Veg";
-                                          //     ref.selectedFilterIndex=-1;
-                                          //   }
-                                          // }
+                                            }
+                                            break;
+                                        }
+                                        // if (index == 0) {
+                                        //     if(  MenuPageViewModel.boolTag==false){
+                                        //       MenuPageViewModel.boolTag=true;
+                                        //       MenuPageViewModel.tag = "Veg";
+                                        //       ref.selectedFilterIndex=index;
+                                        //     } else{
+                                        //       MenuPageViewModel.boolTag=false;
+                                        //       MenuPageViewModel.tag = "Veg";
+                                        //       ref.selectedFilterIndex=-1;
+                                        //     }
+                                        // }
+                                        // else if (index == 1) {
+                                        //   //
+                                        //   if(  MenuPageViewModel.boolTag==false){
+                                        //     MenuPageViewModel.boolTag=true;
+                                        //     MenuPageViewModel.tag = "Non Veg";
+                                        //     ref.selectedFilterIndex=index;
+                                        //   }else {
+                                        //     MenuPageViewModel.boolTag = false;
+                                        //     MenuPageViewModel.tag = "Non Veg";
+                                        //     ref.selectedFilterIndex=-1;
+                                        //   }
+                                        // }
 
-
-                                          // else if (index == 2) {
-                                          //   ref.selectedFilterIndex = 2;
-                                          //   MenuPageViewModel.tag =
-                                          //       "Recommended";
-                                          // }
-                                          final provider = prov.Provider.of<RestaurantBuilder>(context, listen: false);provider.notifyListeners();
-                                        },
-                                        child: Padding(
+                                        // else if (index == 2) {
+                                        //   ref.selectedFilterIndex = 2;
+                                        //   MenuPageViewModel.tag =
+                                        //       "Recommended";
+                                        // }
+                                        final provider =
+                                            prov.Provider.of<RestaurantBuilder>(
+                                                context,
+                                                listen: false);
+                                        provider.notifyListeners();
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 4.0),
+                                        child: Container(
                                           padding: const EdgeInsets.symmetric(
-                                              horizontal: 4.0),
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8.0, vertical: 4),
-                                            decoration: BoxDecoration(
-                                                color: ref.selectedFilterIndex == index && MenuPageViewModel.boolTag==true
-                                                        ? Colors.red
-                                                        : Colors.transparent,
-                                                border: Border.all(
-                                                    color: const Color(
-                                                        0xFFF4F4FF)),
-                                                borderRadius:
-                                                    BorderRadius.circular(4)),
-                                            child: Row(
-                                              children: [
-                                                ref.selectedFilterIndex != index
-                                                    ? SvgPicture.asset(
-                                                        "assets/fastfood.svg",
-                                                        width: 20,
-                                                        height: 20,
-                                                      )
-                                                    : Image.asset(
-                                                        'assets/fastfoodwhite.png',
-                                                        height: 20,
-                                                        width: 20,
-                                                      ),
-                                                const SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Text(genre[index],
-                                                    style: TextStyle(
-                                                      fontSize: 12,
-                                                      color:
-                                                          ref.selectedFilterIndex !=
-                                                                  index
-                                                              ? Colors.black
-                                                              : Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ))
-                                              ],
-                                            ),
+                                              horizontal: 8.0, vertical: 4),
+                                          decoration: BoxDecoration(
+                                              color: ref.selectedFilterIndex ==
+                                                          index &&
+                                                      MenuPageViewModel
+                                                              .boolTag ==
+                                                          true
+                                                  ? Colors.black
+                                                  : Colors.transparent,
+                                              border: Border.all(
+                                                  color:
+                                                      const Color(0xFFF4F4FF)),
+                                              borderRadius:
+                                                  BorderRadius.circular(4)),
+                                          child: Row(
+                                            children: [
+                                              ref.selectedFilterIndex != index
+                                                  ? SvgPicture.asset(
+                                                      "assets/fastfood.svg",
+                                                      width: 20,
+                                                      height: 20,
+                                                    )
+                                                  : Image.asset(
+                                                      'assets/fastfoodwhite.png',
+                                                      height: 20,
+                                                      width: 20,
+                                                    ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Text(genre[index],
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color:
+                                                        ref.selectedFilterIndex !=
+                                                                index
+                                                            ? Colors.black
+                                                            : Colors.white,
+                                                    fontWeight: FontWeight.w500,
+                                                  ))
+                                            ],
                                           ),
                                         ),
-                                      );
+                                      ),
+                                    );
                                     // else {
                                     //   final resIndex = index - genre.length;
                                     //   return GestureDetector(
@@ -567,52 +635,6 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                 //       width: double.infinity,
                 //       height: 84,
                 //       child: createAppBar(context)),
-                prov.Consumer<MenuPageData>(
-                  builder: (context, ref, child) {
-                    List<int> bottomData =
-                        MenuPageViewModel().getItemsAndAmount(context);
-                    return bottomData[0] == 0
-                        ? const SizedBox()
-                        : Align(
-                            alignment: Alignment.bottomRight,
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: GestureDetector(
-                                onTap: () {
-                                  setLocal(
-                                      key: "cart", value: jsonEncode(ref.cart));
-
-                                  context.go("/menu/${Constants.id}/checkout");
-                                },
-                                child: Container(
-                                  width: 151,
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xff88001f),
-                                      borderRadius: BorderRadius.circular(16)),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(Icons.shopping_cart_outlined,
-                                          color: Colors.white),
-                                      const SizedBox(
-                                        width: 4,
-                                      ),
-                                      Text(
-                                        'View Cart (${bottomData[0]})',
-                                        style: GoogleFonts.poppins(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 14),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                  },
-                ),
               ],
             ),
           ),
