@@ -6,6 +6,7 @@ import 'package:dine/Models/orders.dart';
 import 'package:dine/Models/restaurantMenu.dart';
 import 'package:dine/Network/network.dart';
 import 'package:dine/Storage/sharedPreference.dart';
+import 'package:dine/Utils/Constants/staticConstants.dart';
 import 'package:dine/ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -58,8 +59,7 @@ class MenuPageData extends ChangeNotifier {
   Future<void> getRestaurant(String id, context) async {
     Map<String, dynamic>? json = await network.get("Restaurants", id);
     restaurant = Restaurant.fromJson(json!);
-    categoryDividedMenu =
-        MenuPageViewModel().reArrangeCategory(restaurant: restaurant!);
+    categoryDividedMenu = MenuPageViewModel().reArrangeCategory(restaurant: restaurant!);
     code_item = MenuPageViewModel().mapCodeToItem(restaurant!.menu!);
     notifyListeners();
     final builder = Provider.of<RestaurantBuilder>(context, listen: false);
@@ -121,10 +121,10 @@ class MenuPageData extends ChangeNotifier {
   }
 
   Future<void> getData(Restaurant res) async {
-    final id = await getLocal(key: "id");
+    // final id = await getLocal(key: "id");
     //log("$id : NULL ");
     DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await FirebaseFirestore.instance.collection('Category').doc(id).get();
+        await FirebaseFirestore.instance.collection('Category').doc(Constants.id).get();
 
     if (snapshot.exists) {
       log((snapshot.data()?['categories'] ?? []).toString());

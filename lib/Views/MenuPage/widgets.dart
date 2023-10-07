@@ -31,7 +31,6 @@ class _ItemState extends ConsumerState<Item> {
   @override
   Widget build(BuildContext context) {
     final repo = prov.Provider.of<MenuPageViewModel>(context, listen: false);
-
     return SizedBox(
       height: 150,
       width: MediaQuery.of(context).size.width - 35,
@@ -69,8 +68,7 @@ class _ItemState extends ConsumerState<Item> {
           const SizedBox(
             width: 12,
           ),
-          SingleChildScrollView(
-            child: SizedBox(
+           SizedBox(
               width: ((MediaQuery.of(context).size.width - 35) * 0.75) - 12,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,7 +141,6 @@ class _ItemState extends ConsumerState<Item> {
                 ],
               ),
             ),
-          )
         ],
       ),
     );

@@ -5,8 +5,9 @@ import 'package:dine/ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:provider/provider.dart';
+import 'package:provider/provider.dart' as prov;
 import 'Utils/Routes/router.dart';
 import 'firebase_options.dart';
 
@@ -17,17 +18,18 @@ void main() async {
   );
 
   runApp(
-    MultiProvider(
+    prov.MultiProvider(
       providers: [
         // ListenableProvider<CheckoutViewModel>(
         //     create: (_) => CheckoutViewModel()),
-        ListenableProvider<MenuPageViewModel>(
+        prov.ChangeNotifierProvider<MenuPageViewModel>(
             create: (_) => MenuPageViewModel()),
-        ListenableProvider<MenuPageData>(create: (_) => MenuPageData()),
-        ListenableProvider<RestaurantBuilder>(
+        prov.ChangeNotifierProvider<MenuPageData>(
+            create: (_) => MenuPageData()),
+        prov.ChangeNotifierProvider<RestaurantBuilder>(
             create: (_) => RestaurantBuilder()),
       ],
-      child: const MyApp(),
+      child: ProviderScope(child: const MyApp()),
     ),
   );
 }
