@@ -140,7 +140,7 @@ class CartItem extends StatelessWidget {
                           child: itemButton
                               ? prov.Consumer<MenuPageData>(
                                   builder: (_, ref, __) {
-                                    return getAddButton(name: name!, ref: ref);
+                                    return getAddButton(name: name!, ref: ref,context: context);
                                   },
                                 )
                               : const SizedBox(),

@@ -1,12 +1,14 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../Data/Repositories/MenuPage.dart';
 
-getAddButton({required String name, required MenuPageData ref}) {
+getAddButton({required String name, required MenuPageData ref, required BuildContext context}) {
   return ref.cart[name] == 0 || ref.cart[name] == null
       ? GestureDetector(
-          onTap: () => ref.addOnTap(name: name),
+          onTap: () => ref.addOnTap(name: name , context: context),
           child: Container(
             width: 70,
             height: 40,
@@ -55,7 +57,7 @@ getAddButton({required String name, required MenuPageData ref}) {
                     )),
                 GestureDetector(
                     onTap: () {
-                      ref.addOnTap(name: name);
+                      ref.addOnTap(name: name, context: context);
                     },
                     child: const Icon(
                       Icons.add,
