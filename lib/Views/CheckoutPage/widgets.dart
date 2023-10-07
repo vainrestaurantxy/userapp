@@ -274,7 +274,7 @@ class CardTexts extends StatelessWidget {
           return const SizedBox(
             width: double.infinity,
             height: 100,
-            child: Center(child: CircularProgressIndicator()),
+            child: Center(child: Text("No one item in card ")),
           );
         }
         return SizedBox(
