@@ -58,7 +58,7 @@ class _ItemState extends ConsumerState<Item> {
                   bottom: -7,
                   child: prov.Consumer<MenuPageData>(
                     builder: (context, ref, child) {
-                      return getAddButton(name: widget.name, ref: ref);
+                      return getAddButton(name: widget.name, ref: ref,context: context);
                     },
                   ),
                 )
