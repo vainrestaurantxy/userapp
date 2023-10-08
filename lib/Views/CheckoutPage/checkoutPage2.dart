@@ -28,7 +28,7 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
     QrScannerViewModel viewModel = QrScannerViewModel();
     CheckoutViewModel().getCart(context);
     final ref = Provider.of<MenuPageData>(context, listen: false);
-    bool isClicked = false;
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -39,9 +39,6 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
               onTap: () async {
-                setState(() {
-                  isClicked = true;
-                });
 
                 String mac = await viewModel.getMacAdderess();
                 print('ip add haww ${mac}');
@@ -70,11 +67,7 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                       borderRadius: BorderRadius.circular(12),
                       color: const Color(0xff88001f)),
                   child: Center(
-                      child: isClicked == true
-                          ? CircularProgressIndicator(
-                              color: Colors.white,
-                            )
-                          : Text(
+                     child: Text(
                               'Place Order',
                               style: GoogleFonts.poppins(
                                   color: Colors.white,
