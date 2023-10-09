@@ -18,6 +18,7 @@ import '../../Models/restaurant.dart';
 
 class Status extends StatelessWidget {
   Status({super.key});
+
   List<Orders> orders = [
     Orders(
       contactNo: "12312",
@@ -216,17 +217,12 @@ class Status extends StatelessWidget {
                     ),
                     Consumer<MenuPageData>(
                       builder: (_, ref, __) {
-                        final cartData =
-                            StatusPageViewModel().getItemsAndAmount(context);
+                        final cartData = StatusPageViewModel().getItemsAndAmount(context);
                         return Container(
                           padding: const EdgeInsets.all(8),
-
                           child: StreamBuilder(
-                            stream: CheckoutViewModel()
-                                .getOrderStream(Constants.id),
+                            stream: CheckoutViewModel().getOrderStream(Constants.id),
                             builder: (context, snapshot) {
-                              // print(snapshot.connectionState);
-                              // print(snapshot.data);
                               if (snapshot.hasData) {
                                 return Column(
                                   children: [
@@ -235,9 +231,8 @@ class Status extends StatelessWidget {
                                       (index) {
                                         return Padding(
                                           padding: const EdgeInsets.symmetric(
-                                              vertical: 8.0),
-                                          child: StatusCard(
-                                              order: snapshot.data?[index]),
+                                              vertical: 12.0),
+                                          child: StatusCard(order: snapshot.data?[index]),
                                         );
                                       },
                                     )

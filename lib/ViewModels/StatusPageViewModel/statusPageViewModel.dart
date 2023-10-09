@@ -37,7 +37,6 @@ class StatusPageViewModel {
       repo.cart = cartMap;
     }
     json = await getLocal(key: "order");
-
     if (json != "") {
       Map<String, dynamic> decodedJson = jsonDecode(json);
       Map<String, int> cartMap = {};

@@ -67,16 +67,10 @@ class MenuPageData extends ChangeNotifier {
   }
 
   void addOnTap({required String name,required BuildContext context}) {
-    try{
     RestaurantMenu item = restaurant!.menu!.where((element) => element.name == name).first;
     item.itemCount = ((item.itemCount) ?? 0) + 1;
     cart[item.name ?? ""] = (cart[item.name] ?? 0) + 1;
     notifyListeners();
-    }catch(e){
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: const Text("Item temporary unavavailabe"),
-      ));
-    }
   }
 
   void subOnTap({required String name}) {
