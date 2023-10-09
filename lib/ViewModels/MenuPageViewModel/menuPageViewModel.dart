@@ -36,9 +36,10 @@ class MenuPageViewModel extends ChangeNotifier {
     List<Widget> items = [];
     // print("object");
      print("from create menu $tag");
-    print("from create menu $boolTag");
+     print("from create menu $boolTag");
 
-    if ((tag == "Veg" || tag == "Non Veg" || tag=="" || tag=="Non Alcoholic" || tag=="Alcoholic") && boolTag!=true) {
+
+    if ((tag == "Veg" || tag == "Non Veg" || tag=="" || tag=="Drinks" || tag=="Recommended" || tag=="Bestseller" || tag=="New") && boolTag!=true) {
       for (var i in categoryDividedMenu.entries) {
         // keys.add(GlobalKey());
         GlobalKey key = GlobalKey();
@@ -71,11 +72,44 @@ class MenuPageViewModel extends ChangeNotifier {
         );
       }
     }
+    else if(boolTag ==true && tag=="Drinks"){
+      print("fetching drinks category");
+      for (var i in categoryDividedMenu.entries) {
+        GlobalKey key = GlobalKey();
+        keys[i.key] = key;
+        List<RestaurantMenu> filterdItems = i.value.where((element) => (element.tags?[0] ?? "") == "Non Alcoholic").toList();
+        filterdItems= filterdItems + i.value.where((element) => (element.tags?[0] ?? "") == "Alcoholic").toList();
+        items.add(ExpansionTile(
+          key: keys[i.key],
+          title: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              i.key,
+              style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700),
+            ),
+          ),
+          childrenPadding: const EdgeInsets.all(8),
+          initiallyExpanded: true,
+          children: List.generate(
+              filterdItems.length,
+                  (index) => Item(
+                  image: filterdItems[index].image ?? "",
+                  desc: filterdItems[index].description ?? "",
+                  price: filterdItems[index].price ?? 0,
+                  name: filterdItems[index].name ?? "",
+                  code: filterdItems[index].code ?? "",
+                  tags: filterdItems[index].tags ?? [])),
+        ),);
+      }
+    }
     else if(boolTag ==true){
       for (var i in categoryDividedMenu.entries) {
         GlobalKey key = GlobalKey();
         keys[i.key] = key;
-        List<RestaurantMenu> filterdItems = i.value.where((element) => (element.tags?[0] ?? "") == tag).toList();
+        List<RestaurantMenu> filterdItems = i.value.where((element) => (element.tags!.contains(tag))).toList();
         items.add(ExpansionTile(
             key: keys[i.key],
             title: Padding(
@@ -102,7 +136,6 @@ class MenuPageViewModel extends ChangeNotifier {
           ),);
       }
     }
-
     // log('menu ${categoryDividedMenu['Grills']![0].tags.toString()}');
     // log('selectedTags: $selectedTags');
     return items;
