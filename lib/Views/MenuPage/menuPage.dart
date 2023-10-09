@@ -47,7 +47,15 @@ class _MenuPageState extends ConsumerState<MenuPage> {
         // print("items:" + items.toString());
         //  print('ip addr ${Constants.macAddress}');
         restaurant = repo.restaurant!;
-        List<String> genre = ['Veg', 'Non Veg', 'Non Alcoholic', 'Alcoholic'];
+        List<String> genre = ['Veg', 'Non Veg', 'Drinks', 'Recommended', "Bestseller", "New"];
+        Map<String,String> icons={
+          "Veg":"assets/veg.svg",
+          "Non Veg":"assets/non-veg.svg",
+          "Drinks":"assets/drinks.svg",
+          "Recommended":"assets/recommend.svg",
+          "Bestseller":"assets/bestseller.svg",
+          "New":"assets/new.svg",
+        };
         repo.getData(restaurant);
         log(Color(int.parse(restaurant.color!)).toString());
         return Scaffold(
@@ -194,12 +202,12 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                               if (MenuPageViewModel.boolTag ==
                                                   false) {
                                                 MenuPageViewModel.boolTag =
-                                                    true;
+                                                true;
                                                 MenuPageViewModel.tag = "Veg";
                                                 ref.selectedFilterIndex = index;
                                               } else {
                                                 MenuPageViewModel.boolTag =
-                                                    false;
+                                                false;
                                                 MenuPageViewModel.tag = "";
                                                 ref.selectedFilterIndex = -1;
                                               }
@@ -210,13 +218,13 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                               if (MenuPageViewModel.boolTag ==
                                                   false) {
                                                 MenuPageViewModel.boolTag =
-                                                    true;
+                                                true;
                                                 MenuPageViewModel.tag =
-                                                    "Non Veg";
+                                                "Non Veg";
                                                 ref.selectedFilterIndex = index;
                                               } else {
                                                 MenuPageViewModel.boolTag =
-                                                    false;
+                                                false;
                                                 MenuPageViewModel.tag = "";
                                                 ref.selectedFilterIndex = -1;
                                               }
@@ -227,13 +235,12 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                               if (MenuPageViewModel.boolTag ==
                                                   false) {
                                                 MenuPageViewModel.boolTag =
-                                                    true;
-                                                MenuPageViewModel.tag =
-                                                    "Non Alcoholic";
+                                                true;
+                                                MenuPageViewModel.tag = "Drinks";
                                                 ref.selectedFilterIndex = index;
                                               } else {
                                                 MenuPageViewModel.boolTag =
-                                                    false;
+                                                false;
                                                 MenuPageViewModel.tag = "";
                                                 ref.selectedFilterIndex = -1;
                                               }
@@ -244,13 +251,65 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                               if (MenuPageViewModel.boolTag ==
                                                   false) {
                                                 MenuPageViewModel.boolTag =
-                                                    true;
+                                                true;
                                                 MenuPageViewModel.tag =
-                                                    "Alcoholic";
+                                                "Recommended";
                                                 ref.selectedFilterIndex = index;
                                               } else {
                                                 MenuPageViewModel.boolTag =
-                                                    false;
+                                                false;
+                                                MenuPageViewModel.tag = "";
+                                                ref.selectedFilterIndex = -1;
+                                              }
+                                            }
+                                            break;
+
+                                          case 4:
+                                            {
+                                              if (MenuPageViewModel.boolTag ==
+                                                  false) {
+                                                MenuPageViewModel.boolTag =
+                                                true;
+                                                MenuPageViewModel.tag =
+                                                "Bestseller";
+                                                ref.selectedFilterIndex = index;
+                                              } else {
+                                                MenuPageViewModel.boolTag =
+                                                false;
+                                                MenuPageViewModel.tag = "";
+                                                ref.selectedFilterIndex = -1;
+                                              }
+                                            }
+                                            break;
+
+                                          case 5:
+                                            {
+                                              if (MenuPageViewModel.boolTag ==
+                                                  false) {
+                                                MenuPageViewModel.boolTag =
+                                                true;
+                                                MenuPageViewModel.tag =
+                                                "New";
+                                                ref.selectedFilterIndex = index;
+                                              } else {
+                                                MenuPageViewModel.boolTag =
+                                                false;
+                                                MenuPageViewModel.tag = "";
+                                                ref.selectedFilterIndex = -1;
+                                              }
+                                            }
+                                            break;
+                                          default:
+                                            {
+                                              if (MenuPageViewModel.boolTag ==
+                                                  false) {
+                                                MenuPageViewModel.boolTag =
+                                                true;
+                                                MenuPageViewModel.tag = "";
+                                                ref.selectedFilterIndex = index;
+                                              } else {
+                                                MenuPageViewModel.boolTag =
+                                                false;
                                                 MenuPageViewModel.tag = "";
                                                 ref.selectedFilterIndex = -1;
                                               }
@@ -304,7 +363,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                                       MenuPageViewModel
                                                               .boolTag ==
                                                           true
-                                                  ? Colors.black
+                                                  ? Color(0xff88001f)
                                                   : Colors.transparent,
                                               border: Border.all(
                                                   color:
@@ -313,17 +372,15 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                                   BorderRadius.circular(4)),
                                           child: Row(
                                             children: [
-                                              ref.selectedFilterIndex != index
-                                                  ? SvgPicture.asset(
-                                                      "assets/fastfood.svg",
-                                                      width: 20,
-                                                      height: 20,
-                                                    )
-                                                  : Image.asset(
-                                                      'assets/fastfoodwhite.png',
-                                                      height: 20,
-                                                      width: 20,
-                                                    ),
+                                                SvgPicture.asset(
+                                                icons[genre[index]]!,
+                                                width: 20,
+                                                height: 20,
+                                                color:ref.selectedFilterIndex ==
+                                                    index &&
+                                                    MenuPageViewModel
+                                                        .boolTag ? Colors.white:null
+                                              ),
                                               const SizedBox(
                                                 width: 10,
                                               ),

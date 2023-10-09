@@ -49,7 +49,7 @@ class _CheckoutCartPageState extends State<CheckoutCartPage> {
                     quanntity: ref.cart,
                     items: ref.cart.keys.map((e) => ref.code_item[e]!).toList(),
                     macAdd: mac,
-                    orderStatus: "Order Confirmed",
+                    orderStatus: "Order Placed",
                     price: ref.getTotal(),
                     tableNo: Constants.tableNo,
                     tax: 5,

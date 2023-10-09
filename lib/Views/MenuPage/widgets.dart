@@ -1,10 +1,12 @@
 import 'dart:developer';
+import 'dart:js_interop';
 
 import 'package:dine/Data/Repositories/MenuPage.dart';
 import 'package:dine/Shared/Widgets/cartButton.dart';
 import 'package:dine/ViewModels/MenuPageViewModel/menuPageViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart' as prov;
 
 import '../../Models/tag.dart';
@@ -28,6 +30,17 @@ class Item extends ConsumerStatefulWidget {
 }
 
 class _ItemState extends ConsumerState<Item> {
+
+  Map<String,String> icons={
+    "Veg":"assets/veg.svg",
+    "Non Veg":"assets/non-veg.svg",
+    "Alcoholic":"assets/drinks.svg",
+    "Non Alcoholic":"assets/drinks.svg",
+    "Recommended":"assets/recommend.svg",
+    "Bestseller":"assets/bestseller.svg",
+    "New":"assets/new.svg",
+  };
+
   @override
   Widget build(BuildContext context) {
     final repo = prov.Provider.of<MenuPageViewModel>(context, listen: false);
@@ -81,23 +94,35 @@ class _ItemState extends ConsumerState<Item> {
                       itemCount: widget.tags.length,
                       itemBuilder: (context, index) => Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4),
-                            color: const Color(0xFF00632E),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 4),
-                          child: Row(
-                            children: [
-                              Text(widget.tags[index],
-                                  style: const TextStyle(
-                                    fontSize: 8,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                  ))
-                            ],
-                          ),
+                        child: Row(
+                          children: [
+                            widget.tags[index]!=""?SvgPicture.asset(
+                              icons[widget.tags[index]!]!,
+                              width: 15,
+                              height: 15,
+                            ):SizedBox(),
+                            const SizedBox(
+                              width: 1,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4),
+                                color:  const Color(0xff88001f),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 4),
+                              child: Row(
+                                children: [
+                                  Text(widget.tags[index],
+                                      style: const TextStyle(
+                                        fontSize: 8,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500,
+                                      ))
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
