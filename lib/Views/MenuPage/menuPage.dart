@@ -358,11 +358,8 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 8.0, vertical: 4),
                                           decoration: BoxDecoration(
-                                              color: ref.selectedFilterIndex ==
-                                                          index &&
-                                                      MenuPageViewModel
-                                                              .boolTag ==
-                                                          true
+                                              color: ref.selectedFilterIndex == index &&
+                                                      MenuPageViewModel.boolTag == true
                                                   ? Color(0xff88001f)
                                                   : Colors.transparent,
                                               border: Border.all(
