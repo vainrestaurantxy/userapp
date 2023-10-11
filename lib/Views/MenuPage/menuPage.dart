@@ -15,6 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart' as prov;
 import '../../Utils/Constants/staticConstants.dart';
 import '../../Data/Repositories/MenuPage.dart';
+import '../../ViewModels/QrScannerViewModel/qrscannerviewmodel.dart';
 
 class MenuPage extends ConsumerStatefulWidget {
   const MenuPage({super.key, required this.id});
@@ -30,6 +31,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
   @override
   Widget build(BuildContext context) {
     final repo = prov.Provider.of<MenuPageData>(context, listen: false);
+    QrScannerViewModel viewModel = QrScannerViewModel();
     List<Widget> items = [];
     repo.getRestaurant(widget.id, context);
     Constants.id = widget.id;
@@ -56,13 +58,12 @@ class _MenuPageState extends ConsumerState<MenuPage> {
           "Bestseller":"assets/bestseller.svg",
           "New":"assets/new.svg",
         };
-        repo.getData(restaurant);
+       // repo.getData(restaurant);
         log(Color(int.parse(restaurant.color!)).toString());
         return Scaffold(
           floatingActionButton: prov.Consumer<MenuPageData>(
             builder: (context, ref, child) {
-              List<int> bottomData =
-                  MenuPageViewModel().getItemsAndAmount(context);
+              List<int> bottomData = MenuPageViewModel().getItemsAndAmount(context);
               return bottomData[0] == 0
                   ? const SizedBox()
                   : Align(
@@ -70,8 +71,11 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: GestureDetector(
-                          onTap: () {
+                          onTap: () async{
                             setLocal(key: "cart", value: jsonEncode(ref.cart));
+                            String mac = await viewModel.getMacAdderess();
+
+                            repo.getUser(mac);
                             context.go("/menu/${Constants.id}/checkout");
                           },
                           child: Container(
