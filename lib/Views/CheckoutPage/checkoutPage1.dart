@@ -23,14 +23,14 @@ class _CheckoutPageState extends State<CheckoutPage> {
   }
 
   Future<void> getTableNo() async {
-    final table = await getLocal(key: 'tableNo');
-    print('table $table');
+    // final table = await getLocal(key: 'tableNo');
+    // print('table $table');
     // final prefs = await SharedPreferences.getInstance();
     // final table = prefs.getInt('tableNo') ?? 9;
-    setState(() async {
-      Constants.tableNo = await int.parse(table);
-      tableCtrl.text = Constants.tableNo.toString();
-    });
+    // setState(() async {
+    //   Constants.tableNo = await int.parse(table);
+    //   tableCtrl.text = Constants.tableNo.toString();
+    // });
   }
 
   TextEditingController nameCtrl = TextEditingController();
@@ -128,7 +128,26 @@ class _CheckoutPageState extends State<CheckoutPage> {
               ),
               TextButton(
                   onPressed: () {
-                    context.go("/menu/${Constants.id}/checkout/checkout2");
+                    if(phnCtrl.text.isNotEmpty && phnCtrl.text.length!=9)
+                    {
+                      final RegExp regex = RegExp(r'^[0-9]+$');
+                      if(!regex.hasMatch(phnCtrl.text)){
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text("phone number should be 0 to 9 digits"),
+                        ));
+                      }else {
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content:
+                          Text("phone number should be 9 digits"),
+                        ));
+                      }
+                    } else if(nameCtrl.text.isNotEmpty && nameCtrl.text.length<3) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("Name should be more than 3 character"),
+                      ));
+                    }else{
+                      context.go("/menu/${Constants.id}/checkout/checkout2");
+                    }
                   },
                   child: Container(
                       width: 396,

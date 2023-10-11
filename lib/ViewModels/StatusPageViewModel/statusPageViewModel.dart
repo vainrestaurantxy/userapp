@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:dine/Utils/Constants/staticConstants.dart';
 import 'package:provider/provider.dart';
 
 import '../../Data/Repositories/MenuPage.dart';
@@ -24,8 +25,8 @@ class StatusPageViewModel {
 
   getCartandOrder(context) async {
     final repo = Provider.of<MenuPageData>(context, listen: false);
-    String id = await getLocal(key: "id");
-    await repo.getRestaurant(id, context);
+    // String id = await getLocal(key: "id");
+    await repo.getRestaurant(Constants.id, context);
     String json = await getLocal(key: "cart");
     if (json != "") {
       Map<String, dynamic> decodedJson = jsonDecode(json);
@@ -36,7 +37,6 @@ class StatusPageViewModel {
       repo.cart = cartMap;
     }
     json = await getLocal(key: "order");
-
     if (json != "") {
       Map<String, dynamic> decodedJson = jsonDecode(json);
       Map<String, int> cartMap = {};

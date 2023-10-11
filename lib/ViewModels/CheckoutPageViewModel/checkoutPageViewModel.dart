@@ -25,8 +25,8 @@ class CheckoutViewModel {
 
   getCart(context) async {
     final repo = Provider.of<MenuPageData>(context, listen: false);
-    String id = await getLocal(key: "id");
-    await repo.getRestaurant(id, context);
+    // String id = await getLocal(key: "id");
+    await repo.getRestaurant(Constants.id, context);
     String json = await getLocal(key: "cart");
     Map<String, dynamic> decodedJson = jsonDecode(json);
     repo.refresh();

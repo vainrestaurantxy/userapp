@@ -140,7 +140,7 @@ class CartItem extends StatelessWidget {
                           child: itemButton
                               ? prov.Consumer<MenuPageData>(
                                   builder: (_, ref, __) {
-                                    return getAddButton(name: name!, ref: ref);
+                                    return getAddButton(name: name!, ref: ref,context: context);
                                   },
                                 )
                               : const SizedBox(),
@@ -274,7 +274,7 @@ class CardTexts extends StatelessWidget {
           return const SizedBox(
             width: double.infinity,
             height: 100,
-            child: Center(child: CircularProgressIndicator()),
+            child: Center(child: Text("No one item in card ")),
           );
         }
         return SizedBox(
