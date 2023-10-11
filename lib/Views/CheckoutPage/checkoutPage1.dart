@@ -1,11 +1,11 @@
-import 'package:dine/Storage/sharedPreference.dart';
 import 'package:dine/Utils/texts.dart';
 import 'package:dine/ViewModels/CheckoutPageViewModel/checkoutPageViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:provider/provider.dart' as prov;
+import '../../Data/Repositories/MenuPage.dart';
 import '../../Utils/Constants/staticConstants.dart';
 
 class CheckoutPage extends StatefulWidget {
@@ -19,29 +19,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   void initState() {
     super.initState();
-    getTableNo();
   }
 
-  Future<void> getTableNo() async {
-    // final table = await getLocal(key: 'tableNo');
-    // print('table $table');
-    // final prefs = await SharedPreferences.getInstance();
-    // final table = prefs.getInt('tableNo') ?? 9;
-    // setState(() async {
-    //   Constants.tableNo = await int.parse(table);
-    //   tableCtrl.text = Constants.tableNo.toString();
-    // });
-  }
-
-  TextEditingController nameCtrl = TextEditingController();
-  TextEditingController phnCtrl = TextEditingController();
-  TextEditingController tableCtrl =
-      TextEditingController(text: Constants.tableNo.toString());
-
+  TextEditingController nameCtrl = Constants.name!=null?TextEditingController(text: Constants.name):TextEditingController();
+  TextEditingController phnCtrl = Constants.phone!=null?TextEditingController(text: Constants.phone):TextEditingController();
+  TextEditingController tableCtrl = TextEditingController(text: Constants.tableNo.toString());
+  bool flag=false;
   @override
   Widget build(BuildContext context) {
     CheckoutViewModel().getCart(context);
-
+    final repo = prov.Provider.of<MenuPageData>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -87,6 +74,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
               ),
               TextFormField(
                 controller: nameCtrl,
+                onTap: (){
+                  if(Constants.name!=null && flag==false){
+                    flag=true;
+                    nameCtrl.text=Constants.name;
+                    phnCtrl.text=Constants.phone;
+                  }
+                },
                 onChanged: (v) {
                   Constants.name = v;
                 },
@@ -146,6 +140,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         content: Text("Name should be more than 3 character"),
                       ));
                     }else{
+                     Constants.name!=null? repo.updateUser(macAddress: Constants.macAddress, name: Constants.name, phoneNo: Constants.phone, tableNo: Constants.tableNo):repo.setUser(macAdderess: Constants.macAddress, name: Constants.name, phoneno: Constants.phone, tableNo: Constants.tableNo);
                       context.go("/menu/${Constants.id}/checkout/checkout2");
                     }
                   },
