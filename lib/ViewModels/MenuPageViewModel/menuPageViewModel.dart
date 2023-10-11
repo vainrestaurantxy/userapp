@@ -38,7 +38,6 @@ class MenuPageViewModel extends ChangeNotifier {
      print("from create menu $tag");
      print("from create menu $boolTag");
 
-
     if ((tag == "Veg" || tag == "Non Veg" || tag=="" || tag=="Drinks" || tag=="Recommended" || tag=="Bestseller" || tag=="New") && boolTag!=true) {
       for (var i in categoryDividedMenu.entries) {
         // keys.add(GlobalKey());
@@ -73,7 +72,7 @@ class MenuPageViewModel extends ChangeNotifier {
       }
     }
     else if(boolTag ==true && tag=="Drinks"){
-      print("fetching drinks category");
+
       for (var i in categoryDividedMenu.entries) {
         GlobalKey key = GlobalKey();
         keys[i.key] = key;
@@ -94,7 +93,7 @@ class MenuPageViewModel extends ChangeNotifier {
           childrenPadding: const EdgeInsets.all(8),
           initiallyExpanded: true,
           children: List.generate(
-              filterdItems.length,
+                  filterdItems.length,
                   (index) => Item(
                   image: filterdItems[index].image ?? "",
                   desc: filterdItems[index].description ?? "",

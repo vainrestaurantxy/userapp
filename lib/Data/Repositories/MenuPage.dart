@@ -52,7 +52,6 @@ class MenuPageData extends ChangeNotifier {
           (cart[(a.key)] as int) *
           ((code_item[a.key]?.discount ?? 0) / 100);
     }
-
     return double.parse(discount.toStringAsFixed(2));
   }
 
@@ -107,27 +106,60 @@ class MenuPageData extends ChangeNotifier {
       required String name,
       required String phoneno,
       required int tableNo}) async {
+    try{
     await FirebaseFirestore.instance
         .collection("Users")
         .doc(macAdderess)
         .set({"name": name, "phoneNo": phoneno, "tableNo": tableNo});
+    }catch(e){
+      print("Error from set user $e");
+    }
   }
 
-  getUser(macAddress) async {
-    DocumentSnapshot<Map<String, dynamic>> json = await FirebaseFirestore
-        .instance
+  Future<void> updateUser(
+      {required String macAddress,
+        required String name,
+        required String phoneNo,
+        required int tableNo,
+      }) async {
+    try{
+    await FirebaseFirestore.instance
         .collection("Users")
         .doc(macAddress)
-        .get();
-    name = json.data()?["name"] ?? "";
-    phone = json.data()?["phoneNo"] ?? "";
-    tableNo = json.data()?["tableNo"] ?? "";
-    notifyListeners();
+        .update({
+      "name": name,
+      "phoneNo": phoneNo,
+      "tableNo": tableNo,
+    });}
+        catch(e){
+      print("error from update $e");
+        }
+  }
+  getUser(macAddress) async {
+   try{
+     DocumentSnapshot<Map<String, dynamic>> json = await FirebaseFirestore
+         .instance
+         .collection("Users")
+         .doc(macAddress)
+         .get();
+     name = json.data()?["name"] ?? "";
+     Constants.name=name!;
+     phone = json.data()?["phoneNo"] ?? "";
+     Constants.macAddress=macAddress!;
+     Constants.phone=phone!;
+     tableNo = tableNo = int.parse((json.data()?["tableNo"] ?? 0).toString());
+     Constants.tableNo=tableNo!;
+     print("name is ${Constants.name}");
+     notifyListeners();}
+   catch(e){
+     print("error from get user $e");
+   }
   }
 
   Future<void> getData(Restaurant res) async {
     // final id = await getLocal(key: "id");
     //log("$id : NULL ");
+    try{
     DocumentSnapshot<Map<String, dynamic>> snapshot =
         await FirebaseFirestore.instance.collection('Category').doc(Constants.id).get();
 
@@ -140,6 +172,9 @@ class MenuPageData extends ChangeNotifier {
       res.tags = tempList;
       // print('res tags : ${res.tags!.length.toString()}');
       notifyListeners();
+    }
+    }catch(e){
+      print("Error from get category data (MenuPage.dart) $e");
     }
   }
 }

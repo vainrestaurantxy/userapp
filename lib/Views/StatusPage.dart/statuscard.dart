@@ -17,6 +17,7 @@ class StatusCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final ref = Provider.of<MenuPageData>(context, listen: false);
     return Container(
+
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(11),
@@ -107,9 +108,9 @@ class StatusCard extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.all(8),
                               decoration: ShapeDecoration(
-                                color: const Color(0xFF241C43),
+                                color: order!.orderStatus=="Order Confirmed"?Color(0xFF241C43):Colors.white,
                                 shape: RoundedRectangleBorder(
-                                  side: const BorderSide(
+                                  side: BorderSide(
                                       width: 0.50, color: Color(0xFF241D43)),
                                   borderRadius: BorderRadius.circular(6),
                                 ),
@@ -123,12 +124,12 @@ class StatusCard extends StatelessWidget {
                                     width: 18,
                                     height: 18,
                                     clipBehavior: Clip.antiAlias,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xFF241C43),
+                                    decoration: BoxDecoration(
+                                      color: order!.orderStatus=="Order Confirmed"?Color(0xFF241C43):Colors.white,
                                     ),
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.check,
-                                      color: Colors.white,
+                                      color:order!.orderStatus=="Order Confirmed"?Colors.white:Color(0xFF241C43),
                                       size: 18,
                                     ),
                                   ),
@@ -312,14 +313,15 @@ class StatusCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(width: 8),
+                        Spacer(),
                         SizedBox(
-                          width: 100,
+                          width: 120,
                           child: Text.rich(
+                            softWrap: false,
                             TextSpan(
                               children: [
                                 const TextSpan(
-                                  text: 'Status:',
+                                  text: 'Status: ',
                                   style: TextStyle(
                                     color: Color(0xFF323232),
                                     fontSize: 12,
@@ -327,17 +329,7 @@ class StatusCard extends StatelessWidget {
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
-                                const TextSpan(
-                                  text: ' ',
-                                  style: TextStyle(
-                                    color: Color(0xFF323232),
-                                    fontSize: 12,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
                                 TextSpan(
-                                  // text: 'Order Paid',
                                   text: order?.orderStatus,
                                   style: const TextStyle(
                                     color: Color(0xFF53389E),

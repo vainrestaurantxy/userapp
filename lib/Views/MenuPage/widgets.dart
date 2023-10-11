@@ -37,7 +37,7 @@ class _ItemState extends ConsumerState<Item> {
     "Alcoholic":"assets/drinks.svg",
     "Non Alcoholic":"assets/drinks.svg",
     "Recommended":"assets/recommend.svg",
-    "Bestseller":"assets/bestseller.svg",
+    "Best seller":"assets/bestseller.svg",
     "New":"assets/new.svg",
   };
 
@@ -94,17 +94,11 @@ class _ItemState extends ConsumerState<Item> {
                       itemCount: widget.tags.length,
                       itemBuilder: (context, index) => Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: Row(
-                          children: [
-                            widget.tags[index]!=""?SvgPicture.asset(
-                              icons[widget.tags[index]!]!,
-                              width: 15,
-                              height: 15,
-                            ):SizedBox(),
-                            const SizedBox(
-                              width: 1,
-                            ),
-                            Container(
+                        child: (widget.tags[index]=="Veg" || widget.tags[index]=="Non Veg")?SvgPicture.asset(
+                          icons[widget.tags[index]!]!,
+                          width: 20,
+                          height: 20,
+                        ):Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(4),
                                 color:  const Color(0xff88001f),
@@ -119,10 +113,8 @@ class _ItemState extends ConsumerState<Item> {
                                         color: Colors.white,
                                         fontWeight: FontWeight.w500,
                                       ))
-                                ],
-                              ),
+                              ]
                             ),
-                          ],
                         ),
                       ),
                     ),
