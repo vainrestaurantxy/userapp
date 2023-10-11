@@ -21,10 +21,15 @@ class _CheckoutPageState extends State<CheckoutPage> {
     super.initState();
   }
 
-  TextEditingController nameCtrl = Constants.name!=null?TextEditingController(text: Constants.name):TextEditingController();
-  TextEditingController phnCtrl = Constants.phone!=null?TextEditingController(text: Constants.phone):TextEditingController();
-  TextEditingController tableCtrl = TextEditingController(text: Constants.tableNo.toString());
-  bool flag=false;
+  TextEditingController nameCtrl = Constants.name != null
+      ? TextEditingController(text: Constants.name)
+      : TextEditingController();
+  TextEditingController phnCtrl = Constants.phone != null
+      ? TextEditingController(text: Constants.phone)
+      : TextEditingController();
+  TextEditingController tableCtrl =
+      TextEditingController(text: Constants.tableNo.toString());
+  bool flag = false;
   @override
   Widget build(BuildContext context) {
     CheckoutViewModel().getCart(context);
@@ -55,11 +60,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
               TextFormField(
                 controller: tableCtrl,
                 onChanged: (value) {
-                  setLocal(key: 'tableNo', value: value);
                   Constants.tableNo = int.parse(value);
                 },
                 readOnly: false,
-                //  initialValue: Constants.tableNo.toString(),
                 decoration: InputDecoration(
                     label: const Text("Table Number"),
                     enabledBorder: OutlineInputBorder(
@@ -74,11 +77,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
               ),
               TextFormField(
                 controller: nameCtrl,
-                onTap: (){
-                  if(Constants.name!=null && flag==false){
-                    flag=true;
-                    nameCtrl.text=Constants.name;
-                    phnCtrl.text=Constants.phone;
+                onTap: () {
+                  if (Constants.name != null && flag == false) {
+                    flag = true;
+                    nameCtrl.text = Constants.name;
+                    phnCtrl.text = Constants.phone;
                   }
                 },
                 onChanged: (v) {
@@ -122,25 +125,36 @@ class _CheckoutPageState extends State<CheckoutPage> {
               ),
               TextButton(
                   onPressed: () {
-                    if(phnCtrl.text.isNotEmpty && phnCtrl.text.length!=9)
-                    {
+                    if (phnCtrl.text.isNotEmpty && phnCtrl.text.length != 9) {
                       final RegExp regex = RegExp(r'^[0-9]+$');
-                      if(!regex.hasMatch(phnCtrl.text)){
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      if (!regex.hasMatch(phnCtrl.text)) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
                           content: Text("phone number should be 0 to 9 digits"),
                         ));
-                      }else {
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content:
-                          Text("phone number should be 9 digits"),
+                      } else {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text("phone number should be 9 digits"),
                         ));
                       }
-                    } else if(nameCtrl.text.isNotEmpty && nameCtrl.text.length<3) {
+                    } else if (nameCtrl.text.isNotEmpty &&
+                        nameCtrl.text.length < 3) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text("Name should be more than 3 character"),
                       ));
-                    }else{
-                     Constants.name!=null? repo.updateUser(macAddress: Constants.macAddress, name: Constants.name, phoneNo: Constants.phone, tableNo: Constants.tableNo):repo.setUser(macAdderess: Constants.macAddress, name: Constants.name, phoneno: Constants.phone, tableNo: Constants.tableNo);
+                    } else {
+                      Constants.name != null
+                          ? repo.updateUser(
+                              macAddress: Constants.macAddress,
+                              name: Constants.name,
+                              phoneNo: Constants.phone,
+                              tableNo: Constants.tableNo)
+                          : repo.setUser(
+                              macAdderess: Constants.macAddress,
+                              name: Constants.name,
+                              phoneno: Constants.phone,
+                              tableNo: Constants.tableNo);
                       context.go("/menu/${Constants.id}/checkout/checkout2");
                     }
                   },
