@@ -37,7 +37,7 @@ class _ItemState extends ConsumerState<Item> {
     "Alcoholic":"assets/drinks.svg",
     "Non Alcoholic":"assets/drinks.svg",
     "Recommended":"assets/recommend.svg",
-    "Bestseller":"assets/bestseller.svg",
+    "Best seller":"assets/bestseller.svg",
     "New":"assets/new.svg",
   };
 

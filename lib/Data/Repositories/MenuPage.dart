@@ -52,25 +52,32 @@ class MenuPageData extends ChangeNotifier {
           (cart[(a.key)] as int) *
           ((code_item[a.key]?.discount ?? 0) / 100);
     }
-
     return double.parse(discount.toStringAsFixed(2));
   }
 
   Future<void> getRestaurant(String id, context) async {
     Map<String, dynamic>? json = await network.get("Restaurants", id);
     restaurant = Restaurant.fromJson(json!);
-    categoryDividedMenu = MenuPageViewModel().reArrangeCategory(restaurant: restaurant!);
+    categoryDividedMenu =
+        MenuPageViewModel().reArrangeCategory(restaurant: restaurant!);
     code_item = MenuPageViewModel().mapCodeToItem(restaurant!.menu!);
     notifyListeners();
     final builder = Provider.of<RestaurantBuilder>(context, listen: false);
     builder.refreshRestaurant();
   }
 
-  void addOnTap({required String name,required BuildContext context}) {
-    RestaurantMenu item = restaurant!.menu!.where((element) => element.name == name).first;
-    item.itemCount = ((item.itemCount) ?? 0) + 1;
-    cart[item.name ?? ""] = (cart[item.name] ?? 0) + 1;
-    notifyListeners();
+  void addOnTap({required String name, required BuildContext context}) {
+    try {
+      RestaurantMenu item =
+          restaurant!.menu!.where((element) => element.name == name).first;
+      item.itemCount = ((item.itemCount) ?? 0) + 1;
+      cart[item.name ?? ""] = (cart[item.name] ?? 0) + 1;
+      notifyListeners();
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: const Text("Item temporary unavavailabe"),
+      ));
+    }
   }
 
   void subOnTap({required String name}) {
@@ -101,39 +108,76 @@ class MenuPageData extends ChangeNotifier {
       required String name,
       required String phoneno,
       required int tableNo}) async {
-    await FirebaseFirestore.instance
-        .collection("Users")
-        .doc(macAdderess)
-        .set({"name": name, "phoneNo": phoneno, "tableNo": tableNo});
+    try {
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(macAdderess)
+          .set({"name": name, "phoneNo": phoneno, "tableNo": tableNo});
+    } catch (e) {
+      print("Error from set user $e");
+    }
   }
 
-  getUser(macAddress) async {
-    DocumentSnapshot<Map<String, dynamic>> json = await FirebaseFirestore
-        .instance
-        .collection("Users")
-        .doc(macAddress)
-        .get();
-    name = json.data()?["name"] ?? "";
-    phone = json.data()?["phoneNo"] ?? "";
-    tableNo = json.data()?["tableNo"] ?? "";
-    notifyListeners();
+  Future<void> updateUser({
+    required String macAddress,
+    required String name,
+    required String phoneNo,
+    required int tableNo,
+  }) async {
+    try {
+      await FirebaseFirestore.instance.collection("Users").doc(macAddress).set({
+        "name": name,
+        "phoneNo": phoneNo,
+        "tableNo": tableNo,
+      });
+    } catch (e) {
+      print("error from update $e");
+    }
+  }
+
+  Future<void> getUser(macAddress) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> json = await FirebaseFirestore
+          .instance
+          .collection("Users")
+          .doc(macAddress)
+          .get();
+      name = json.data()?["name"] ?? "";
+      Constants.name = name!;
+      phone = json.data()?["phoneNo"] ?? "";
+      Constants.macAddress = macAddress!;
+      Constants.phone = phone!;
+      tableNo = tableNo = int.parse((json.data()?["tableNo"] ?? 0).toString());
+      Constants.tableNo = tableNo!;
+      print("name is ${Constants.name}");
+      notifyListeners();
+    } catch (e) {
+      print("error from get user $e");
+    }
   }
 
   Future<void> getData(Restaurant res) async {
     // final id = await getLocal(key: "id");
     //log("$id : NULL ");
-    DocumentSnapshot<Map<String, dynamic>> snapshot =
-        await FirebaseFirestore.instance.collection('Category').doc(Constants.id).get();
+    try {
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+          .instance
+          .collection('Category')
+          .doc(Constants.id)
+          .get();
 
-    if (snapshot.exists) {
-      log((snapshot.data()?['categories'] ?? []).toString());
-      List<String> tempList =
-          ((snapshot.data()?['categories'] ?? []) as List<dynamic>)
-              .map((e) => e as String)
-              .toList();
-      res.tags = tempList;
-      // print('res tags : ${res.tags!.length.toString()}');
-      notifyListeners();
+      if (snapshot.exists) {
+        log((snapshot.data()?['categories'] ?? []).toString());
+        List<String> tempList =
+            ((snapshot.data()?['categories'] ?? []) as List<dynamic>)
+                .map((e) => e as String)
+                .toList();
+        res.tags = tempList;
+        // print('res tags : ${res.tags!.length.toString()}');
+        notifyListeners();
+      }
+    } catch (e) {
+      print("Error from get category data (MenuPage.dart) $e");
     }
   }
 }

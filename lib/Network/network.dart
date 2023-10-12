@@ -6,6 +6,7 @@ class Network {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<Map<String, dynamic>?> get(String collection, String id) async {
+   try{
     log("Getting Data from Collection : ${collection} \n DocId: ${id}");
     // set();
     Map<String, dynamic>? data;
@@ -22,6 +23,11 @@ class Network {
       return {};
     }
     return data;
+   }
+   catch(e){
+     print("From Fetching Restaurants (Network.dart) $e");
+   }
+
   }
 
   Future<void> add(String collection, Map<String, dynamic> data) async {
