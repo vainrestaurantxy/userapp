@@ -49,21 +49,29 @@ class _MenuPageState extends ConsumerState<MenuPage> {
         // print("items:" + items.toString());
         //  print('ip addr ${Constants.macAddress}');
         restaurant = repo.restaurant!;
-        List<String> genre = ['Veg', 'Non Veg', 'Drinks', 'Recommended', "Bestseller", "New"];
-        Map<String,String> icons={
-          "Veg":"assets/veg.svg",
-          "Non Veg":"assets/non-veg.svg",
-          "Drinks":"assets/drinks.svg",
-          "Recommended":"assets/recommend.svg",
-          "Bestseller":"assets/bestseller.svg",
-          "New":"assets/new.svg",
+        List<String> genre = [
+          'Veg',
+          'Non Veg',
+          'Drinks',
+          'Recommended',
+          "Bestseller",
+          "New"
+        ];
+        Map<String, String> icons = {
+          "Veg": "assets/veg.svg",
+          "Non Veg": "assets/non-veg.svg",
+          "Drinks": "assets/drinks.svg",
+          "Recommended": "assets/recommend.svg",
+          "Bestseller": "assets/bestseller.svg",
+          "New": "assets/new.svg",
         };
-       // repo.getData(restaurant);
+        // repo.getData(restaurant);
         log(Color(int.parse(restaurant.color!)).toString());
         return Scaffold(
           floatingActionButton: prov.Consumer<MenuPageData>(
             builder: (context, ref, child) {
-              List<int> bottomData = MenuPageViewModel().getItemsAndAmount(context);
+              List<int> bottomData =
+                  MenuPageViewModel().getItemsAndAmount(context);
               return bottomData[0] == 0
                   ? const SizedBox()
                   : Align(
@@ -71,11 +79,11 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: GestureDetector(
-                          onTap: () async{
+                          onTap: () async {
                             setLocal(key: "cart", value: jsonEncode(ref.cart));
                             String mac = await viewModel.getMacAdderess();
 
-                            repo.getUser(mac);
+                            await repo.getUser(mac);
                             context.go("/menu/${Constants.id}/checkout");
                           },
                           child: Container(
@@ -206,12 +214,12 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                               if (MenuPageViewModel.boolTag ==
                                                   false) {
                                                 MenuPageViewModel.boolTag =
-                                                true;
+                                                    true;
                                                 MenuPageViewModel.tag = "Veg";
                                                 ref.selectedFilterIndex = index;
                                               } else {
                                                 MenuPageViewModel.boolTag =
-                                                false;
+                                                    false;
                                                 MenuPageViewModel.tag = "";
                                                 ref.selectedFilterIndex = -1;
                                               }
@@ -222,13 +230,13 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                               if (MenuPageViewModel.boolTag ==
                                                   false) {
                                                 MenuPageViewModel.boolTag =
-                                                true;
+                                                    true;
                                                 MenuPageViewModel.tag =
-                                                "Non Veg";
+                                                    "Non Veg";
                                                 ref.selectedFilterIndex = index;
                                               } else {
                                                 MenuPageViewModel.boolTag =
-                                                false;
+                                                    false;
                                                 MenuPageViewModel.tag = "";
                                                 ref.selectedFilterIndex = -1;
                                               }
@@ -239,12 +247,13 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                               if (MenuPageViewModel.boolTag ==
                                                   false) {
                                                 MenuPageViewModel.boolTag =
-                                                true;
-                                                MenuPageViewModel.tag = "Drinks";
+                                                    true;
+                                                MenuPageViewModel.tag =
+                                                    "Drinks";
                                                 ref.selectedFilterIndex = index;
                                               } else {
                                                 MenuPageViewModel.boolTag =
-                                                false;
+                                                    false;
                                                 MenuPageViewModel.tag = "";
                                                 ref.selectedFilterIndex = -1;
                                               }
@@ -255,13 +264,13 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                               if (MenuPageViewModel.boolTag ==
                                                   false) {
                                                 MenuPageViewModel.boolTag =
-                                                true;
+                                                    true;
                                                 MenuPageViewModel.tag =
-                                                "Recommended";
+                                                    "Recommended";
                                                 ref.selectedFilterIndex = index;
                                               } else {
                                                 MenuPageViewModel.boolTag =
-                                                false;
+                                                    false;
                                                 MenuPageViewModel.tag = "";
                                                 ref.selectedFilterIndex = -1;
                                               }
@@ -273,13 +282,13 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                               if (MenuPageViewModel.boolTag ==
                                                   false) {
                                                 MenuPageViewModel.boolTag =
-                                                true;
+                                                    true;
                                                 MenuPageViewModel.tag =
-                                                "Bestseller";
+                                                    "Bestseller";
                                                 ref.selectedFilterIndex = index;
                                               } else {
                                                 MenuPageViewModel.boolTag =
-                                                false;
+                                                    false;
                                                 MenuPageViewModel.tag = "";
                                                 ref.selectedFilterIndex = -1;
                                               }
@@ -291,13 +300,12 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                               if (MenuPageViewModel.boolTag ==
                                                   false) {
                                                 MenuPageViewModel.boolTag =
-                                                true;
-                                                MenuPageViewModel.tag =
-                                                "New";
+                                                    true;
+                                                MenuPageViewModel.tag = "New";
                                                 ref.selectedFilterIndex = index;
                                               } else {
                                                 MenuPageViewModel.boolTag =
-                                                false;
+                                                    false;
                                                 MenuPageViewModel.tag = "";
                                                 ref.selectedFilterIndex = -1;
                                               }
@@ -308,12 +316,12 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                               if (MenuPageViewModel.boolTag ==
                                                   false) {
                                                 MenuPageViewModel.boolTag =
-                                                true;
+                                                    true;
                                                 MenuPageViewModel.tag = "";
                                                 ref.selectedFilterIndex = index;
                                               } else {
                                                 MenuPageViewModel.boolTag =
-                                                false;
+                                                    false;
                                                 MenuPageViewModel.tag = "";
                                                 ref.selectedFilterIndex = -1;
                                               }
@@ -362,8 +370,11 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 8.0, vertical: 4),
                                           decoration: BoxDecoration(
-                                              color: ref.selectedFilterIndex == index &&
-                                                      MenuPageViewModel.boolTag == true
+                                              color: ref.selectedFilterIndex ==
+                                                          index &&
+                                                      MenuPageViewModel
+                                                              .boolTag ==
+                                                          true
                                                   ? Color(0xff88001f)
                                                   : Colors.transparent,
                                               border: Border.all(
@@ -373,15 +384,17 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                                   BorderRadius.circular(4)),
                                           child: Row(
                                             children: [
-                                                SvgPicture.asset(
-                                                icons[genre[index]]!,
-                                                width: 20,
-                                                height: 20,
-                                                color:ref.selectedFilterIndex ==
-                                                    index &&
-                                                    MenuPageViewModel
-                                                        .boolTag ? Colors.white:null
-                                              ),
+                                              SvgPicture.asset(
+                                                  icons[genre[index]]!,
+                                                  width: 20,
+                                                  height: 20,
+                                                  color:
+                                                      ref.selectedFilterIndex ==
+                                                                  index &&
+                                                              MenuPageViewModel
+                                                                  .boolTag
+                                                          ? Colors.white
+                                                          : null),
                                               const SizedBox(
                                                 width: 10,
                                               ),

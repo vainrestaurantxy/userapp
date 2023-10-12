@@ -144,6 +144,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         content: Text("Name should be more than 3 character"),
                       ));
                     } else {
+                      Constants.name = nameCtrl.text;
+                      Constants.phone = phnCtrl.text;
+                      Constants.tableNo = int.parse(tableCtrl.text);
                       Constants.name != null
                           ? repo.updateUser(
                               macAddress: Constants.macAddress,
