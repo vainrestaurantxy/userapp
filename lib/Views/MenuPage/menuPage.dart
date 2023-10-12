@@ -82,7 +82,6 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                           onTap: () async {
                             setLocal(key: "cart", value: jsonEncode(ref.cart));
                             String mac = await viewModel.getMacAdderess();
-
                             await repo.getUser(mac);
                             context.go("/menu/${Constants.id}/checkout");
                           },
