@@ -47,13 +47,13 @@ class _MenuPageState extends ConsumerState<MenuPage> {
         // print("items:" + items.toString());
         //  print('ip addr ${Constants.macAddress}');
         restaurant = repo.restaurant!;
-        List<String> genre = ['Veg', 'Non Veg', 'Drinks', 'Recommended', "Bestseller", "New"];
+        List<String> genre = ['Veg', 'Non Veg', 'Drinks', 'Recommended', "Best Seller", "New"];
         Map<String,String> icons={
           "Veg":"assets/veg.svg",
           "Non Veg":"assets/non-veg.svg",
           "Drinks":"assets/drinks.svg",
           "Recommended":"assets/recommend.svg",
-          "Bestseller":"assets/bestseller.svg",
+          "Best Seller":"assets/bestseller.svg",
           "New":"assets/new.svg",
         };
         repo.getData(restaurant);
@@ -271,7 +271,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                                 MenuPageViewModel.boolTag =
                                                 true;
                                                 MenuPageViewModel.tag =
-                                                "Bestseller";
+                                                "Best Seller";
                                                 ref.selectedFilterIndex = index;
                                               } else {
                                                 MenuPageViewModel.boolTag =
