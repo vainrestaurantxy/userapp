@@ -38,7 +38,7 @@ class MenuPageViewModel extends ChangeNotifier {
      print("from create menu $tag");
      print("from create menu $boolTag");
 
-    if ((tag == "Veg" || tag == "Non Veg" || tag=="" || tag=="Drinks" || tag=="Recommended" || tag=="Bestseller" || tag=="New") && boolTag!=true) {
+    if ((tag == "Veg" || tag == "Non Veg" || tag=="" || tag=="Drinks" || tag=="Recommended" || tag=="Best Seller" || tag=="New") && boolTag!=true) {
       for (var i in categoryDividedMenu.entries) {
         // keys.add(GlobalKey());
         GlobalKey key = GlobalKey();
