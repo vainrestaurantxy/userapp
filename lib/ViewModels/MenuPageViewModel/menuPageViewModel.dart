@@ -63,7 +63,7 @@ class MenuPageViewModel extends ChangeNotifier {
                 (index) => Item(
                     image: i.value[index].image ?? "",
                     desc: i.value[index].description ?? "",
-                    price: i.value[index].price ?? 0,
+                    price: i.value[index].price ?? 0.0,
                     name: i.value[index].name ?? "",
                     code: i.value[index].code ?? "",
                     tags: i.value[index].tags ?? [])),
@@ -140,17 +140,17 @@ class MenuPageViewModel extends ChangeNotifier {
     return items;
   }
 
-  List<int> getItemsAndAmount(context) {
+  List<dynamic> getItemsAndAmount(context) {
     final prov = Provider.of<MenuPageData>(context, listen: false);
     int items = 0;
-    int amount = 0;
+    double amount = 0;
     //  print(prov.cart);
     for (var i in prov.cart.entries) {
       String code = i.key;
       int count = i.value;
       items += count;
       //  print(prov.code_item[code]);
-      amount += count * (prov.code_item[code]?.price ?? 0);
+      amount += count * (prov.code_item[code]?.price ?? 0.0);
     }
     return [items, amount];
   }

@@ -25,7 +25,7 @@ class CartItem extends StatelessWidget {
       this.menu,
       this.itemButton = true});
   String? name;
-  int? price;
+  double? price;
   bool itemButton;
   Map<String, dynamic>? quantity;
   String? image;

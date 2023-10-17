@@ -1,14 +1,11 @@
-
 import 'package:json_annotation/json_annotation.dart';
-
-
 
 part 'restaurantMenu.g.dart';
 
 @JsonSerializable()
 class RestaurantMenu {
   String? code, name, description, image;
-  int? price;
+  double? price;
 
   int? itemCount = 0;
 

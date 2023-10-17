@@ -16,7 +16,7 @@ RestaurantMenu _$RestaurantMenuFromJson(Map<String, dynamic> json) =>
       discount: json['discount'] as int?,
       itemCount: json['itemCount'] as int?,
       itemType: json['itemType'] as String?,
-      price: json['price'] as int?,
+      price: (json['price'] as num?)?.toDouble(),
       recommendedWith: (json['recommendedWith'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),

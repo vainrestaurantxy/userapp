@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dine/Models/restaurant.dart';
 import 'package:dine/Shared/Widgets/AppBar.dart';
 import 'package:dine/Shared/Widgets/SliverAppBar.dart';
@@ -27,9 +28,57 @@ class MenuPage extends ConsumerStatefulWidget {
 
 class _MenuPageState extends ConsumerState<MenuPage> {
   late Restaurant restaurant;
+  setupRestaurant() {
+    FirebaseFirestore.instance
+        .collection("Category")
+        .doc("GTUrlsAgJkSdM0iIjMDAYiipTu83")
+        .set({
+      "categories": [
+        "Fresh Juices",
+        "Nature Juices",
+        "Mix Juices",
+        "Special Deserts",
+        "Fruit Bricks",
+        "Lassi",
+        "Burgers",
+        "Club Sandwiches",
+        "Diet Club Sandwich",
+        "Wrap Sandwiches",
+        "Broasted Chicken",
+        "Grilled",
+        "Breakfast",
+        "Tea & Coffee",
+        "Bread Sandwiches",
+        "Porotta Sandwiches",
+        "Flatbread",
+        "Soups",
+        "Salads",
+        "Charcoal Specials",
+        "Grilled Sea Food",
+        "Combo Sandwiches",
+        "Biryani & Lunch",
+        "Noodles",
+        "Fried Rice",
+        "Pulao",
+        "Lunch Combo",
+        "Philippine Cuisine",
+        "Kerela Special",
+        "Chicken Special",
+        "Mutton Special",
+        "Beef Special",
+        "Fish Special",
+        "Veg Special",
+        "Chinese Cuisine",
+        "Dinner Special",
+        "Add Ons"
+      ]
+    });
+  }
+
   ScrollController controller = ScrollController();
   @override
   Widget build(BuildContext context) {
+    // setupRestaurant();
     final repo = prov.Provider.of<MenuPageData>(context, listen: false);
     QrScannerViewModel viewModel = QrScannerViewModel();
     List<Widget> items = [];
@@ -49,21 +98,28 @@ class _MenuPageState extends ConsumerState<MenuPage> {
         // print("items:" + items.toString());
         //  print('ip addr ${Constants.macAddress}');
         restaurant = repo.restaurant!;
-        List<String> genre = ['Veg', 'Non Veg', 'Drinks', 'Recommended', "Best Seller", "New"];
-        Map<String,String> icons={
-          "Veg":"assets/veg.svg",
-          "Non Veg":"assets/non-veg.svg",
-          "Drinks":"assets/drinks.svg",
-          "Recommended":"assets/recommend.svg",
-          "Best Seller":"assets/bestseller.svg",
-          "New":"assets/new.svg",
+        List<String> genre = [
+          'Veg',
+          'Non Veg',
+          'Drinks',
+          'Recommended',
+          "Best Seller",
+          "New"
+        ];
+        Map<String, String> icons = {
+          "Veg": "assets/veg.svg",
+          "Non Veg": "assets/non-veg.svg",
+          "Drinks": "assets/drinks.svg",
+          "Recommended": "assets/recommend.svg",
+          "Best Seller": "assets/bestseller.svg",
+          "New": "assets/new.svg",
         };
         // repo.getData(restaurant);
-        log(Color(int.parse(restaurant.color!)).toString());
+        log(Color(int.parse(restaurant.color ?? "0xFFFFFF")).toString());
         return Scaffold(
           floatingActionButton: prov.Consumer<MenuPageData>(
             builder: (context, ref, child) {
-              List<int> bottomData =
+              List<dynamic> bottomData =
                   MenuPageViewModel().getItemsAndAmount(context);
               return bottomData[0] == 0
                   ? const SizedBox()
@@ -276,7 +332,7 @@ class _MenuPageState extends ConsumerState<MenuPage> {
                                                 MenuPageViewModel.boolTag =
                                                     true;
                                                 MenuPageViewModel.tag =
-                                                "Best Seller";
+                                                    "Best Seller";
                                                 ref.selectedFilterIndex = index;
                                               } else {
                                                 MenuPageViewModel.boolTag =

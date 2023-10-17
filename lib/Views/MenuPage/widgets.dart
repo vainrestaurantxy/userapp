@@ -21,7 +21,7 @@ class Item extends ConsumerStatefulWidget {
       required this.code,
       required this.tags});
   String image, desc, name;
-  int price;
+  double price;
   String code;
   List<String> tags;
 
